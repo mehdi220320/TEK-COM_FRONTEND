@@ -12,10 +12,10 @@ export class UsersTablePanelComponent implements OnInit {
   constructor(private userService:UserServiceService) { }
 
   ngOnInit(): void {
-      this.userService.getAllUsers().subscribe((data) => {
-        this.alluser = data;
-        console.log(this.alluser);
-      });
+      // this.userService.getAllUsers().subscribe((data) => {
+      //   this.alluser = data;
+      //   console.log(this.alluser);
+      // });
   }
 
 }
