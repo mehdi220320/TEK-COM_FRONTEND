@@ -1,4 +1,4 @@
-<div class="row newsfeed-right-side-content mt-3 ml-5">
+<div class="row newsfeed-right-side-content mt-3">
   <div class="col-md-3 newsfeed-left-side sticky-top shadow-sm" id="sidebar-wrapper">
     <div class="card newsfeed-user-card h-100">
       <ul class="list-group list-group-flush newsfeed-left-sidebar">
@@ -44,39 +44,23 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-8 second-section" id="page-content-wrapper">
-    <div class="mb-3">
-      <div class="btn-group d-flex">
-        <a href="index.html" class="btn btn-quick-links mr-3 ql-active">
-          <img src="assets/images/icons/theme/speech.png" class="mr-2" alt="quick links icon">
-          <span class="fs-8">Speech</span>
-        </a>
-        <a href="messages.html" class="btn btn-quick-links mr-3">
-          <img src="../assets/images/icons/theme/listen.png" class="mr-2" alt="quick links icon">
-          <span class="fs-8">Listen</span>
-        </a>
-        <a href="watch.html" class="btn btn-quick-links">
-          <img src="../assets/images/icons/theme/watch.png" class="mr-2" alt="quick links icon">
-          <span class="fs-8">Watch</span>
-        </a>
-      </div>
-    </div>
-    <ul class="list-unstyled" >
-      <li class="media post-form w-shadow mb-3 bg-white">
-        <div class="media-body">
+  <div class="col-md-6 second-section" id="page-content-wrapper">
+    <ul class="list-unstyled" style="margin-bottom: 0;">
+      <li class="media post-form w-shadow bg-transparent">
+        <div class="media-body bg-white mb-2 rounded" >
           <div class="form-group post-input">
-            <textarea class="form-control" id="postForm" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
+            <textarea  class="form-control bg-white" id="postForm" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
           </div>
           <div class="row post-form-group">
             <div class="col-md-9">
               <button type="button" class="btn btn-link post-form-btn btn-sm">
-                <img src="././assets/images/icons/theme/post-image.png" alt="post form icon"> <span>Photo/Video</span>
+                <i class='bx bx-images'></i> <span>Photo/Video</span>
               </button>
               <button type="button" class="btn btn-link post-form-btn btn-sm">
-                <img src="assets/images/icons/theme/tag-friend.png" alt="post form icon"> <span>Tag Friends</span>
+                <i class='bx bxs-group'></i> <span>Tag Friends</span>
               </button>
               <button type="button" class="btn btn-link post-form-btn btn-sm">
-                <img src="assets/images/icons/theme/check-in.png" alt="post form icon"> <span>Check In</span>
+                <i class='bx bxs-map'></i> <span>Check In</span>
               </button>
             </div>
             <div class="col-md-3 text-right">
@@ -87,16 +71,16 @@
       </li>
     </ul>
 
-    <!-- Posts sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
-    <div class="posts-section mb-5">
-      <div class="post border-bottom p-3 bg-white w-shadow">
+    <!-- Posts -->
+    <div class="posts-section mb-2" *ngFor="let post of posts">
+      <div class="post border-bottom p-3 bg-white w-shadow mb-3">
         <div class="media text-muted pt-3">
           <img src="assets/images/users/user-1.jpg" alt="Online user" class="mr-3 post-user-image">
           <div class="media-body pb-3 mb-0 small lh-125">
             <div class="d-flex justify-content-between align-items-center w-100">
-              <a href="#" class="text-gray-dark post-user-name">John Michael</a>
+              <a href="#" class="text-gray-dark post-user-name">{{post.whoPosted}}</a>
               <div class="dropdown">
-                <a href="#" class="post-more-settings" role="button" data-toggle="dropdown" id="postOptions" aria-haspopup="true" aria-expanded="false">
+                <a href="#" class="post-more-settings" role="button" data-toggle="dropdown" id="" aria-haspopup="true" aria-expanded="false">
                   <i class='bx bx-dots-horizontal-rounded'></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left post-dropdown-menu">
@@ -118,7 +102,7 @@
                       </div>
                       <div class="col-md-10">
                         <span class="fs-9">Hide post</span>
-                        <small id="hidePost" class="form-text text-muted">See fewer posts like this</small>
+                        <small  class="form-text text-muted">See fewer posts like this</small>
                       </div>
                     </div>
                   </a>
@@ -129,7 +113,7 @@
                       </div>
                       <div class="col-md-10">
                         <span class="fs-9">Snooze Lina for 30 days</span>
-                        <small id="snoozePost" class="form-text text-muted">Temporarily stop seeing posts</small>
+                        <small  class="form-text text-muted">Temporarily stop seeing posts</small>
                       </div>
                     </div>
                   </a>
@@ -140,26 +124,38 @@
                       </div>
                       <div class="col-md-10">
                         <span class="fs-9">Report</span>
-                        <small id="reportPost" class="form-text text-muted">I'm concerned about this post</small>
+                        <small  class="form-text text-muted">I'm concerned about this post</small>
                       </div>
                     </div>
                   </a>
                 </div>
               </div>
             </div>
-            <span class="d-block">3 hours ago <i class='bx bx-globe ml-3'></i></span>
+            <span class="d-block">{{post.dateAjout}} <i class='bx bx-globe ml-3'></i></span>
           </div>
         </div>
         <div class="mt-3">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis voluptatem veritatis harum, tenetur, quibusdam voluptatum, incidunt saepe minus maiores ea atque sequi illo veniam sint quaerat corporis totam et. Culpa?</p>
+          <p>{{post.description}}</p>
         </div>
-        <div class="d-block mt-3">
-          <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.digitalclassworld.com%2Fblog%2Ffull-form-of-url%2F&psig=AOvVaw0O-ROW1e-1Ik79U9nYy6Qq&ust=1729155540119000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCco77EkokDFQAAAAAdAAAAABAE">        </div>
+        <div class="d-block ">
+          <ng-container *ngFor="let image of post.images; let i = index">
+            <img *ngIf="post.selectedImageIndex === i" [src]="image" class="post-content rounded" [alt]="'Post image ' + (i + 1)">
+          </ng-container>
+        </div>
+        <div class="dots" *ngIf="post.images.length >= 2">
+          <label *ngFor="let image of post.images; let i = index"
+                 (click)="showImage(post, i)"
+                 [ngClass]="{'bg-dark': post.selectedImageIndex === i}">
+          </label>
+        </div>
+
+
+
         <div class="mb-3">
           <!-- Reactions -->
           <div class="argon-reaction">
                                         <span class="like-btn">
-                                            <a href="#" class="post-card-buttons" id="reactions"><i class='bx bxs-like mr-2'></i> 67</a>
+                                            <a href="#" class="post-card-buttons" ><i class='bx bxs-like mr-2'></i> 67</a>
                                             <ul class="reactions-box dropdown-shadow">
                                                 <li class="reaction reaction-like" data-reaction="Like"></li>
                                                 <li class="reaction reaction-love" data-reaction="Love"></li>
@@ -170,7 +166,7 @@
                                             </ul>
                                         </span>
           </div>
-          <a href="javascript:void(0)" class="post-card-buttons" id="show-comments"><i class='bx bx-message-rounded mr-2'></i> 5</a>
+          <a href="javascript:void(0)" class="post-card-buttons" ><i class='bx bx-message-rounded mr-2'></i> 5</a>
           <div class="dropdown dropup share-dropup">
             <a href="#" class="post-card-buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class='bx bx-share-alt mr-2'></i> Share
@@ -316,78 +312,10 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center my-5 load-post">
-        <button type="button" class="btn btn-quick-link join-group-btn border shadow" data-toggle="tooltip" data-placement="top" data-title="Load More Post"><i class='bx bx-dots-horizontal-rounded'></i></button>
-      </div>
     </div>
   </div>
-<!--  <div class="col-md-3 third-section">-->
-<!--    <div class="card shadow-sm">-->
-<!--      <div class="card-body">-->
-<!--        <div class="weather-card-header d-flex justify-content-between align-items-center">-->
-<!--          <p class="fs-1 mb-0">11:37 PM</p>-->
-<!--          <a href="#" class="btn text-primary">California, CA <i class='bx bx-chevron-down'></i></a>-->
-<!--        </div>-->
-<!--        <div class="weather-quick align-items-center mt-4">-->
-<!--          <div class="row">-->
-<!--            <div class="col-md-8">-->
-<!--              <img src="assets/images/icons/weather/sun.png" width="40" height="40" alt="Weather icon">-->
-<!--              <h1 class="weather-card display-4 ml-3">28<span class="text-muted">&deg;</span></h1>-->
-<!--            </div>-->
-<!--            <div class="col-md-4">-->
-<!--              <p class="mb-0 fs-1" ><i class='bx bx-droplet'></i> 15%</p>-->
-<!--              <p class="mb-0 fs-1" ><i class='bx bx-flag'></i> 10km/h</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-</div>
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="postModal" aria-labelledby="postModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-body post-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-7 post-content">
-              <img src="https://scontent.fevn1-2.fna.fbcdn.net/v/t1.0-9/56161887_588993861570433_2896723195090436096_n.jpg?_nc_cat=103&_nc_eui2=AeFI0UuTq3uUF_TLEbnZwM-qSRtgOu0HE2JPwW6b4hIki73-2OWYhc7L1MPsYl9cYy-w122CCak-Fxj0TE1a-kjsd-KXzh5QsuvxbW_mg9qqtg&_nc_ht=scontent.fevn1-2.fna&oh=ea44bffa38f368f98f0553c5cef8e455&oe=5D050B05" alt="post-image">
-            </div>
-            <div class="col-md-5 pr-3">
-              <div class="media text-muted pr-3 pt-3">
-                <img src="assets/images/users/user-1.jpg" alt="user image" class="mr-3 post-modal-user-img">
-                <div class="media-body">
-                  <div class="d-flex justify-content-between align-items-center w-100 post-modal-top-user fs-9">
-                    <a href="#" class="text-gray-dark">John Michael</a>
-                    <div class="dropdown">
-                      <a href="#" class="postMoreSettings" role="button" data-toggle="dropdown" id="postOptions" aria-haspopup="true" aria-expanded="false">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left postDropdownMenu">
-                        <a href="#" class="dropdown-item" aria-describedby="savePost">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <i class='bx bx-bookmark-plus postOptionIcon'></i>
-                            </div>
-                            <div class="col-md-10">
-                              <span class="postOptionTitle">Save post</span>
-                              <small id="savePost" class="form-text text-muted">Add this to your saved items</small>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <span class="d-block fs-8">3 hours ago <i class='bx bx-globe ml-3'></i></span>
-                </div>
-              </div>
-              <div class="mt-3 post-modal-caption fs-9">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis voluptatem veritatis harum, tenetur, quibusdam voluptatum, incidunt saepe minus maiores ea atque sequi illo veniam sint quaerat corporis totam et. Culpa?</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-md-3 third-section">
+    <app-groups-suggestion></app-groups-suggestion>
   </div>
 </div>
+<router-outlet></router-outlet>

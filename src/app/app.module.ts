@@ -11,6 +11,7 @@ import { ANavbarComponent } from './AdminView/a-navbar/a-navbar.component';
 import { UsersTablePanelComponent } from './AdminView/users-table-panel/users-table-panel.component';
 import {HttpClientModule} from "@angular/common/http";
 import {UserServiceService} from "./Services/user-service.service";
+import { GroupsSuggestionComponent } from './post/groups-suggestion/groups-suggestion.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
@@ -26,7 +27,8 @@ const appRoutes:Routes=[
     NavbarComponent,
     PostComponent,
     ANavbarComponent,
-    UsersTablePanelComponent
+    UsersTablePanelComponent,
+    GroupsSuggestionComponent
   ],
   imports: [
     BrowserModule,
