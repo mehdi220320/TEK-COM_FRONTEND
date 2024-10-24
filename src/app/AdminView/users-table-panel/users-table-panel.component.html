@@ -41,7 +41,7 @@
             <td>{{ user.birthday | date:'MM/dd/yy' }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.status }}</td>
-            <td> <button class="btn btn-primary mr-1">Edit</button>
+            <td> <button class="btn btn-primary mr-1" (click)="deleteUser(user.id)">Edit</button>
               <button class="btn btn-danger">Delete</button>
             </td>
           </tr>

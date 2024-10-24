@@ -57,6 +57,7 @@ export class UsersTablePanelComponent implements OnInit {
   numViews(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.showNum = Number(target.value);
+    this.IndexChange(1);
   }
   getTotIndex(): number[] {
     const totalPages = Math.ceil(this.randomUsers.length / this.showNum);
@@ -88,6 +89,11 @@ export class UsersTablePanelComponent implements OnInit {
     }
     return this.randomUsers.slice((this.index-1)*this.showNum,this.index*this.showNum);
   }
-
+  deleteUser(id: number): void {
+    let index = this.randomUsers.findIndex(user => user.id === id);
+    if (index > -1) {
+      this.randomUsers.splice(index, 1);
+    }
+  }
 
 }

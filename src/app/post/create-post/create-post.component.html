@@ -1,0 +1,25 @@
+<ul class="list-unstyled" style="margin-bottom: 0;">
+  <li class="media post-form w-shadow bg-transparent">
+    <div class="media-body bg-white mb-2 rounded" >
+      <div class="form-group post-input">
+        <textarea  class="form-control bg-white" id="postForm" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
+      </div>
+      <div *ngFor="let file of fileHandle" class="d-inline-flex ml-3 align-items-end justify-content-center">
+        <i class='bx bx-window-close close-icon' (click)="removeFileSelected(file)"></i>
+        <img *ngIf="file && file.url" [src]="file.url" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
+      </div>
+
+      <div class="row post-form-group">
+        <div class="col-md-9">
+          <label for="fileInput" class="btn btn-link post-form-btn btn-sm">
+            <i class='bx bx-images'></i> <span>Photo/Video</span>
+          </label>
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        </div>
+        <div class="col-md-3 text-right">
+          <button type="button" class="btn btn-primary btn-sm">Publish</button>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>

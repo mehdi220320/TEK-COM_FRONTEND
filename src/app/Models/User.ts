@@ -6,6 +6,7 @@ export class User {
               public email:string,
               public birthday:Date,
               public role:string,
-              public status:string
+              public status:string,
+
               ) {}
 }

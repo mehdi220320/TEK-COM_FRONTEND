@@ -1,0 +1,16 @@
+.img-body{
+  height: 150px;
+  width: 150px;
+  margin-left: 10px;
+}
+.close-icon{
+  position: absolute;
+  margin-left: 134px;
+  margin-bottom: 131px;
+  background-color: white;
+  cursor: pointer;
+  border-bottom-left-radius: 4px;
+}
+.close-icon:hover{
+  color:red;
+}
