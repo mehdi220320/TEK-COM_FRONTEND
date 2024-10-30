@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
-import {UserServiceService} from "./Services/user-service.service";
+import {UserServiceService} from "./user-service.service";
 
 @Injectable({
   providedIn: 'root'
@@ -101,9 +101,6 @@ public isLoggedIn2(){
     }
   }
   public onlogout() {
-
-
-
     /*const token = localStorage.getItem('jwtToken');
 
     if (token) {
@@ -116,6 +113,5 @@ public isLoggedIn2(){
         error => console.error(error)
       );
     }*/
-
   }
 }

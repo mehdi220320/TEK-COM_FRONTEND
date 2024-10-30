@@ -1,6 +1,9 @@
 export class Comments {
-  constructor(public whoPosted:string,
+  constructor(public id:number,
               public description:string,
-              public date: Date) {
+              public date: Date,
+              public username:string,
+              public postid:string
+  ) {
   }
 }

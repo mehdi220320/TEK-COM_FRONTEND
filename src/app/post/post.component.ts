@@ -4,6 +4,7 @@ import {Likes} from "../Models/Likes";
 import {FileHandle} from "../Models/FileHandle";
 import {Comments} from "../Models/Comments";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import{PostService} from '../Services/post.service'
 
 @Component({
   selector: 'app-post',
@@ -11,111 +12,31 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-   posts: Post[] = [
-    new Post(
-      1,
-      new Date(2023, 9, 17, 10, 30),
-      'Jean Dupont',
-      'Community A',
-      true,
-      [
-        { file: new File([], 'img_1.png'), url: './assets/images/img_1.png' },
-        { file: new File([], 'post-1.jpg'), url: './assets/images/posts/post-1.jpg' }
-      ],
-      'This is the description of the first post.',
-      [
-        new Comments('Alice', 'Great post!', new Date(2023, 9, 17, 11, 30)),
-        new Comments('Bob', 'Thanks for sharing!', new Date(2023, 9, 17, 12, 45))
-      ],
-      [
-        new Likes(1, 101, 1),
-        new Likes(2, 102, 1)
-      ]
-    ),
-    new Post(
-      2,
-      new Date(2023, 9, 16, 12, 15),
-      'Marie Curie',
-      'Community B',
-      false,
-      [
-        { file: new File([], 'post-1.jpg'), url: './assets/images/posts/post-1.jpg' },
-        { file: new File([], 'img_1.png'), url: './assets/images/img_1.png' }
-      ],
-      'This is another post description, belonging to Community B.',
-      [
-        new Comments('Charlie', 'Interesting topic!', new Date(2023, 9, 16, 13, 0))
-      ],
-      [
-        new Likes(3, 103, 2),
-        new Likes(4, 104, 2)
-      ]
-    ),
-    new Post(
-      3,
-      new Date(2023, 9, 15, 9, 45),
-      'Albert Einstein',
-      'Community A',
-      true,
-      [
-        { file: new File([], 'post-1.jpg'), url: './assets/images/posts/post-1.jpg' },
-        { file: new File([], 'img.png'), url: './assets/images/img.png' }
-      ],
-      'Post description about scientific discoveries in Community A.',
-      [],
-      [
-        new Likes(5, 105, 3)
-      ]
-    ),
-    new Post(
-      4,
-      new Date(2023, 9, 14, 14, 0),
-      'Isaac Newton',
-      'Community C',
-      true,
-      [
-        { file: new File([], 'post-1.jpg'), url: './assets/images/posts/post-1.jpg' }
-      ],
-      'A brief post discussing physics in Community C.',
-      [],
-      [
-        new Likes(6, 106, 4),
-        new Likes(7, 107, 4)
-      ]
-    ),
-    new Post(
-      5,
-      new Date(2023, 9, 13, 11, 25),
-      'Ada Lovelace',
-      'Community D',
-      false,
-      [
-        { file: new File([], 'post-1.jpg'), url: './assets/images/posts/post-1.jpg' },
-        { file: new File([], 'img_1.png'), url: './assets/images/img_1.png' },
-        { file: new File([], 'img.png'), url: './assets/images/img.png' }
-      ],
-      'Exploring algorithms in this insightful post for Community D.',
-      [],
-      [
-        new Likes(8, 108, 5),
-        new Likes(9, 109, 5)
-      ]
-    ),
-    new Post(
-      6,
-      new Date(2024, 10, 17, 17, 45),
-      'Ada Lovelace',
-      'Community D',
-      false,
-      [],
-      'Exploring algorithms in this insightful post for Community D.',
-      [],
-      [
-        new Likes(10, 110, 6)
-      ]
-    )
-  ];
+  posts: Post[] = [];
+
+  constructor(private postService: PostService) { }
+
   ngOnInit(): void {
+    const postId = 1;
+
+    this.postService.getPostById(postId).subscribe((data: any) => {
+      this.posts = data.map((item: any) => {
+        return new Post(
+          item.id,
+          item.date_ajout,
+          item.whoposted,
+          item.community,
+          item.content,
+          item.isvisible,
+          [],
+          item.commentList,
+          item.likeList,
+          0
+        );
+      });
+    }, (error) => {
+      console.error("Error fetching posts:", error);
+    });
   }
   selectedImageIndex: number = 0;
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {User} from "../Models/User";
 import {environement} from "../environement/environement";
 interface LoginData {
   email: string;
