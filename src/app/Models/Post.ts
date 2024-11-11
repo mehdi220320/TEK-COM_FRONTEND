@@ -13,7 +13,8 @@ export class Post{
                private _images: FileHandle[],
                private _comments: Comments[],
                private _likes: Likes[],
-               private _selectedImageIndex: number = 0)
+               private _selectedImageIndex: number = 0,
+               public showComments: boolean = false)
   {}
   public get id(): number {
     return this._id;

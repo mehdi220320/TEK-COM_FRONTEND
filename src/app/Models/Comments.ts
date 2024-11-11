@@ -1,9 +1,15 @@
+import {Post} from "./Post";
+import {User} from "./User";
+
 export class Comments {
-  constructor(public id:number,
-              public description:string,
-              public date: Date,
-              public username:string,
-              public postid:string
+  constructor(  public id:number | null,
+               public description:string,
+               public date: Date,
+               public username:User,
+                public post:Post
   ) {
   }
+
+
+
 }

@@ -19,7 +19,7 @@ const appRoutes:Routes=[
   {path:"signup",component:SignupComponent},
   {path:"",component:LoginComponent},
   {path:"navbar",component:NavbarComponent},
-  {path:"adminIndex",component:ANavbarComponent}
+  {path:"adminIndex",component:ANavbarComponent},
 ]
 @NgModule({
   declarations: [

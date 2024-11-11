@@ -5,6 +5,8 @@ import {FileHandle} from "../Models/FileHandle";
 import {Comments} from "../Models/Comments";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import{PostService} from '../Services/post.service'
+import {NgForm} from "@angular/forms";
+import { User } from '../Models/User';
 
 @Component({
   selector: 'app-post',
@@ -64,9 +66,36 @@ export class PostComponent implements OnInit {
       return `${years} year${years > 1 ? 's' : ''} ago`;
     }
   }
-  showComments: boolean = false;
-  toggleComments() {
-    this.showComments = !this.showComments;
+  toggleComments(post :Post) {
+    post.showComments = !post.showComments;
   }
+  createComment(commentForm: NgForm, post: Post) {
+    const user = new User(
+      1,                 // id
+      "",                // other user fields as needed
+      "",
+      "",
+      "",
+      new Date(),
+      "",
+      ""
+    );
+    const comment = new Comments(
+      null,
+      commentForm.value['description'],
+      new Date(),
+      user,
+      post
+    );
+    console.log(comment);
 
+    this.postService.addComment(comment).subscribe(
+      (response) => {
+        console.log('Comment created successfully:', response);
+      },
+      (error) => {
+        console.error('Error creating comment:', error);
+      }
+    );
+  }
 }

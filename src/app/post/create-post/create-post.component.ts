@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FileHandle} from "../../Models/FileHandle";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {NgForm} from "@angular/forms";
+import{PostService} from "../../Services/post.service";
 
 @Component({
   selector: 'app-create-post',
@@ -10,7 +12,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class CreatePostComponent implements OnInit {
   fileHandle: FileHandle[] =[];
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer,
+              private postService:PostService) {}
 
   ngOnInit(): void {
   }
@@ -27,5 +30,28 @@ export class CreatePostComponent implements OnInit {
       this.fileHandle.splice(index, 1);
     }
   }
+
+  createPost(postForm: NgForm) {
+    console.log(postForm.value);
+
+    const description = postForm.value['description'];
+
+    const post = {
+      whoposted: 1,
+      community: 1,
+      content: description,
+      type: "text"
+    };
+
+    this.postService.createPost(post).subscribe(
+      (response) => {
+        console.log('Post created successfully:', response);
+      },
+      (error) => {
+        console.error('Error creating post:', error);
+      }
+    );
+  }
+
 
 }

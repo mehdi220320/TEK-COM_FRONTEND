@@ -141,7 +141,7 @@
                                             </ul>
                                         </span>
           </div>
-          <a href="javascript:void(0)" class="post-card-buttons" id="show-comments" (click)="toggleComments()">
+          <a href="javascript:void(0)" class="post-card-buttons" id="show-comments" (click)="toggleComments(post)">
             <i class='bx bx-message-rounded mr-2'></i> {{post.comments.length}} Comments
           </a>
           <div class="dropdown dropup share-dropup">
@@ -182,7 +182,7 @@
             </div>
           </div>
         </div>
-        <div class="border-top pt-3" *ngIf="showComments">
+        <div class="border-top pt-3" *ngIf="post.showComments">
           <div class="row bootstrap snippets">
             <div class="col-md-12">
               <div class="comment-wrapper">
@@ -193,17 +193,16 @@
                         <img src="assets/images/users/user-4.jpg" alt="" class="img-circle">
                       </a>
                       <div class="media-body">
-                        <form action="" method="" role="form">
+                        <form #commentForm="ngForm"(ngSubmit)="createComment(commentForm,post)"  role="form">
                           <div class="row">
                             <div class="col-md-12">
                               <div class="input-group">
-                                <input type="text" class="form-control comment-input" placeholder="Write a comment...">
+                                <input type="text" class="form-control comment-input" ngModel name="description" placeholder="Write a comment...">
 
                                 <div class="input-group-btn">
                                   <button type="button" class="btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bxs-smiley-happy'></i></button>
                                   <button type="button" class="btn comment-form-btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bx-camera'></i></button>
-                                  <button type="button" class="btn comment-form-btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bx-microphone'></i></button>
-                                  <button type="button" class="btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bx-file-blank'></i></button>
+                                    <button type="submit" class="btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class=' bx bx-like '></i></button>
                                 </div>
                               </div>
                             </div>
@@ -228,7 +227,6 @@
                           </p>
                           <div class="commentLR">
                             <button type="button" class="btn btn-link fs-8">Like</button>
-                            <button type="button" class="btn btn-link fs-8">Reply</button>
                           </div>
                         </div>
                       </li>
