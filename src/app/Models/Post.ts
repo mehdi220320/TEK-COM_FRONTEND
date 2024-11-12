@@ -17,8 +17,8 @@ export interface Post {
   community: string;
   content: string;
   isVisible: boolean;
-  comments: Comments[];
-  likes: Likes[];
+  commentList: Comments[];
+  likeList: Likes[];
   selectedImageIndex?: number;
   showComments?: boolean;
   fileList: File2[];

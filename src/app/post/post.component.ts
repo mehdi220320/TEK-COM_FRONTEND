@@ -39,7 +39,6 @@ export class PostComponent implements OnInit {
   getImageUrl(post: Post, index: number): SafeUrl | null {
     if (post.fileList && post.fileList[index]) {
       const file: File2 = post.fileList[index];
-      // Assuming file data is Base64-encoded, adjust if necessary
       return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
     }
     return null;
