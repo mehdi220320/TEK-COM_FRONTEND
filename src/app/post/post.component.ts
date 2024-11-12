@@ -71,8 +71,8 @@ export class PostComponent implements OnInit {
   }
   createComment(commentForm: NgForm, post: Post) {
     const user = new User(
-      1,                 // id
-      "",                // other user fields as needed
+      1,
+      "",
       "",
       "",
       "",
@@ -81,7 +81,7 @@ export class PostComponent implements OnInit {
       ""
     );
     const comment = new Comments(
-      null,
+      10,
       commentForm.value['description'],
       new Date(),
       user,
