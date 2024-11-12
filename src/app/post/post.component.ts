@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {File2, Post} from "../Models/Post";
-import {Likes} from "../Models/Likes";
-import {FileHandle} from "../Models/FileHandle";
-import {Comments} from "../Models/Comments";
+import { File2, Post } from "../Models/Post";
+import { Likes } from "../Models/Likes";
+import { FileHandle } from "../Models/FileHandle";
+import { Comments } from "../Models/Comments";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import{PostService} from '../Services/post.service'
-import {NgForm} from "@angular/forms";
+import { PostService } from '../Services/post.service';
+import { NgForm } from "@angular/forms";
 import { User } from '../Models/User';
 
 @Component({
@@ -20,16 +20,20 @@ export class PostComponent implements OnInit {
   constructor(private postService: PostService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    const postId = 1; // Replace with dynamic post ID if necessary
-    this.postService.getPostById(postId).subscribe(
-      (data: Post[]) => {
-        this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 })); // Initialize selectedImageIndex
-        console.log("Posts with fileList:", this.posts);
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
+    this.postService.getPostById(localStorage.getItem("id")).subscribe({
+      next: (data) => {
+        console.log('Data received from server:', data);
+        this.posts = data;
+        console.log('Posts after assignment:', this.posts); // Log posts after assignment
       },
-      (error) => {
-        console.error("Error fetching posts:", error);
+      error: (error) => {
+        console.error('Error fetching posts:', error);
       }
-    );
+    });
   }
 
   showImage(post: Post, index: number): void {

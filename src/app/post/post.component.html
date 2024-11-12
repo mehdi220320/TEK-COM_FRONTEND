@@ -114,9 +114,17 @@
           <p>{{post.content}}</p>
         </div>
         <div class="d-block ">
-          <ng-container *ngFor="let image of post.fileList; let i = index">
-            <img *ngIf="post.selectedImageIndex === i" [src]="getImageUrl(post, i)" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
-          </ng-container>
+          <div class="thumbnails">
+            <img
+              *ngFor="let file of post.fileList; let i = index"
+              [src]="getImageUrl(post, i)"
+              alt="Thumbnail"
+              (click)="showImage(post, i)"
+              [class.selected]="i === post.selectedImageIndex"
+              class="thumbnail"
+            />
+          </div>
+        </div>
         </div>
         <div class="dots" *ngIf="post.fileList.length >= 2">
           <label *ngFor="let image of post.fileList; let i = index"
@@ -246,5 +254,5 @@
   <div class="col-md-3 third-section">
     <app-groups-suggestion></app-groups-suggestion>
   </div>
-</div>
+
 <router-outlet></router-outlet>

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         }
         const role1 = response.role;
         if (role1 === 'STUD') {
-          this.router.navigate(['/adminIndex']);
+          this.router.navigate(['/navbar']);
           this.isLoading = false;
         } else if (role1==='PROF')
         { this.router.navigate(['/seancebyproject']);
