@@ -19,4 +19,5 @@ export class PostService {
   addComment(comment:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/addcomment", comment)
   }
+
 }

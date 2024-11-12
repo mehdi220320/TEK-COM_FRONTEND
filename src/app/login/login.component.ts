@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
         this.userAuthService.setRoles(response.role);
         this.userAuthService.setToken(response.token);
         this.userAuthService.setEmail(response.email);
+        this.userAuthService.setid(response.id);
         console.log(localStorage.getItem('roles'))
         const email=loginform.value['email'];
         const pass=loginform.value['password'];

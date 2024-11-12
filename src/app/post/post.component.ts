@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Post} from "../Models/Post";
+import {File2, Post} from "../Models/Post";
 import {Likes} from "../Models/Likes";
 import {FileHandle} from "../Models/FileHandle";
 import {Comments} from "../Models/Comments";
@@ -15,83 +15,74 @@ import { User } from '../Models/User';
 })
 export class PostComponent implements OnInit {
   posts: Post[] = [];
-
-  constructor(private postService: PostService) { }
-
-  ngOnInit(): void {
-    const postId = 1;
-
-    this.postService.getPostById(postId).subscribe((data: any) => {
-      this.posts = data.map((item: any) => {
-        return new Post(
-          item.id,
-          item.date_ajout,
-          item.whoposted,
-          item.community,
-          item.content,
-          item.isvisible,
-          [],
-          item.commentList,
-          item.likeList,
-          0
-        );
-      });
-    }, (error) => {
-      console.error("Error fetching posts:", error);
-    });
-  }
   selectedImageIndex: number = 0;
 
-  showImage(post: Post, index: number) {
+  constructor(private postService: PostService, private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    const postId = 1; // Replace with dynamic post ID if necessary
+    this.postService.getPostById(postId).subscribe(
+      (data: Post[]) => {
+        this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 })); // Initialize selectedImageIndex
+        console.log("Posts with fileList:", this.posts);
+      },
+      (error) => {
+        console.error("Error fetching posts:", error);
+      }
+    );
+  }
+
+  showImage(post: Post, index: number): void {
     post.selectedImageIndex = index;
   }
+
+  getImageUrl(post: Post, index: number): SafeUrl | null {
+    if (post.fileList && post.fileList[index]) {
+      const file: File2 = post.fileList[index];
+      // Assuming file data is Base64-encoded, adjust if necessary
+      return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
+    }
+    return null;
+  }
+
   getTimeSincePost(dateAjout: Date): string {
     const now = new Date();
     const timeDifference = now.getTime() - new Date(dateAjout).getTime();
 
-    const minutes = Math.floor(timeDifference / (1000 * 60));
-    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24*365));
+    const timeIntervals = [
+      { label: 'minute', value: 1000 * 60 },
+      { label: 'hour', value: 1000 * 60 * 60 },
+      { label: 'day', value: 1000 * 60 * 60 * 24 },
+      { label: 'year', value: 1000 * 60 * 60 * 24 * 365 }
+    ];
 
-    if (minutes < 1) {
-      return 'Just now';
-    } else if (minutes < 60) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    } else if (hours < 24) {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    } else if(days < 366) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    }else{
-      return `${years} year${years > 1 ? 's' : ''} ago`;
+    for (let i = 0; i < timeIntervals.length; i++) {
+      const { label, value } = timeIntervals[i];
+      const intervalValue = Math.floor(timeDifference / value);
+
+      if (intervalValue >= 1) {
+        return `${intervalValue} ${label}${intervalValue > 1 ? 's' : ''} ago`;
+      }
     }
+
+    return 'Just now';
   }
-  toggleComments(post :Post) {
+
+  toggleComments(post: Post): void {
     post.showComments = !post.showComments;
   }
-  createComment(commentForm: NgForm, post: Post) {
-    const user = new User(
-      1,                 // id
-      "",                // other user fields as needed
-      "",
-      "",
-      "",
-      new Date(),
-      "",
-      ""
-    );
-    const comment = new Comments(
-      null,
-      commentForm.value['description'],
-      new Date(),
-      user,
-      post
-    );
-    console.log(comment);
 
-    this.postService.addComment(comment).subscribe(
+  createComment(commentForm: NgForm, post: Post): void {
+    const com: { description: any; postid: number; username: string } = {
+      description: commentForm.value.description,
+      username: localStorage.getItem('id') || '',
+      postid: post.id,
+    };
+
+    this.postService.addComment(com).subscribe(
       (response) => {
         console.log('Comment created successfully:', response);
+        commentForm.reset(); // Reset form
       },
       (error) => {
         console.error('Error creating comment:', error);
