@@ -114,22 +114,30 @@
           <p>{{post.content}}</p>
         </div>
         <div class="d-block ">
-          <ng-container *ngFor="let image of post.images; let i = index">
-            <img *ngIf="post.selectedImageIndex === i" [src]="image.url" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
-          </ng-container>
+          <div class="thumbnails">
+            <img
+              *ngFor="let file of post.fileList; let i = index"
+              [src]="getImageUrl(post, i)"
+              alt="Thumbnail"
+              (click)="showImage(post, i)"
+              [class.selected]="i === post.selectedImageIndex"
+              class="thumbnail"
+            />
+          </div>
         </div>
-        <div class="dots" *ngIf="post.images.length >= 2">
-          <label *ngFor="let image of post.images; let i = index"
+        </div>
+        <div class="dots" *ngIf="post.fileList.length >= 2">
+          <label *ngFor="let image of post.fileList; let i = index"
                  (click)="showImage(post, i)"
                  [ngClass]="{'bg-light': post.selectedImageIndex === i}">
           </label>
         </div>
-        <div [ngClass]="{'mt-4':post.images.length >= 2}" class="mb-2">
+        <div [ngClass]="{'mt-4':post.fileList.length >= 2}" class="mb-2">
           <!-- Reactions -->
           <div class="argon-reaction">
                                         <span class="like-btn">
                                             <a href="#" class="post-card-buttons">
-                                              <i class='bx bxs-like mr-2'></i> {{ (post.likes ? post.likes.length : 0) }} Likes
+                                              <i class='bx bxs-like mr-2'></i> {{ (post.likeList ? post.likeList.length : 0) }} Likes
                                             </a>
                                             <ul class="reactions-box dropdown-shadow">
                                                 <li class="reaction reaction-like" data-reaction="Like"></li>
@@ -142,7 +150,7 @@
                                         </span>
           </div>
           <a href="javascript:void(0)" class="post-card-buttons" id="show-comments" (click)="toggleComments(post)">
-            <i class='bx bx-message-rounded mr-2'></i> {{post.comments.length}} Comments
+            <i class='bx bx-message-rounded mr-2'></i> {{post.commentList.length}} Comments
           </a>
           <div class="dropdown dropup share-dropup">
             <a href="#" class="post-card-buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -211,7 +219,7 @@
                       </div>
                     </li>
                     </ul>
-                    <ul class="media-list comments-list" *ngFor="let comment of post.comments" >
+                    <ul class="media-list comments-list" *ngFor="let comment of post.commentList" >
                       <li class="media">
                         <a href="#" class="pull-left">
                           <img src="assets/images/users/user-2.jpg" alt="" class="img-circle">
@@ -246,5 +254,5 @@
   <div class="col-md-3 third-section">
     <app-groups-suggestion></app-groups-suggestion>
   </div>
-</div>
+
 <router-outlet></router-outlet>
