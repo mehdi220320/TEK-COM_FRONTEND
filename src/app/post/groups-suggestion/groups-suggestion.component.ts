@@ -11,5 +11,13 @@ export class GroupsSuggestionComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  showCreateCommunity = false;
 
+  openCreateCommunity() {
+    this.showCreateCommunity = true;
+  }
+
+  closeCreateCommunity() {
+    this.showCreateCommunity = false;
+  }
 }

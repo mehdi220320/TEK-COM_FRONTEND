@@ -14,12 +14,14 @@ import {UserServiceService} from "./Services/user-service.service";
 import { GroupsSuggestionComponent } from './post/groups-suggestion/groups-suggestion.component';
 import { CreatePostComponent } from './post/create-post/create-post.component';
 import {FormsModule} from "@angular/forms";
+import { CreateCommunityComponent } from './community/create-community/create-community.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"",component:LoginComponent},
   {path:"navbar",component:NavbarComponent},
   {path:"adminIndex",component:ANavbarComponent},
+  {path:"communitycreating",component:CreateCommunityComponent},
 ]
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ const appRoutes:Routes=[
     ANavbarComponent,
     UsersTablePanelComponent,
     GroupsSuggestionComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    CreateCommunityComponent
   ],
   imports: [
     BrowserModule,
