@@ -25,9 +25,8 @@ export class PostComponent implements OnInit {
   }
 
   loadPosts(): void {
-    const postId = 1;
     // @ts-ignore
-    this.postService.getPostById(localStorage.getItem("id")).subscribe(
+    this.postService.getPostById(1).subscribe(
       (data: Post[]) => {
         this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
         console.log("Posts with fileList:", this.posts);
@@ -53,20 +52,19 @@ export class PostComponent implements OnInit {
     const now = new Date();
     const timeDifference = now.getTime() - new Date(dateAjout).getTime();
 
-    const timeIntervals = [
-      { label: 'minute', value: 1000 * 60 },
-      { label: 'hour', value: 1000 * 60 * 60 },
-      { label: 'day', value: 1000 * 60 * 60 * 24 },
-      { label: 'year', value: 1000 * 60 * 60 * 24 * 365 }
-    ];
+    const minutes = Math.floor(timeDifference / (1000 * 60));
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
 
-    for (let i = 0; i < timeIntervals.length; i++) {
-      const { label, value } = timeIntervals[i];
-      const intervalValue = Math.floor(timeDifference / value);
-
-      if (intervalValue >= 1) {
-        return `${intervalValue} ${label}${intervalValue > 1 ? 's' : ''} ago`;
-      }
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''} ago`;
+    } else if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
     }
 
     return 'Just now';
@@ -75,22 +73,27 @@ export class PostComponent implements OnInit {
   toggleComments(post: Post): void {
     post.showComments = !post.showComments;
   }
+  inputValue: string = '';
 
   createComment(commentForm: NgForm, post: Post): void {
-    const com: { description: any; postid: number; username: string } = {
+    const com: { description: any; date:Date;post: number; username: string } = {
       description: commentForm.value.description,
-      username: localStorage.getItem('id') || '',
-      postid: post.id,
+      date: new Date(),
+      username: localStorage.getItem('id') || '1',
+      post: post.id
     };
-
+    console.log(com)
     this.postService.addComment(com).subscribe(
       (response) => {
         console.log('Comment created successfully:', response);
-        commentForm.reset(); // Reset form
+        commentForm.reset("");
+        this.posts=[];
+        this.loadPosts();
       },
       (error) => {
         console.error('Error creating comment:', error);
       }
     );
   }
+
 }
