@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FileHandle} from "../../Models/FileHandle";
 import {DomSanitizer} from "@angular/platform-browser";
+import {NgForm} from "@angular/forms";
+import {CommunityService} from "../../Services/community.service";
 
 @Component({
   selector: 'app-create-community',
@@ -10,7 +12,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class CreateCommunityComponent implements OnInit {
   fileHandle: FileHandle[] =[];
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer,private communityService:CommunityService) { }
 
   ngOnInit(): void {
   }
@@ -26,5 +28,27 @@ export class CreateCommunityComponent implements OnInit {
     if (index !== -1) {
       this.fileHandle.splice(index, 1);
     }
+  }
+  creationStatus=false;
+  changeStatus(status:boolean){
+    this.creationStatus=status;
+  }
+  createCommunity(comForm:NgForm){
+    const formData = new FormData();
+    formData.append('title', comForm.value.title);
+    formData.append('description', comForm.value.description);
+    formData.append('usercreate', '1');
+    console.log(formData)
+    this.communityService.createCommunity(formData).subscribe((response) => {
+        console.log('Community created successfully:', response);
+        comForm.reset();
+        this.changeStatus(true);
+      },
+      (error) => {
+        console.error('Error creating community:', error);
+      }
+    );
+
+
   }
 }
