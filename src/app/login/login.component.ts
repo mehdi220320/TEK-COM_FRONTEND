@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
         this.userAuthService.setRoles(response.role);
         this.userAuthService.setToken(response.token);
         this.userAuthService.setEmail(response.email);
+        this.userAuthService.setid(response.id);
         console.log(localStorage.getItem('roles'))
         const email=loginform.value['email'];
         const pass=loginform.value['password'];
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
         }
         const role1 = response.role;
         if (role1 === 'STUD') {
-          this.router.navigate(['/adminIndex']);
+          this.router.navigate(['/navbar']);
           this.isLoading = false;
         } else if (role1==='PROF')
         { this.router.navigate(['/seancebyproject']);

@@ -10,10 +10,16 @@ export class PostService {
   PATH_OF_API = environement.apiBaseUrl;
   requestHeader = new HttpHeaders({"No-Auth": "True"})
   constructor(private httpClient: HttpClient) { }
-  getPostById(id:number) {
+
+  getPostById(id: string | null) {
     return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/user/"+id);
   }
-  createPost(post:any[]){
+  createPost(post:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/create", post)
   }
+  addComment(comment:any){
+    return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/addcomment", comment)
+  }
+
+
 }

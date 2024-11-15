@@ -1,8 +1,8 @@
 <ul class="list-unstyled" style="margin-bottom: 0;">
   <li class="media post-form w-shadow bg-transparent">
-    <div class="media-body bg-white mb-2 rounded" >
+    <form  class="media-body bg-white mb-2 rounded"  #postForm="ngForm"(ngSubmit)="createPost(postForm)">
       <div class="form-group post-input">
-        <textarea  class="form-control bg-white" id="postForm" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
+        <textarea  class="form-control bg-white" id="postForm" ngModel name="description" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
       </div>
       <div *ngFor="let file of fileHandle" class="d-inline-flex ml-3 align-items-end justify-content-center">
         <i class='bx bx-window-close close-icon' (click)="removeFileSelected(file)"></i>
@@ -17,9 +17,9 @@
           <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
         </div>
         <div class="col-md-3 text-right">
-          <button type="button" class="btn btn-primary btn-sm">Publish</button>
+          <button type="submit" class="btn btn-primary btn-sm">Publish</button>
         </div>
       </div>
-    </div>
+    </form>
   </li>
 </ul>

@@ -1,9 +1,13 @@
-export class Comments {
-  constructor(public id:number,
-              public description:string,
-              public date: Date,
-              public username:string,
-              public postid:string
-  ) {
-  }
+import {Post} from "./Post";
+import {User} from "./User";
+
+export interface  Comments {
+
+  id: number;
+  description: string;
+  date: Date;
+  username: string;
+  postid: number;
+
+
 }

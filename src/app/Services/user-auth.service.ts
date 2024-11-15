@@ -18,6 +18,7 @@ export class UserAuthService {
     return JSON.parse(localStorage.getItem("roles"));
 
   }
+
   public setToken(jwtToken:string){
     localStorage.setItem("jwtToken" , jwtToken);
 

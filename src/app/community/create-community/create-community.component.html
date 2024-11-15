@@ -1,0 +1,56 @@
+<button class="primary ml-5" (click)="dialog.showModal()">Create Your Own Community</button>
+
+<dialog #dialog id="dialog">
+  <div class="container">
+    <div class="text">
+      Create Your Own Community
+    </div>
+    <form #communityForm="ngForm" (ngSubmit)="createCommunity(communityForm)">
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" ngModel name="title" required>
+          <div class="underline"></div>
+          <label>Title</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data textarea">
+          <textarea rows="8" cols="80" ngModel name="description" required></textarea>
+          <div class="underline"></div>
+          <label>Write Your Description</label>
+        </div>
+      </div>
+      <div *ngFor="let file of fileHandle" class="d-inline-flex ml-3 align-items-end justify-content-center">
+        <i class="bx bx-window-close close-icon" (click)="removeFileSelected(file)"></i>
+        <img *ngIf="file && file.url" [src]="file.url" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
+      </div>
+      <div class="form-row">
+        <div class="col-md-9 cov-img">
+          <label for="coverimg" class="btn btn-link post-form-btn btn-sm">
+            <i class="bx bx-images"></i> <span>Choose your Community's Front Cover Photo</span>
+          </label>
+          <input type="file" id="coverimg" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        </div>
+      </div>
+      <div *ngIf="!creationStatus; else submitElse">
+        <div class="form-row submit-btn">
+          <div class="input-data">
+            <div class="inner"></div>
+            <input type="submit" value="submit">
+          </div>
+        </div>
+      </div>
+
+      <ng-template #submitElse>
+        <div class="form-row cancel-btn">
+          <div class="input-data">
+            <div class="inner"></div>
+            <input type="button" (click)="dialog.close(); changeStatus(false)" value="submit">
+          </div>
+        </div>
+      </ng-template>
+    </form>
+  </div>
+
+  <button (click)="dialog.close()" aria-label="close" class="x">❌</button>
+</dialog>
