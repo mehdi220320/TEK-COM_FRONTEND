@@ -1,3 +1,5 @@
+import {File2} from "./Post";
+
 export class User {
   constructor(public id:number,
               public nom:string,
@@ -7,6 +9,6 @@ export class User {
               public birthday:Date,
               public role:string,
               public status:string,
-
+              public image:File2
               ) {}
 }
