@@ -15,6 +15,7 @@ import { GroupsSuggestionComponent } from './post/groups-suggestion/groups-sugge
 import { CreatePostComponent } from './post/create-post/create-post.component';
 import {FormsModule} from "@angular/forms";
 import { CreateCommunityComponent } from './community/create-community/create-community.component';
+import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
@@ -22,6 +23,7 @@ const appRoutes:Routes=[
   {path:"navbar",component:NavbarComponent},
   {path:"adminIndex",component:ANavbarComponent},
   {path:"communitycreating",component:CreateCommunityComponent},
+  {path:"report",component:ReportTablePanelComponent},
 ]
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ const appRoutes:Routes=[
     RouterOutlet,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReportTablePanelComponent
   ],
   exports:[RouterModule],
   providers: [UserServiceService],
