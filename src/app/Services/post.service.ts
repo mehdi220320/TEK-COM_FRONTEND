@@ -14,6 +14,9 @@ export class PostService {
   getPostById(id: string | null) {
     return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/user/"+id);
   }
+  getPostByCommunityId(id: string | null) {
+    return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/community/"+id);
+  }
   createPost(post:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/create", post)
   }

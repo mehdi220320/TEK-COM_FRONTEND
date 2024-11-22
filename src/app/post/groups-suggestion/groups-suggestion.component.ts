@@ -26,7 +26,7 @@ export class GroupsSuggestionComponent implements OnInit {
         console.error("Error fetching communities:", error);
       }
     );
-      this.communityService.getBestSuggestionCommunity(6).subscribe(
+      this.communityService.getBestSuggestionCommunity(1).subscribe(
         (response)=>{
           console.log('Community est : ', response)
           this.BestSuggcommunity=response;
