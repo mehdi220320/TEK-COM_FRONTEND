@@ -6,7 +6,7 @@
     <img class="card-img-top suggestion-image" [src]="getImageURL(this.BestSuggcommunity?.image)"  alt="Suggested Image">
     <div class="overlay-card suggestion-card-body">
       <div class="card-body">
-        <h5><i class="bx bxs-user"></i> top suggestion : <a class="btn btn-quick-links " href="#">{{this.BestSuggcommunity?.title}}</a></h5>
+        <h5><i class="bx bxs-user"></i> top suggestion : <a class="btn btn-quick-links " [href]="'/community/'+this.BestSuggcommunity?.id">{{this.BestSuggcommunity?.title}}</a></h5>
         <p class="card-text">{{this.BestSuggcommunity?.description}}</p>
         <a href="#" class="btn btn-quick-links">Follow Us</a>
       </div>
@@ -31,7 +31,7 @@
       <img src="assets/images/users/user-2.jpg" alt="Online user" class="online-user-image align-middle">
       <div class="media-body mb-0 small lh-125">
         <div class="d-flex justify-content-between align-items-center w-100">
-          <strong class="text-gray-dark"><a href="#" class="smFLname">{{community.title}}</a></strong>
+          <strong class="text-gray-dark"><a  [href]="'/community/'+community.id" class="smFLname">{{community.title}}</a></strong>
         </div>
       </div>
     </div>

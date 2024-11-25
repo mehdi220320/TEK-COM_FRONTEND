@@ -23,7 +23,7 @@ const appRoutes:Routes=[
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent},
   {
-    path: 'community',
+    path: 'community/:id',
     component: CommunityProfileComponent,
     children: [
       { path: '', redirectTo: 'timeline', pathMatch: 'full' },

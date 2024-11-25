@@ -28,12 +28,31 @@
               <p class="profile-username  text-muted">{{this.community?.description}}</p>
               <h3 class="intro-about">Created In : </h3>
               <p class="profile-username  text-muted">{{this.community?.createdatetime}}</p>
-              <h3 class="intro-about">Post numbers : </h3>
-              <h3 class="intro-about">Number of followers : </h3>
-              <br>
-              <br>
+              <h3 class="intro-about">Post numbers :  </h3>
+              <p class="profile-username  text-muted">{{posts.length}}</p>
+
+              <h3 class="intro-about">Number of followers :  </h3>
+              <p class="profile-username  text-muted">{{posts.length}}</p>
+              <h3 class="intro-about">Galery </h3>
             </div>
           </div>
+          <hr style=" margin-bottom: 1rem;
+                         border: 0;
+                         border-top: 1px solid rgba(0, 0, 0, .1);
+                         width: 90%">
+          <div class="intro mt-2 ">
+            <div *ngIf="galery.length==0">
+              <div class="msg msg-danger msg-danger-text"> <span class="glyphicon glyphicon glyphicon-ok"></span>This Community has an empty galery</div>
+            </div>
+            <div *ngFor="let file of galery;let index=index" class="d-inline-flex  align-items-end justify-content-center">
+              <img *ngIf="index <=8"  [src]="getImageURL(file)" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
+            </div>
+          </div>
+          <hr style="    margin-top: 1rem;
+                         margin-bottom: 1rem;
+                         border: 0;
+                         border-top: 1px solid rgba(0, 0, 0, .1);
+                         width: 90%">
         </div>
       </div>
       <div class="col-md-9 p-0">
@@ -61,7 +80,3 @@
     </div>
   </div>
 </div>
-
-
-
-
