@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from "../../Services/report.service";
-import { Report } from "../../Models/Report";
+import { Report } from "../../Models/report";
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 
@@ -65,5 +65,11 @@ export class ReportTablePanelComponent implements OnInit {
       return  this.reports.slice(this.index-1,this.index*this.showNum)
     }
     return this.reports.slice((this.index-1)*this.showNum,this.index*this.showNum);
+  }
+  deleteReport(id: number): void {
+    this.reportservice.deleteReport(id).subscribe(() => {
+      console.log('User deleted');
+      this.report = null;
+    });
   }
 }

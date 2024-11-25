@@ -36,11 +36,11 @@ s<div class="container-fluid">
           <tr *ngFor="let report of reports">
             <td>{{ report.id }}</td>
             <td>{{ report.cause }}</td>
-            <td>{{ report.date_ajout | date:'MM/dd/yy' }}</td>
+            <td>{{ report.date_ajout | date:'MM/dd/yy'}}</td>
             <td>{{ report.whoposted }}</td>
             <td>{{ report.post }}</td>
-            <td> <button class="btn btn-primary mr-1" >Edit</button>
-              <button class="btn btn-danger">Delete</button>
+            <td> <button class="btn btn-primary mr-1" >Ignorer</button>
+            <td> <button class="btn btn-primary mr-1" (click)="deleteReport(report.id)">Supprimer</button>
             </td>
           </tr>
           </tbody>

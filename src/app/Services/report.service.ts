@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environement} from "../environement/environement";
-import {Report} from "../Models/Report"
+import {Report} from "../Models/report"
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
@@ -15,8 +15,11 @@ export class ReportService  {
   getReports() {
     return this.httpClient.get<Report[]>(this.PATH_OF_API+"/api/v1/report/reports");
   }
-  createPost(report:any){
+  createReport(report:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/report/create", report)
+  }
+  deleteReport(id: number){
+    return this.httpClient.delete(this.PATH_OF_API + "/api/v1/report/delete"+id)
   }
 }
 

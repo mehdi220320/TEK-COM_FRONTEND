@@ -4,5 +4,5 @@ export interface Report{
    post:number,
    cause:String,
    date_ajout: Date,
-   whoposted:string
+   whoposted:string,
 }

@@ -1,13 +1,12 @@
 <div class="p-3 bg-white rounded w-shadow">
   <app-create-community></app-create-community>
-
   <hr>
   <h6 class="card-title pb-3 mb-0">Suggested</h6>
   <div class="card suggestion-card">
     <img class="card-img-top suggestion-image" [src]="getImageURL(this.BestSuggcommunity?.image)"  alt="Suggested Image">
     <div class="overlay-card suggestion-card-body">
       <div class="card-body">
-        <h5><i class="bx bxs-user"></i> top suggestion : <span class="rounded" style="color: black;background-color: #ffffff">{{this.BestSuggcommunity?.title}}</span></h5>
+        <h5><i class="bx bxs-user"></i> top suggestion : <a class="btn btn-quick-links " href="#">{{this.BestSuggcommunity?.title}}</a></h5>
         <p class="card-text">{{this.BestSuggcommunity?.description}}</p>
         <a href="#" class="btn btn-quick-links">Follow Us</a>
       </div>

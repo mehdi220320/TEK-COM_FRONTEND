@@ -15,16 +15,26 @@ import { GroupsSuggestionComponent } from './post/groups-suggestion/groups-sugge
 import { CreatePostComponent } from './post/create-post/create-post.component';
 import {FormsModule} from "@angular/forms";
 import { CreateCommunityComponent } from './community/create-community/create-community.component';
-import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
+import { CommunityProfileComponent } from './community/community-profile/community-profile.component';
+import { CommunityFollowersComponent } from './community/community-followers/community-followers.component';
+import { CommunityGalleryComponent } from './community/community-gallery/community-gallery.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"",component:LoginComponent},
-  {path:"navbar",component:NavbarComponent},
+  {path:"home",component:NavbarComponent},
+  {
+    path: 'community',
+    component: CommunityProfileComponent,
+    children: [
+      { path: '', redirectTo: 'timeline', pathMatch: 'full' },
+      { path: 'timeline', component: PostComponent },
+      { path: 'gallery', component: CommunityGalleryComponent },
+      { path: 'followers', component: CommunityFollowersComponent }
+    ]
+  },
   {path:"adminIndex",component:ANavbarComponent},
-  {path:"communitycreating",component:CreateCommunityComponent},
-  {path:"report",component:ReportTablePanelComponent},
-]
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' },]
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,15 +46,17 @@ const appRoutes:Routes=[
     UsersTablePanelComponent,
     GroupsSuggestionComponent,
     CreatePostComponent,
-    CreateCommunityComponent
+    CreateCommunityComponent,
+    CommunityProfileComponent,
+    CommunityFollowersComponent,
+    CommunityGalleryComponent
   ],
   imports: [
     BrowserModule,
     RouterOutlet,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FormsModule,
-    ReportTablePanelComponent
+    FormsModule
   ],
   exports:[RouterModule],
   providers: [UserServiceService],

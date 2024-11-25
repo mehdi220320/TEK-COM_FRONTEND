@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="row profile-right-side-content">
+  <div class="user-profile">
+    <div class="profile-header-background">
+      <a href="#" class="profile-cover">
+        <img [src]="getImageURL(this.community?.image)" alt="Profile Header Background">
+        <div class="cover-overlay">
+          <a href="#" class="btn btn-update-cover"><i class='bx bxs-camera'></i> Update Cover Photo</a>
+        </div>
+      </a>
+    </div>
+    <div class="row profile-rows">
+      <div class="col-lg-3" style="padding: 0">
+        <div class="profile-info-left bg-white rounded w-shadow " style="margin-top: 95px; max-width: 100%">
+          <div class="text-center ">
+            <p class="profile-fullname mt-3">Community Title :</p>
+            <p class="profile-fullname ">{{this.community?.title}}</p>
+            <p class="profile-username mt-2 text-muted"> Created By : @{{this.username }}</p>
+          </div>
+          <hr style="    margin-top: 1rem;
+                         margin-bottom: 1rem;
+                         border: 0;
+                         border-top: 1px solid rgba(0, 0, 0, .1);
+                         width: 90%">
+          <div class="intro mt-2">
+            <div class="intro-item d-block justify-content-between align-items-center">
+              <h3 class="intro-about">Community Bio</h3>
+              <p class="profile-username  text-muted">{{this.community?.description}}</p>
+              <h3 class="intro-about">Created In : </h3>
+              <p class="profile-username  text-muted">{{this.community?.createdatetime}}</p>
+              <h3 class="intro-about">Post numbers : </h3>
+              <h3 class="intro-about">Number of followers : </h3>
+              <br>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 p-0">
+        <div class="profile-info-right">
+          <div class="row px-2">
+            <div class="col-md-8 profile-center">
+              <ul class="list-inline profile-links d-flex justify-content-center shadow-sm rounded">
+                <li class="list-inline-item col-lg-3 " style="text-align: center" routerLinkActive="profile-active">
+                  <a routerLink="timeline">Timeline</a>
+                </li>
+                <li class="list-inline-item col-lg-3"  style="text-align: center" routerLinkActive="profile-active">
+                  <a routerLink="followers">Followers</a>
+                <li class="list-inline-item    col-lg-3"  style="text-align: center" routerLinkActive="profile-active" >
+                  <a routerLink="gallery">Gallery</a>
+                </li>
+              </ul>
+              <router-outlet></router-outlet>
+            </div>
+            <div style="    max-width: 33.33%;">
+              <app-groups-suggestion></app-groups-suggestion>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

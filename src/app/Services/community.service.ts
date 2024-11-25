@@ -25,6 +25,7 @@ export class CommunityService {
   getMembersByCommunityId(id:any):Observable<User[]>{
     return this.httpClient.get<User[]>(this.PATH_OF_API+"/api/v1/com/members/"+id)
   }
-
-
+  getCommunityById(id:any):Observable<Community>{
+    return this.httpClient.get<Community>(this.PATH_OF_API+"/api/v1/com/community/"+id)
+  }
 }
