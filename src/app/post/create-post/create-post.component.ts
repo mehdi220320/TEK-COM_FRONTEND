@@ -3,6 +3,7 @@ import {FileHandle} from "../../Models/FileHandle";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {NgForm} from "@angular/forms";
 import{PostService} from "../../Services/post.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-post',
@@ -10,31 +11,39 @@ import{PostService} from "../../Services/post.service";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  fileHandle: FileHandle[] =[];
+  imageFiles: FileHandle[] = [];
+  content: string = '';
+  whoposted!: number  ;
 
-  constructor(private sanitizer: DomSanitizer,
-              private postService:PostService) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private postService: PostService
+  ) {}
 
   ngOnInit(): void {
-    // this.createPost({
-    //   description: "This is a default post description"
-    // });
+    // Retrieve `whoposted` from local storage
+    const storedUserId = localStorage.getItem('id');
+    if (storedUserId) {
+      this.whoposted = +storedUserId;
+    }
   }
-  createPost(postForm: NgForm) {
-    console.log(postForm.value);
 
-    const description = postForm.value['description'];
-
-    const post = {
-      whoposted: 1,
-      community: 1,
-      content: description,
-      type: "text"
+  // Function to add a post with form data
+  addPost(postForm: NgForm) {
+    // Define the post data object
+    const postData = {
+      content: postForm.value['content'],
+      whoposted: this.whoposted.toString(),
+      community: 1,  // Assign the community ID as needed
+      type: "text",  // Define the type, can be adjusted if needed
+      images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
 
-    this.postService.createPost(post).subscribe(
+    // Use the service to create the post
+    this.postService.createPost(postData).subscribe(
       (response) => {
         console.log('Post created successfully:', response);
+        window.location.reload();
       },
       (error) => {
         console.error('Error creating post:', error);
@@ -42,20 +51,21 @@ export class CreatePostComponent implements OnInit {
     );
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+  // Handle image file selection and preview
+  onImageFileSelected(event: any): void {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-      this.fileHandle.push({ file, url });
+      this.imageFiles.push({ file, url });
     }
   }
-  removeFileSelected(file:FileHandle){
-    let index = this.fileHandle.indexOf(file);
+
+  // Remove selected image file
+  removeImageFile(fileHandle: FileHandle): void {
+    const index = this.imageFiles.indexOf(fileHandle);
     if (index !== -1) {
-      this.fileHandle.splice(index, 1);
+      this.imageFiles.splice(index, 1);
     }
   }
-
-
-
 }
