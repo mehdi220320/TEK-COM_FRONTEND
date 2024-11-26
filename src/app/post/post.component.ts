@@ -25,7 +25,7 @@ export class PostComponent implements OnInit {
   }
 
   loadPosts(): void {
-    this.postService.getPostById(localStorage.getItem('id')).subscribe(
+    this.postService.getPostById(localStorage.getItem("id")).subscribe(
       (data: Post[]) => {
         this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
         console.log("Posts with fileList:", this.posts);
@@ -78,7 +78,7 @@ export class PostComponent implements OnInit {
     const com: { description: any; date:Date;post: number; username: string } = {
       description: commentForm.value.description,
       date: new Date(),
-      username: localStorage.getItem('id') || '',
+      username: localStorage.getItem('id') || '1',
       post: post.id
     };
     console.log(com)
