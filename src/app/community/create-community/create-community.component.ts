@@ -3,6 +3,7 @@ import {FileHandle} from "../../Models/FileHandle";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgForm} from "@angular/forms";
 import {CommunityService} from "../../Services/community.service";
+import {Community} from "../../Models/Community";
 
 @Component({
   selector: 'app-create-community',
@@ -11,10 +12,11 @@ import {CommunityService} from "../../Services/community.service";
 })
 export class CreateCommunityComponent implements OnInit {
   fileHandle: FileHandle[] =[];
-
+  msg:String|undefined;
   constructor(private sanitizer: DomSanitizer,private communityService:CommunityService) { }
-
+   creationStatus: boolean | undefined;
   ngOnInit(): void {
+    this.creationStatus=false;
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -29,18 +31,19 @@ export class CreateCommunityComponent implements OnInit {
       this.fileHandle.splice(index, 1);
     }
   }
-  creationStatus=false;
   changeStatus(status:boolean){
     this.creationStatus=status;
   }
-  createCommunity(comForm:NgForm){
+  createCommunity(comForm: NgForm) {
     const formData = new FormData();
     formData.append('title', comForm.value.title);
     formData.append('description', comForm.value.description);
     formData.append('usercreate', '1');
-    console.log(formData)
-    this.communityService.createCommunity(formData).subscribe((response) => {
-        console.log('Community created successfully:', response);
+
+    this.communityService.createCommunity(formData).subscribe(
+      (response) => {
+        console.log('Community created successfully:', response.message);
+        this.msg=comForm.value.title
         comForm.reset();
         this.changeStatus(true);
       },
@@ -48,7 +51,7 @@ export class CreateCommunityComponent implements OnInit {
         console.error('Error creating community:', error);
       }
     );
-
-
   }
+
+
 }

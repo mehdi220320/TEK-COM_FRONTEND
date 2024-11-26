@@ -7,6 +7,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import{PostService} from '../Services/post.service'
 import {NgForm} from "@angular/forms";
 import { User } from '../Models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -16,24 +17,40 @@ import { User } from '../Models/User';
 export class PostComponent implements OnInit {
   posts: Post[] = [];
   selectedImageIndex: number = 0;
+  currentRoute: string = '';
 
-  constructor(private postService: PostService, private sanitizer: DomSanitizer) {}
+  constructor(private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
 
 
   ngOnInit(): void {
+    this.currentRoute = this.router.url;
+    console.warn(this.currentRoute)
     this.loadPosts();
   }
 
   loadPosts(): void {
-    this.postService.getPostById(localStorage.getItem("id")).subscribe(
-      (data: Post[]) => {
-        this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
-        console.log("Posts with fileList:", this.posts);
-      },
-      (error) => {
-        console.error("Error fetching posts:", error);
-      }
-    );
+    if(this.currentRoute==="/home"){
+      this.postService.getPostById(localStorage.getItem('id')).subscribe(
+        (data: Post[]) => {
+          this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
+          console.log("Posts with fileList:", this.posts);
+        },
+        (error) => {
+          console.error("Error fetching posts:", error);
+        }
+      );
+    }
+    else {
+      this.postService.getPostByCommunityId("1").subscribe(
+        (data: Post[]) => {
+          this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
+          console.log("Posts with fileList:", this.posts);
+        },
+        (error) => {
+          console.error("Error fetching posts:", error);
+        }
+      );
+    }
   }
   showImage(post: Post, index: number): void {
     post.selectedImageIndex = index;
@@ -78,7 +95,7 @@ export class PostComponent implements OnInit {
     const com: { description: any; date:Date;post: number; username: string } = {
       description: commentForm.value.description,
       date: new Date(),
-      username: localStorage.getItem('id') || '1',
+      username: localStorage.getItem('id') || '',
       post: post.id
     };
     console.log(com)

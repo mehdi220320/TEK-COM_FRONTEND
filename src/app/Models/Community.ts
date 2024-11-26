@@ -6,4 +6,5 @@ export interface  Community {
   title: string;
   usercreate: string;
   image: File2;
+  createdatetime:Date;
 }
