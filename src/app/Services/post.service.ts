@@ -12,6 +12,9 @@ export class PostService {
   requestHeader = new HttpHeaders({"No-Auth": "True"})
   constructor(private httpClient: HttpClient) { }
 
+  getPostByCommunityId(id: string | null) {
+    return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/community/"+id);
+  }
   getPostById(id: string | null) {
     return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/user/"+id);
   }

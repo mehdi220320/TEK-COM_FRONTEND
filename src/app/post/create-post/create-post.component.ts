@@ -4,6 +4,8 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {NgForm} from "@angular/forms";
 import{PostService} from "../../Services/post.service";
 import {Router} from "@angular/router";
+import {CommunityService} from "../../Services/community.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
@@ -14,27 +16,35 @@ export class CreatePostComponent implements OnInit {
   imageFiles: FileHandle[] = [];
   content: string = '';
   whoposted!: number  ;
-
-  constructor(
-    private sanitizer: DomSanitizer,
-    private postService: PostService
+  currenturl:string='';
+  communityId:string='';
+  isMember!:boolean;
+  userID=localStorage.getItem('id');
+  constructor(private router:Router, private sanitizer: DomSanitizer, private postService: PostService, private communityService:CommunityService
   ) {}
 
   ngOnInit(): void {
-    // Retrieve `whoposted` from local storage
     const storedUserId = localStorage.getItem('id');
     if (storedUserId) {
       this.whoposted = +storedUserId;
     }
+    this.currenturl=this.router.url
+    const parts = this.currenturl.split('/');
+    this.communityId = parts[2];
+    this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
+      this.isMember=response
+    },(error)=>{
+      console.error("isMember fonction doesn t work properly")
+    })
+
   }
 
-  // Function to add a post with form data
   addPost(postForm: NgForm) {
-    // Define the post data object
+
     const postData = {
       content: postForm.value['content'],
       whoposted: this.whoposted.toString(),
-      community: 1,  // Assign the community ID as needed
+      community: this.communityId,  // Assign the community ID as needed
       type: "text",  // Define the type, can be adjusted if needed
       images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
@@ -51,7 +61,6 @@ export class CreatePostComponent implements OnInit {
     );
   }
 
-  // Handle image file selection and preview
   onImageFileSelected(event: any): void {
     const files = event.target.files;
     for (let i = 0; i < files.length; i++) {
@@ -61,7 +70,6 @@ export class CreatePostComponent implements OnInit {
     }
   }
 
-  // Remove selected image file
   removeImageFile(fileHandle: FileHandle): void {
     const index = this.imageFiles.indexOf(fileHandle);
     if (index !== -1) {
