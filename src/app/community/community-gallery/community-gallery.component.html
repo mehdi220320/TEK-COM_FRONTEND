@@ -1,1 +1,17 @@
-<p>community-gallery works!</p>
+<div class="bg-white py-3 px-4 shadow-sm">
+  <div class="card-head d-flex justify-content-between">
+    <h5 class="mb-4">Gallery</h5>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-6 mb-2 " *ngFor="let file of galery" style="max-width: 100%;max-height: 300px">
+      <div class="card group-card shadow-sm">
+        <img [src]="getImageURL(file)" class="card-img-top group-card-image" alt="Group image">
+        <div class="card-body">
+          <div class="btn-group w-100" role="group">
+            <a href="#" class="btn btn-quick-link join-group-btn border w-100">See post</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import {Community} from "../../Models/Community";
 import {UserServiceService} from "../../Services/user-service.service";
 import {File2, Post} from "../../Models/Post";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PostService} from "../../Services/post.service";
 
 @Component({
@@ -19,7 +19,7 @@ export class CommunityProfileComponent implements OnInit {
   index=1;
   posts:Post[]=[]
   galery:File2[]=[]
-  constructor(private postService: PostService,private route: ActivatedRoute,private communityService:CommunityService,private userService:UserServiceService,private sanitizer:DomSanitizer) { }
+  constructor(private router:Router ,private postService: PostService,private route: ActivatedRoute,private communityService:CommunityService,private userService:UserServiceService,private sanitizer:DomSanitizer) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -28,13 +28,9 @@ export class CommunityProfileComponent implements OnInit {
     this.postService.getPostByCommunityId(this.id).subscribe((response)=>{
       this.posts=response;
       for(let post of this.posts){
-        console.log("test2")
         if(post.fileList.length!=0){
-          console.log("test3")
           for(let file of post.fileList){
-            console.log("test4")
             this.galery.push(file);
-            console.log("galery : "+this.galery)
           }
         }
       }
@@ -52,9 +48,16 @@ export class CommunityProfileComponent implements OnInit {
       console.error('Error fetching community:', error);
       this.community = null;
     });
-
+    // if (this.router.url.includes(`/community/${this.id}/gallery`)) {
+    //   this.navigateToGallery();
+    //   console.log("true")
+    // }
   }
-
+  navigateToGallery(): void {
+    this.router.navigate(['/community', this.id, 'gallery'], {
+      queryParams: { galery: JSON.stringify(this.galery) }
+    });
+  }
   getImageURL(image:any):any{
     if(image===null)
       if(this.index++%2==1)

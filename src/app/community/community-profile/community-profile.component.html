@@ -65,8 +65,8 @@
                 </li>
                 <li class="list-inline-item col-lg-3"  style="text-align: center" routerLinkActive="profile-active">
                   <a routerLink="followers">Followers</a>
-                <li class="list-inline-item    col-lg-3"  style="text-align: center" routerLinkActive="profile-active" >
-                  <a routerLink="gallery">Gallery</a>
+                <li class="list-inline-item col-lg-3" style="text-align: center" routerLinkActive="profile-active">
+                  <a (click)="navigateToGallery()" style="cursor:pointer;">Gallery</a>
                 </li>
               </ul>
               <router-outlet></router-outlet>
