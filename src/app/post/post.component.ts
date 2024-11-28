@@ -7,7 +7,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import{PostService} from '../Services/post.service'
 import {NgForm} from "@angular/forms";
 import { User } from '../Models/User';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -18,8 +18,7 @@ export class PostComponent implements OnInit {
   posts: Post[] = [];
   selectedImageIndex: number = 0;
   currentRoute: string = '';
-
-  constructor(private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
+  constructor(private postService: PostService, private sanitizer: DomSanitizer,private activatedRoute:ActivatedRoute,private router:Router) {}
 
 
   ngOnInit(): void {
@@ -41,7 +40,9 @@ export class PostComponent implements OnInit {
       );
     }
     else {
-      this.postService.getPostByCommunityId("1").subscribe(
+      const parts = this.currentRoute.split('/'); // Split the URL by '/'
+      const communityId = parts[2];
+      this.postService.getPostByCommunityId(communityId).subscribe(
         (data: Post[]) => {
           this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
           console.log("Posts with fileList:", this.posts);

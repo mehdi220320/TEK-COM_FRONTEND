@@ -28,7 +28,7 @@ const appRoutes:Routes=[
     children: [
       { path: '', redirectTo: 'timeline', pathMatch: 'full' },
       { path: 'timeline', component: PostComponent },
-      { path: 'gallery', component: CommunityGalleryComponent },
+      { path: 'gallery', component: CommunityGalleryComponent,data: { galery: [] } },
       { path: 'followers', component: CommunityFollowersComponent }
     ]
   },

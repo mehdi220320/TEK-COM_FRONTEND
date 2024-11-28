@@ -28,4 +28,7 @@ export class CommunityService {
   getCommunityById(id:any):Observable<Community>{
     return this.httpClient.get<Community>(this.PATH_OF_API+"/api/v1/com/community/"+id)
   }
+  isMember(iduser:any,idcommunity:any):Observable<boolean>{
+    return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+iduser+"/"+idcommunity)
+  }
 }

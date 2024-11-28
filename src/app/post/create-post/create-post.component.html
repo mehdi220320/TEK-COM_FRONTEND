@@ -1,22 +1,23 @@
-<ul class="list-unstyled" style="margin-bottom: 0;">
+<ul class="list-unstyled" style="margin-bottom: 0;" *ngIf="isMember">
   <li class="media post-form w-shadow bg-transparent">
-    <form  class="media-body bg-white mb-2 rounded"  #postForm="ngForm"(ngSubmit)="createPost(postForm)">
-      <div class="form-group post-input">
-        <textarea  class="form-control bg-white" id="postForm" ngModel name="description" rows="2" placeholder="What's on your mind, Arthur?"></textarea>
-      </div>
-      <div *ngFor="let file of fileHandle" class="d-inline-flex  ml-3 align-items-end justify-content-center">
-        <i class='bx bx-window-close close-icon' (click)="removeFileSelected(file)"></i>
-        <img *ngIf="file && file.url" [src]="file.url" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
+    <form class="media-body bg-white mb-2 rounded" #postForm="ngForm" (ngSubmit)="addPost(postForm)">
+      <div class="form-group post-input bg-white">
+        <textarea
+          class="form-control bg-white " id="postForm" ngModel name="content" rows="2" placeholder="What's on your mind?"></textarea>
       </div>
 
+      <div *ngFor="let fileHandle of imageFiles" class="d-inline-flex ml-3 align-items-end justify-content-center">
+        <i class='bx bx-window-close close-icon' (click)="removeImageFile(fileHandle)"></i>
+        <img *ngIf="fileHandle && fileHandle.url" [src]="fileHandle.url" class="img-thumbnail img-fluid img-body" alt="Image Preview"/>
+      </div>
       <div class="row post-form-group">
-        <div class="col-md-9">
-          <label for="fileInput" class="btn btn-link post-form-btn btn-sm">
+        <div class="col-md-6">
+          <label for="imageFileInput" class="btn btn-link post-form-btn btn-sm">
             <i class='bx bx-images'></i> <span>Photo/Video</span>
           </label>
-          <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+          <input type="file" id="imageFileInput" (change)="onImageFileSelected($event)" accept="image/*" multiple style="display: none;"/>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="col-md-12 text-right">
           <button type="submit" class="btn btn-primary btn-sm">Publish</button>
         </div>
       </div>

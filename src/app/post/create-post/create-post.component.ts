@@ -3,6 +3,9 @@ import {FileHandle} from "../../Models/FileHandle";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {NgForm} from "@angular/forms";
 import{PostService} from "../../Services/post.service";
+import {Router} from "@angular/router";
+import {CommunityService} from "../../Services/community.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
@@ -10,31 +13,47 @@ import{PostService} from "../../Services/post.service";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  fileHandle: FileHandle[] =[];
-
-  constructor(private sanitizer: DomSanitizer,
-              private postService:PostService) {}
+  imageFiles: FileHandle[] = [];
+  content: string = '';
+  whoposted!: number  ;
+  currenturl:string='';
+  communityId:string='';
+  isMember!:boolean;
+  userID=localStorage.getItem('id');
+  constructor(private router:Router, private sanitizer: DomSanitizer, private postService: PostService, private communityService:CommunityService
+  ) {}
 
   ngOnInit(): void {
-    // this.createPost({
-    //   description: "This is a default post description"
-    // });
+    const storedUserId = localStorage.getItem('id');
+    if (storedUserId) {
+      this.whoposted = +storedUserId;
+    }
+    this.currenturl=this.router.url
+    const parts = this.currenturl.split('/');
+    this.communityId = parts[2];
+    this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
+      this.isMember=response
+    },(error)=>{
+      console.error("isMember fonction doesn t work properly")
+    })
+
   }
-  createPost(postForm: NgForm) {
-    console.log(postForm.value);
 
-    const description = postForm.value['description'];
+  addPost(postForm: NgForm) {
 
-    const post = {
-      whoposted: 1,
-      community: 1,
-      content: description,
-      type: "text"
+    const postData = {
+      content: postForm.value['content'],
+      whoposted: this.whoposted.toString(),
+      community: this.communityId,  // Assign the community ID as needed
+      type: "text",  // Define the type, can be adjusted if needed
+      images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
 
-    this.postService.createPost(post).subscribe(
+    // Use the service to create the post
+    this.postService.createPost(postData).subscribe(
       (response) => {
         console.log('Post created successfully:', response);
+        window.location.reload();
       },
       (error) => {
         console.error('Error creating post:', error);
@@ -42,20 +61,19 @@ export class CreatePostComponent implements OnInit {
     );
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+  onImageFileSelected(event: any): void {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-      this.fileHandle.push({ file, url });
+      this.imageFiles.push({ file, url });
     }
   }
-  removeFileSelected(file:FileHandle){
-    let index = this.fileHandle.indexOf(file);
+
+  removeImageFile(fileHandle: FileHandle): void {
+    const index = this.imageFiles.indexOf(fileHandle);
     if (index !== -1) {
-      this.fileHandle.splice(index, 1);
+      this.imageFiles.splice(index, 1);
     }
   }
-
-
-
 }
