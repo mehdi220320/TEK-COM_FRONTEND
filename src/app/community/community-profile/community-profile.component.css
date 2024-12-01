@@ -70,3 +70,21 @@
 .msg-magick-text {
   color: #bb39d7;
 }
+
+.follow {
+  position: absolute;
+  top: 250px;
+  left: 7rem;
+  width:-webkit-fill-available;
+  opacity: 1;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+.primary-follow:hover{
+  background: rgb(14, 68, 234);
+}
+.danger-unfollow:hover{
+  background: #c9302c;
+
+}

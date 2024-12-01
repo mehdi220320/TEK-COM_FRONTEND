@@ -44,8 +44,8 @@ export class CreatePostComponent implements OnInit {
     const postData = {
       content: postForm.value['content'],
       whoposted: this.whoposted.toString(),
-      community: this.communityId,  // Assign the community ID as needed
-      type: "text",  // Define the type, can be adjusted if needed
+      community: this.communityId,
+      type: "text",
       images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
 

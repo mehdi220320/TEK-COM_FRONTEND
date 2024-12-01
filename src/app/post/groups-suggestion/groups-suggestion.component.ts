@@ -17,7 +17,7 @@ export class GroupsSuggestionComponent implements OnInit {
   constructor(private communityService: CommunityService,private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
-    this.communityService.getSuggestionCommunity(1).subscribe(
+    this.communityService.getSuggestionCommunity(localStorage.getItem('id')).subscribe(
       (data: Community[]) => {
         this.communities = data;
         console.log("Communities fetched:", this.communities);
@@ -26,23 +26,24 @@ export class GroupsSuggestionComponent implements OnInit {
         console.error("Error fetching communities:", error);
       }
     );
-      this.communityService.getBestSuggestionCommunity(1).subscribe(
+      this.communityService.getBestSuggestionCommunity(localStorage.getItem('id')).subscribe(
         (response)=>{
           console.log('Community est : ', response)
           this.BestSuggcommunity=response;
+          this.communityService.getMembersByCommunityId(response.id).subscribe(
+            (response)=>{
+              this.BestSuggcommunityMembers=response;
+              console.log("el memebers :"+response)
+            },(error)=>{
+              console.error("Error fetching members :",error)
+
+            }
+          )
         },(error)=>{
           console.error("Error fetching best recommendation :",error)
         }
       );
-      this.communityService.getMembersByCommunityId(1).subscribe(
-        (response)=>{
-          this.BestSuggcommunityMembers=response;
-          console.log("el memebers :"+response)
-        },(error)=>{
-          console.error("Error fetching members :",error)
 
-        }
-      )
   }
   index=0;
   getImageURL(image:any):any{

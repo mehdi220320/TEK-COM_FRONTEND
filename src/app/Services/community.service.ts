@@ -16,10 +16,10 @@ export class CommunityService {
     return this.httpClient.post<any>(this.PATH_OF_API + "/api/v1/com/addcom", community);
   }
 
-  getSuggestionCommunity(id:number):Observable<Community[]>{
+  getSuggestionCommunity(id:any):Observable<Community[]>{
     return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/NotMembre/"+id)
   }
-  getBestSuggestionCommunity(id:number):Observable<Community>{
+  getBestSuggestionCommunity(id:any):Observable<Community>{
     return this.httpClient.get<Community>(this.PATH_OF_API+"/api/v1/com/bestSuggestion/"+id)
   }
   getMembersByCommunityId(id:any):Observable<User[]>{
@@ -31,4 +31,16 @@ export class CommunityService {
   isMember(iduser:any,idcommunity:any):Observable<boolean>{
     return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+iduser+"/"+idcommunity)
   }
+  addMember(communityId:any,userId:any):Observable<any>{
+    const formData=new FormData();
+    formData.append('userId',userId);
+    formData.append('communityId',communityId);
+    return this.httpClient.post(this.PATH_OF_API+"/api/v1/com/addMember",formData);
+  }
+  deleteMember(communityId: any, userId: any): Observable<any> {
+    const url = `${this.PATH_OF_API}/api/v1/com/deleteMember?communityId=${communityId}&userId=${userId}`;
+    return this.httpClient.delete(url);
+  }
+
+
 }

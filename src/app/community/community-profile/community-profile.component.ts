@@ -19,8 +19,11 @@ export class CommunityProfileComponent implements OnInit {
   index=1;
   posts:Post[]=[]
   galery:File2[]=[]
+  isMember !:boolean;
+  currentUrl!:string;
   constructor(private router:Router ,private postService: PostService,private route: ActivatedRoute,private communityService:CommunityService,private userService:UserServiceService,private sanitizer:DomSanitizer) { }
   ngOnInit(): void {
+    this.currentUrl=this.router.url
     this.route.params.subscribe(params => {
       this.id = params['id'];
       console.log(this.id);
@@ -37,6 +40,7 @@ export class CommunityProfileComponent implements OnInit {
     },(error)=>{
       console.error("Can t fetch posts of community")
     })
+
     this.communityService.getCommunityById(this.id).subscribe((response) => {
       this.community = response;
       this.userService.getUsernameById(this.community.usercreate).subscribe((response) => {
@@ -48,15 +52,12 @@ export class CommunityProfileComponent implements OnInit {
       console.error('Error fetching community:', error);
       this.community = null;
     });
-    // if (this.router.url.includes(`/community/${this.id}/gallery`)) {
-    //   this.navigateToGallery();
-    //   console.log("true")
-    // }
-  }
-  navigateToGallery(): void {
-    this.router.navigate(['/community', this.id, 'gallery'], {
-      queryParams: { galery: JSON.stringify(this.galery) }
-    });
+    this.communityService.isMember(localStorage.getItem('id'),this.id).subscribe((response)=>{
+      this.isMember=response
+    },(error)=>{
+      console.error("isMember fonction doesn t work properly")
+    })
+
   }
   getImageURL(image:any):any{
     if(image===null)
@@ -68,5 +69,22 @@ export class CommunityProfileComponent implements OnInit {
       const file: File2 = image;
       return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
     }
+  }
+  addMember(){
+    this.communityService.addMember(this.id,localStorage.getItem('id')).subscribe((response)=>{
+      console.log(response)
+    },(error)=>{
+      console.error("can t add you as a member")
+    })
+  }
+  deleteMember(){
+    this.communityService.deleteMember(this.id, localStorage.getItem('id')).subscribe(
+      (response) => {
+        console.log("Member deleted successfully", response);
+      },
+      (error) => {
+        console.error("Error deleting member", error);
+      }
+    );
   }
 }
