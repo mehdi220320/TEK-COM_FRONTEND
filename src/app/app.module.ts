@@ -18,6 +18,7 @@ import { CreateCommunityComponent } from './community/create-community/create-co
 import { CommunityProfileComponent } from './community/community-profile/community-profile.component';
 import { CommunityFollowersComponent } from './community/community-followers/community-followers.component';
 import { CommunityGalleryComponent } from './community/community-gallery/community-gallery.component';
+import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
@@ -33,6 +34,7 @@ const appRoutes:Routes=[
     ]
   },
   {path:"adminIndex",component:ANavbarComponent},
+  {path:"dashboard",component:DasboardComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
 @NgModule({
@@ -49,7 +51,8 @@ const appRoutes:Routes=[
     CreateCommunityComponent,
     CommunityProfileComponent,
     CommunityFollowersComponent,
-    CommunityGalleryComponent
+    CommunityGalleryComponent,
+    DasboardComponent
   ],
   imports: [
     BrowserModule,

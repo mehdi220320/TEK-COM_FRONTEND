@@ -40,7 +40,7 @@ export class PostComponent implements OnInit {
       );
     }
     else {
-      const parts = this.currentRoute.split('/'); // Split the URL by '/'
+      const parts = this.currentRoute.split('/');
       const communityId = parts[2];
       this.postService.getPostByCommunityId(communityId).subscribe(
         (data: Post[]) => {
