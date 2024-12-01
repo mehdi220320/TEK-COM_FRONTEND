@@ -35,6 +35,7 @@ const appRoutes:Routes=[
   },
   {path:"adminIndex",component:ANavbarComponent},
   {path:"dashboard",component:DasboardComponent},
+  {path:"tablepanel",component:UsersTablePanelComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
 @NgModule({
