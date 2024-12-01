@@ -1,3 +1,7 @@
 .img-body{
   height: 40px;
 }
+
+.primary-follow:hover{
+  background: rgb(14, 68, 234);
+}

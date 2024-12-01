@@ -4,6 +4,7 @@ import {Community} from "../../Models/Community";
 import {File2, Post} from "../../Models/Post";
 import {DomSanitizer} from "@angular/platform-browser";
 import {User} from "../../Models/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-groups-suggestion',
@@ -14,9 +15,10 @@ export class GroupsSuggestionComponent implements OnInit {
   communities: Community[] = [];
   BestSuggcommunity: Community | undefined;
   BestSuggcommunityMembers:User [] =[];
-  constructor(private communityService: CommunityService,private sanitizer:DomSanitizer) { }
-
+  constructor(private communityService: CommunityService,private sanitizer:DomSanitizer,private  router:Router) { }
+  url:string="";
   ngOnInit(): void {
+    this.url=this.router.url
     this.communityService.getSuggestionCommunity(localStorage.getItem('id')).subscribe(
       (data: Community[]) => {
         this.communities = data;
@@ -79,6 +81,12 @@ export class GroupsSuggestionComponent implements OnInit {
     }
     return this.shuffled.slice(0, this.maxCommunities);
   }
-
+  addMember(){
+    this.communityService.addMember(this.BestSuggcommunity?.id,localStorage.getItem('id')).subscribe((response)=>{
+      console.log(response)
+    },(error)=>{
+      console.error("can t add you as a member")
+    })
+  }
 
 }
