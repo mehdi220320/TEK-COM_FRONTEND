@@ -7,7 +7,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import{PostService} from '../Services/post.service'
 import {NgForm} from "@angular/forms";
 import { User } from '../Models/User';
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +18,19 @@ export class PostComponent implements OnInit {
   posts: Post[] = [];
   selectedImageIndex: number = 0;
   currentRoute: string = '';
-  constructor(private postService: PostService, private sanitizer: DomSanitizer,private activatedRoute:ActivatedRoute,private router:Router) {}
+  userImages: string[] = [
+    'assets/images/users/post/155865-OV9V41-346-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346f-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346g-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346l-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346x-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346xx-removebg-preview.png',
+    'assets/images/users/post/menn-removebg-preview.png',
+    'assets/images/users/post/155865-OV9V41-346ss-removebg-preview.png',
+    'assets/images/users/post/womm-removebg-preview.png',
+
+  ];
+  constructor(private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
 
 
   ngOnInit(): void {
@@ -40,9 +52,7 @@ export class PostComponent implements OnInit {
       );
     }
     else {
-      const parts = this.currentRoute.split('/');
-      const communityId = parts[2];
-      this.postService.getPostByCommunityId(communityId).subscribe(
+      this.postService.getPostByCommunityId("1").subscribe(
         (data: Post[]) => {
           this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
           console.log("Posts with fileList:", this.posts);
@@ -52,6 +62,10 @@ export class PostComponent implements OnInit {
         }
       );
     }
+  }
+  getRandomUserImage(): string {
+    const randomIndex = Math.floor(Math.random() * this.userImages.length);
+    return this.userImages[randomIndex];
   }
   showImage(post: Post, index: number): void {
     post.selectedImageIndex = index;

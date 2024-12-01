@@ -23,6 +23,7 @@ export interface Post {
   selectedImageIndex?: number;
   showComments?: boolean;
   fileList: File2[];
+
 }
 const initialPost: Post = {
   id: 0, // Assuming '0' is a placeholder for an uninitialized post
