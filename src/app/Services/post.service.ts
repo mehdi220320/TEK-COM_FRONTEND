@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Post} from "../Models/Post";
+import {Post,File2} from "../Models/Post";
 import {environement} from "../environement/environement";
 import {Observable} from "rxjs";
+import {Community} from "../Models/Community";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,8 @@ export class PostService {
   addComment(comment:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/addcomment", comment)
   }
-
+  getPostByFile(imageID: any):Observable<Post> {
+   return this.httpClient.get<Post>(this.PATH_OF_API+"/api/v1/post/postByImage/"+imageID);
+  }
 
 }

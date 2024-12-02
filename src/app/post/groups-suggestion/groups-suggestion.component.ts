@@ -4,6 +4,7 @@ import {Community} from "../../Models/Community";
 import {File2, Post} from "../../Models/Post";
 import {DomSanitizer} from "@angular/platform-browser";
 import {User} from "../../Models/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-groups-suggestion',
@@ -14,10 +15,11 @@ export class GroupsSuggestionComponent implements OnInit {
   communities: Community[] = [];
   BestSuggcommunity: Community | undefined;
   BestSuggcommunityMembers:User [] =[];
-  constructor(private communityService: CommunityService,private sanitizer:DomSanitizer) { }
-
+  constructor(private communityService: CommunityService,private sanitizer:DomSanitizer,private  router:Router) { }
+  url:string="";
   ngOnInit(): void {
-    this.communityService.getSuggestionCommunity(1).subscribe(
+    this.url=this.router.url
+    this.communityService.getSuggestionCommunity(localStorage.getItem('id')).subscribe(
       (data: Community[]) => {
         this.communities = data;
         console.log("Communities fetched:", this.communities);
@@ -26,23 +28,24 @@ export class GroupsSuggestionComponent implements OnInit {
         console.error("Error fetching communities:", error);
       }
     );
-      this.communityService.getBestSuggestionCommunity(1).subscribe(
+      this.communityService.getBestSuggestionCommunity(localStorage.getItem('id')).subscribe(
         (response)=>{
           console.log('Community est : ', response)
           this.BestSuggcommunity=response;
+          this.communityService.getMembersByCommunityId(response.id).subscribe(
+            (response)=>{
+              this.BestSuggcommunityMembers=response;
+              console.log("el memebers :"+response)
+            },(error)=>{
+              console.error("Error fetching members :",error)
+
+            }
+          )
         },(error)=>{
           console.error("Error fetching best recommendation :",error)
         }
       );
-      this.communityService.getMembersByCommunityId(1).subscribe(
-        (response)=>{
-          this.BestSuggcommunityMembers=response;
-          console.log("el memebers :"+response)
-        },(error)=>{
-          console.error("Error fetching members :",error)
 
-        }
-      )
   }
   index=0;
   getImageURL(image:any):any{
@@ -78,6 +81,12 @@ export class GroupsSuggestionComponent implements OnInit {
     }
     return this.shuffled.slice(0, this.maxCommunities);
   }
-
+  addMember(){
+    this.communityService.addMember(this.BestSuggcommunity?.id,localStorage.getItem('id')).subscribe((response)=>{
+      console.log(response)
+    },(error)=>{
+      console.error("can t add you as a member")
+    })
+  }
 
 }

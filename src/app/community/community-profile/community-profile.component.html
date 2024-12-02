@@ -2,11 +2,16 @@
 <div class="row profile-right-side-content">
   <div class="user-profile">
     <div class="profile-header-background">
-      <a href="#" class="profile-cover">
+      <a  class="profile-cover">
         <img [src]="getImageURL(this.community?.image)" alt="Profile Header Background">
+        <div class="follow">
+          <a *ngIf="!isMember" (click)="addMember()" [href]="currentUrl" class="btn btn-quick-links primary-follow">Follow Us</a>
+          <a *ngIf="isMember" (click)="deleteMember()" [href]="currentUrl" class="btn btn-quick-links danger-unfollow" >Unfollow Us</a>
+        </div>
         <div class="cover-overlay">
           <a href="#" class="btn btn-update-cover"><i class='bx bxs-camera'></i> Update Cover Photo</a>
         </div>
+
       </a>
     </div>
     <div class="row profile-rows">
@@ -66,7 +71,7 @@
                 <li class="list-inline-item col-lg-3"  style="text-align: center" routerLinkActive="profile-active">
                   <a routerLink="followers">Followers</a>
                 <li class="list-inline-item col-lg-3" style="text-align: center" routerLinkActive="profile-active">
-                  <a (click)="navigateToGallery()" style="cursor:pointer;">Gallery</a>
+                  <a routerLink="gallery">Gallery</a>
                 </li>
               </ul>
               <router-outlet></router-outlet>

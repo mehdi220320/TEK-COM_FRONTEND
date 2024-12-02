@@ -1,1 +1,17 @@
-<p>community-followers works!</p>
+<div class="bg-white py-3 px-4 shadow-sm">
+  <div class="card-head d-flex justify-content-between">
+    <h5 class="mb-4">Gallery</h5>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-6 mb-2 h-50 " *ngFor="let follower of followers" >
+      <div class="card group-card shadow-sm">
+        <img  class="gallery_card" [src]="getImageURL(follower.image)" alt="Group image">
+        <div class="card-body">
+          <div class="btn-group w-100" role="group">
+            <button class="btn btn-quick-link join-group-btn border w-100">{{follower.usernamez}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
