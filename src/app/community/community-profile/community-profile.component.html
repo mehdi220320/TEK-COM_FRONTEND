@@ -5,8 +5,8 @@
       <a  class="profile-cover">
         <img [src]="getImageURL(this.community?.image)" alt="Profile Header Background">
         <div class="follow">
-          <a *ngIf="!isMember" (click)="addMember()" [href]="currentUrl" class="btn btn-quick-links primary-follow">Follow Us</a>
-          <a *ngIf="isMember" (click)="deleteMember()" [href]="currentUrl" class="btn btn-quick-links danger-unfollow" >Unfollow Us</a>
+          <a *ngIf="!isMember" (click)="addMember()" class="btn btn-quick-links primary-follow">Follow Us</a>
+          <a *ngIf="isMember" (click)="deleteMember()" class="btn btn-quick-links danger-unfollow" >Unfollow Us</a>
         </div>
         <div class="cover-overlay">
           <a href="#" class="btn btn-update-cover"><i class='bx bxs-camera'></i> Update Cover Photo</a>

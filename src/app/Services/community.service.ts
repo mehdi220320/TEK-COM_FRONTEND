@@ -29,7 +29,7 @@ export class CommunityService {
     return this.httpClient.get<Community>(this.PATH_OF_API+"/api/v1/com/community/"+id)
   }
   isMember(iduser:any,idcommunity:any):Observable<boolean>{
-    return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+iduser+"/"+idcommunity)
+    return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+idcommunity+"/"+iduser)
   }
   addMember(communityId:any,userId:any):Observable<any>{
     const formData=new FormData();
