@@ -18,10 +18,14 @@ import { CreateCommunityComponent } from './community/create-community/create-co
 import { CommunityProfileComponent } from './community/community-profile/community-profile.component';
 import { CommunityFollowersComponent } from './community/community-followers/community-followers.component';
 import { CommunityGalleryComponent } from './community/community-gallery/community-gallery.component';
+import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
+import { ReportpostComponent } from './post/reportpost/reportpost.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent},
+  { path: 'reportpost', component: ReportpostComponent }
+  ,
   {
     path: 'community/:id',
     component: CommunityProfileComponent,
@@ -32,9 +36,18 @@ const appRoutes:Routes=[
       { path: 'followers', component: CommunityFollowersComponent }
     ]
   },
-  {path:"adminIndex",component:ANavbarComponent},
+
+  { path: "adminIndex", component: ANavbarComponent, children: [
+      { path: 'reports', component: ReportTablePanelComponent }
+    ]}
+
+  ,
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' },]
+  { path: '**', redirectTo: '/home' },
+
+]
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,14 +62,16 @@ const appRoutes:Routes=[
     CreateCommunityComponent,
     CommunityProfileComponent,
     CommunityFollowersComponent,
-    CommunityGalleryComponent
+    CommunityGalleryComponent,
+    ReportpostComponent
   ],
   imports: [
     BrowserModule,
     RouterOutlet,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReportTablePanelComponent
   ],
   exports:[RouterModule],
   providers: [UserServiceService],

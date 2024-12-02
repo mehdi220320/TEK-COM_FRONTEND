@@ -1,0 +1,70 @@
+<div class="report-post-container">
+  <h1 class="report-title">Report Post</h1>
+  <p class="report-description">
+    Please select the reason for reporting this post to help us take appropriate action.
+  </p>
+
+  <form (ngSubmit)="onSubmitReport()">
+    <div class="form-group">
+      <label class="form-label">Reason for Reporting:</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          id="spam"
+          name="reason"
+          class="form-check-input"
+          [(ngModel)]="cause"
+          value="spam"
+          required
+        />
+        <label for="spam" class="form-check-label">Spam</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          id="harassment"
+          name="reason"
+          class="form-check-input"
+          [(ngModel)]="cause"
+          value="harassment"
+        />
+        <label for="harassment" class="form-check-label">Harassment or Hate Speech</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          id="misinformation"
+          name="reason"
+          class="form-check-input"
+          [(ngModel)]="cause"
+          value="misinformation"
+        />
+        <label for="misinformation" class="form-check-label">Misinformation</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          id="nudity"
+          name="reason"
+          class="form-check-input"
+          [(ngModel)]="cause"
+          value="nudity"
+        />
+        <label for="nudity" class="form-check-label">Nudity or Explicit Content</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          id="other"
+          name="reason"
+          class="form-check-input"
+          [(ngModel)]="cause"
+          value="other"
+        />
+        <label for="other" class="form-check-label">Other</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn report-btn">Submit Report</button>
+  </form>
+</div>

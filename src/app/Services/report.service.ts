@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {environement} from "../environement/environement";
-import {Report} from "../Models/report"
+import {Report} from "../Models/Report"
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,42 +16,28 @@ export class ReportService  {
   getReports() {
     return this.httpClient.get<Report[]>(this.PATH_OF_API+"/api/v1/report/reports");
   }
-  createReport(report:any){
+  submitReport(report:any){
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/report/create", report)
   }
-  deleteReport(id: number){
-    return this.httpClient.delete(this.PATH_OF_API + "/api/v1/report/delete"+id)
-  }
-}
 
 
-
-
-/*
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Post} from "../Models/Post";
-import {environement} from "../environement/environement";
-
-@Injectable({
-  providedIn: 'root'
-})
-export class PostService {
-  PATH_OF_API = environement.apiBaseUrl;
-  requestHeader = new HttpHeaders({"No-Auth": "True"})
-  constructor(private httpClient: HttpClient) { }
-
-  getPostById(id: string | null) {
-    return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/user/"+id);
-  }
-  createPost(post:any){
-    return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/create", post)
-  }
-  addComment(comment:any){
-    return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/addcomment", comment)
+  validateReport(reportId: number): Observable<any> {
+    return this.httpClient.put<number>(
+      `${this.PATH_OF_API}/api/v1/report/ReportValide/${reportId}`,
+      { headers: this.requestHeader }
+    );
   }
 
+
+  rejectReport(reportId: number): Observable<number> {
+    return this.httpClient.put<number>(`${this.PATH_OF_API}/api/v1/report/ReportNonValider/${reportId}`, { headers: this.requestHeader });
+  }
+
+  // DeleteReport(reportId: number): Observable<number> {
+  //   return this.httpClient.delete<number>(
+  //     `${this.PATH_OF_API}/api/v1/report/DeleteReport/${reportId}`,
+  //     { headers: this.requestHeader } // Add headers if necessary
+  //   );
+  // }
 
 }
-
- */
