@@ -35,7 +35,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
-    console.warn(this.currentRoute)
+    // console.warn(this.currentRoute)
     this.loadPosts();
   }
 
@@ -125,6 +125,12 @@ export class PostComponent implements OnInit {
         console.error('Error creating comment:', error);
       }
     );
+  }
+
+
+  redirectToReport(postId: number) {
+    debugger;
+    this.router.navigate(['/reportpost'], { queryParams: { postId } });
   }
 
 }

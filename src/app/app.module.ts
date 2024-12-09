@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
@@ -19,10 +18,13 @@ import { CommunityProfileComponent } from './community/community-profile/communi
 import { CommunityFollowersComponent } from './community/community-followers/community-followers.component';
 import { CommunityGalleryComponent } from './community/community-gallery/community-gallery.component';
 import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
+import {ReportpostComponent} from "./post/reportpost/reportpost.component";
+import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent},
+  { path: 'reportpost', component: ReportpostComponent },
   {
     path: 'community/:id',
     component: CommunityProfileComponent,
@@ -53,14 +55,16 @@ const appRoutes:Routes=[
     CommunityProfileComponent,
     CommunityFollowersComponent,
     CommunityGalleryComponent,
-    DasboardComponent
+    DasboardComponent,
+    ReportpostComponent
   ],
   imports: [
     BrowserModule,
     RouterOutlet,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReportTablePanelComponent
   ],
   exports:[RouterModule],
   providers: [UserServiceService],

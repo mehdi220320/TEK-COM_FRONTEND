@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <h3 class="text-dark mb-4 mt-4">Reports</h3>
+
+  <!-- Success/Failure Messages -->
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div class="card shadow">
+    <!-- Card Header -->
+    <div class="card-header py-3">
+      <p class="text-primary m-0 fw-bold">Report Details</p>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+      <!-- Top Controls -->
+      <div class="row mb-3 align-items-center">
+        <!-- Items per Page Dropdown -->
+        <div class="col-md-6 text-nowrap">
+          <label class="form-label">
+            Show&nbsp;
+            <select
+              class="form-select form-select-sm d-inline-block"
+              [(ngModel)]="showNum"
+              (change)="numViews($event)"
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Search Box -->
+        <div class="col-md-6 text-md-end">
+          <label class="form-label">
+            <input
+              type="search"
+              class="form-control form-control-sm"
+              placeholder="Search"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Report Table -->
+      <div class="table-responsive mt-2">
+        <table class="table table-hover table-striped align-middle">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cause</th>
+            <th>Date</th>
+            <th>Post Creator</th>
+            <th>Post ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let report of tableViews()">
+            <td>{{ report.id }}</td>
+            <td>{{ report.cause }}</td>
+            <td>{{ report.date_ajout | date: 'MM/dd/yyyy' }}</td>
+            <td>{{ report.whoposted }}</td>
+            <td>{{ report.post }}</td>
+            <td>
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    'bg-success': report.etat === 'Traité',
+                    'bg-warning': report.etat === 'Non traité'
+                  }"
+                >
+                  {{ report.etat }}
+                </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-success"
+                (click)="validateReport(report.id)"
+                [disabled]="report.etat === 'Traité'">
+                Validate
+              </button>
+              <button
+                class="btn btn-dark"
+                (click)="rejectReport(report.id)"
+                [disabled]="report.etat === 'Traité'">
+                Reject
+              </button>
+
+<!--              <button-->
+<!--                class="btn btn-danger"-->
+<!--                (click)="DeleteReport(report.id)">-->
+<!--                Delete-->
+<!--              </button>-->
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="previousIndex()">Previous</button>
+        <button class="btn btn-secondary" (click)="nextIndex()">Next</button>
+        <ul class="pagination mb-0">
+          <li *ngFor="let index of getTotIndex()" class="page-item">
+            <a class="page-link" href="#" (click)="IndexChange(index)">{{ index }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

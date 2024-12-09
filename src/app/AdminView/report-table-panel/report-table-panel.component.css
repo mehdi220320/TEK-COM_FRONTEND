@@ -1,0 +1,42 @@
+.table-hover tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.btn {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}

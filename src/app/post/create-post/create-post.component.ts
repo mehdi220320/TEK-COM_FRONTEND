@@ -18,7 +18,7 @@ export class CreatePostComponent implements OnInit {
   whoposted!: number  ;
   currenturl:string='';
   communityId:string='';
-  isMember!:boolean;
+  isMember:boolean=true;
   userID=localStorage.getItem('id');
   constructor(private router:Router, private sanitizer: DomSanitizer, private postService: PostService, private communityService:CommunityService
   ) {}
@@ -28,14 +28,20 @@ export class CreatePostComponent implements OnInit {
     if (storedUserId) {
       this.whoposted = +storedUserId;
     }
+
     this.currenturl=this.router.url
-    const parts = this.currenturl.split('/');
-    this.communityId = parts[2];
-    this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
-      this.isMember=response
-    },(error)=>{
-      console.error("isMember fonction doesn t work properly")
-    })
+    if(this.currenturl!='home'){
+      const parts = this.currenturl.split('/');
+
+      this.communityId = parts[2];
+
+      this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
+        this.isMember=response
+      },(error)=>{
+        console.error("isMember fonction doesn t work properly")
+      })
+
+    }
 
   }
 
