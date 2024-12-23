@@ -32,7 +32,7 @@
           <input type="file" id="coverimg" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
         </div>
       </div>
-      <div *ngIf="this.creationStatus===false; else submitElse">
+      <div >
         <div class="form-row submit-btn">
           <div class="input-data">
             <div class="inner"></div>
@@ -41,11 +41,11 @@
         </div>
       </div>
       <ng-template #submitElse>
-       <div class="row">
+        <div class="row">
           <div class="col-md-4">
             <div class="msg msg-success msg-success-text"> <span class="glyphicon glyphicon glyphicon-ok"></span>Community <span style="color: #0e44ea;font-family: 'Bold Italic Art'">{{this.msg}}</span>  has been created successfully</div>
           </div>
-       </div>
+        </div>
         <div class="form-row cancel-btn">
           <div class="input-data">
             <div class="inner"></div>

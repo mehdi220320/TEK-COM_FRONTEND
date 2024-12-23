@@ -5,7 +5,14 @@
         <textarea
           class="form-control bg-white " id="postForm" ngModel name="content" rows="2" placeholder="What's on your mind?"></textarea>
       </div>
-
+      <div *ngIf="currenturl=='/home'">
+        <label for="community-select" class="ml-3">Choose a Community:</label>
+        <select class="selectpicker  border-0 px-2 py-2 rounded shadow" id="community-select"
+                [(ngModel)]="selectedCommunity" name="community" >
+          <option value="">--Please choose an option--</option>
+          <option *ngFor="let community of communities" [value]="community.id">{{community.title}}</option>
+        </select>
+      </div>
       <div *ngFor="let fileHandle of imageFiles" class="d-inline-flex ml-3 align-items-end justify-content-center">
         <i class='bx bx-window-close close-icon' (click)="removeImageFile(fileHandle)"></i>
         <img *ngIf="fileHandle && fileHandle.url" [src]="fileHandle.url" class="img-thumbnail img-fluid img-body" alt="Image Preview"/>

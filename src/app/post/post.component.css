@@ -1,0 +1,30 @@
+.dots {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  margin-top: -65px;
+
+}
+.dots label {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: solid #ffffff 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin: 5px;
+}
+.dots label:hover {background: #ffffff;}
+
+/* Set fixed dimensions for the main image and thumbnails */
+.post-images .main-image {
+  width: 100%; /* Full width within the post */
+  height: 300px; /* Fixed height */
+  object-fit: cover; /* Crop to fill the space without distortion */
+}
+.post-images .thumbnail {
+  width: 60px; /* Fixed thumbnail width */
+  height: 60px; /* Fixed thumbnail height */
+  margin-right: 5px;
+  object-fit: cover;
+}

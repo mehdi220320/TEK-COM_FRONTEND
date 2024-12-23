@@ -19,7 +19,7 @@ export class CommunityProfileComponent implements OnInit {
   index=1;
   posts:Post[]=[]
   galery:File2[]=[]
-  isMember !:boolean;
+  follower !:boolean;
   currentUrl!:string;
   constructor(private router:Router ,private postService: PostService,private route: ActivatedRoute,private communityService:CommunityService,private userService:UserServiceService,private sanitizer:DomSanitizer) { }
   ngOnInit(): void {
@@ -53,7 +53,7 @@ export class CommunityProfileComponent implements OnInit {
       this.community = null;
     });
     this.communityService.isMember(localStorage.getItem('id'),this.id).subscribe((response)=>{
-      this.isMember=response
+      this.follower=response
     },(error)=>{
       console.error("isMember fonction doesn t work properly")
     })
@@ -76,6 +76,9 @@ export class CommunityProfileComponent implements OnInit {
     },(error)=>{
       console.error("can t add you as a member")
     })
+
+    console.warn("el member ahawa f sormik "+ this.follower)
+
   }
   deleteMember(){
     this.communityService.deleteMember(this.id, localStorage.getItem('id')).subscribe(

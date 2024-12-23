@@ -6,6 +6,8 @@ import{PostService} from "../../Services/post.service";
 import {Router} from "@angular/router";
 import {CommunityService} from "../../Services/community.service";
 import {Observable} from "rxjs";
+import {Community} from "../../Models/Community";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-create-post',
@@ -18,19 +20,25 @@ export class CreatePostComponent implements OnInit {
   whoposted!: number  ;
   currenturl:string='';
   communityId:string='';
-  isMember:boolean=true;
+  isMember!:boolean;
+  communities:Community[]=[];
   userID=localStorage.getItem('id');
   constructor(private router:Router, private sanitizer: DomSanitizer, private postService: PostService, private communityService:CommunityService
   ) {}
 
   ngOnInit(): void {
+    this.communityService.getCommunitybyUserID(localStorage.getItem('id')).subscribe((response)=>{
+      this.communities=response
+    },(error)=>{
+      console.log("Can t fetch getCommunitybyUserID")
+    })
     const storedUserId = localStorage.getItem('id');
     if (storedUserId) {
       this.whoposted = +storedUserId;
     }
 
     this.currenturl=this.router.url
-    if(this.currenturl!='home'){
+    if(this.currenturl!='/home'){
       const parts = this.currenturl.split('/');
 
       this.communityId = parts[2];
@@ -41,19 +49,22 @@ export class CreatePostComponent implements OnInit {
         console.error("isMember fonction doesn t work properly")
       })
 
+    }else{
+      this.isMember=true;
     }
 
   }
+  selectedCommunity: string = '';
 
   addPost(postForm: NgForm) {
-
     const postData = {
       content: postForm.value['content'],
       whoposted: this.whoposted.toString(),
-      community: this.communityId,
+      community: this.selectedCommunity,
       type: "text",
       images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
+
 
     // Use the service to create the post
     this.postService.createPost(postData).subscribe(

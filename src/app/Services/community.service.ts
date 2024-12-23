@@ -12,7 +12,9 @@ export class CommunityService {
   PATH_OF_API = environement.apiBaseUrl;
   requestHeader = new HttpHeaders({"No-Auth": "True"})
   constructor(private httpClient:HttpClient ) {}
-
+  getCommunitybyUserID(userId:any):Observable<Community[]>{
+    return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/communityByUserId/"+userId)
+  }
 
   createCommunity(community: any): Observable<any> { // Change <String> to <any>
     return this.httpClient.post<any>(this.PATH_OF_API + "/api/v1/com/addcom", community);
@@ -31,7 +33,7 @@ export class CommunityService {
     return this.httpClient.get<Community>(this.PATH_OF_API+"/api/v1/com/community/"+id)
   }
   isMember(iduser:any,idcommunity:any):Observable<boolean>{
-    return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+idcommunity+"/"+iduser)
+    return  this.httpClient.get<boolean>(this.PATH_OF_API+"/api/v1/com/isMember/"+iduser+"/"+idcommunity)
   }
   addMember(communityId:any,userId:any):Observable<any>{
     const formData=new FormData();

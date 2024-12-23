@@ -4,7 +4,7 @@ import {Post,File2} from "../Models/Post";
 import {environement} from "../environement/environement";
 import {Observable} from "rxjs";
 import {Community} from "../Models/Community";
-
+import {Comments} from"../Models/Comments"
 @Injectable({
   providedIn: 'root'
 })
@@ -34,11 +34,25 @@ export class PostService {
     return this.httpClient.post(`${this.PATH_OF_API}/api/v1/post/addpost`, formData);
   }
 
-  addComment(comment:any){
-    return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/addcomment", comment)
+  addComment(description: any, username: any, postId: any): Observable<Comments> {
+    const comment = {
+      description,
+      username,
+      post: postId
+    };
+    return this.httpClient.post<Comments>(this.PATH_OF_API + "/api/v1/post/addcomment", comment);
   }
+
   getPostByFile(imageID: any):Observable<Post> {
    return this.httpClient.get<Post>(this.PATH_OF_API+"/api/v1/post/postByImage/"+imageID);
+  }
+
+  pressLike(userId: any, postId: any): Observable<any> {
+    const payload = {
+      userID: userId,
+      postid: postId
+    };
+    return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/pressLike", payload);
   }
 
 }

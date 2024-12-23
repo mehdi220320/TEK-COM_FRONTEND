@@ -15,6 +15,7 @@ export class CommunityFollowersComponent implements OnInit {
   followers:User[]=[]
   communityId:string="";
   currentRoute:string="";
+
   ngOnInit(): void {
     this.currentRoute=this.router.url
     const parts = this.currentRoute.split('/');

@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class PostComponent implements OnInit {
   posts: Post[] = [];
+  UserLOGINiD= localStorage.getItem('id');
   selectedImageIndex: number = 0;
   currentRoute: string = '';
   userImages: string[] = [
@@ -30,12 +31,12 @@ export class PostComponent implements OnInit {
     'assets/images/users/post/womm-removebg-preview.png',
 
   ];
+
   constructor(private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
 
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
-    // console.warn(this.currentRoute)
     this.loadPosts();
   }
 
@@ -107,24 +108,56 @@ export class PostComponent implements OnInit {
   inputValue: string = '';
 
   createComment(commentForm: NgForm, post: Post): void {
-    const com: { description: any; date:Date;post: number; username: string } = {
-      description: commentForm.value.description,
-      date: new Date(),
-      username: localStorage.getItem('id') || '',
-      post: post.id
-    };
-    console.log(com)
-    this.postService.addComment(com).subscribe(
+
+    this.postService.addComment(commentForm.value.description, localStorage.getItem('id'), post.id).subscribe(
       (response) => {
         console.log('Comment created successfully:', response);
-        commentForm.reset("");
-        this.posts=[];
-        this.loadPosts();
+        const newComment: Comments = {
+          id: response.id,
+          description: response.description,
+          date: new Date(response.date),
+          username: response.username,
+          postid: response.postid
+        };
+
+        const postToUpdate = this.posts.find(p => p.id === post.id);
+        if (postToUpdate) {
+          postToUpdate.commentList.push(newComment);
+        }
+        commentForm.reset();
       },
       (error) => {
         console.error('Error creating comment:', error);
       }
     );
+  }
+  pressLike(postId: number): void {
+    this.postService.pressLike(this.UserLOGINiD, postId).subscribe(
+      (response) => {
+        console.log("Successfully liked the post");
+        const parsedId = this.UserLOGINiD ? parseInt(this.UserLOGINiD, 10) :-1;
+        const post = this.posts.find(p => p.id === postId);
+        if (post) {
+          const existingLikeIndex = post.likeList.findIndex(like => like.userID === parsedId);
+
+          if (existingLikeIndex === -1) {
+            post.likeList.push({ id: response.id, userID: parsedId, postid: postId });
+          } else {
+            post.likeList.splice(existingLikeIndex, 1);
+          }
+        }
+      },
+      (error) => {
+        console.error("Error liking the post", error);
+      }
+    );
+  }  checkLike(userID: any, post: Post): boolean {
+    const parsedId = this.UserLOGINiD ? parseInt(this.UserLOGINiD, 10) : null;
+
+    if (parsedId === null) {
+      return false;
+    }
+    return post.likeList.some(item => item.userID === parsedId);
   }
 
 
@@ -132,5 +165,7 @@ export class PostComponent implements OnInit {
     debugger;
     this.router.navigate(['/reportpost'], { queryParams: { postId } });
   }
+
+
 
 }

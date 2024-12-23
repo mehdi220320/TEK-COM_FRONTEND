@@ -13,8 +13,8 @@ import {Community} from "../../Models/Community";
 export class CreateCommunityComponent implements OnInit {
   fileHandle: FileHandle[] =[];
   msg:String|undefined;
+  creationStatus: boolean | undefined;
   constructor(private sanitizer: DomSanitizer,private communityService:CommunityService) { }
-   creationStatus: boolean | undefined;
   ngOnInit(): void {
     this.creationStatus=false;
   }

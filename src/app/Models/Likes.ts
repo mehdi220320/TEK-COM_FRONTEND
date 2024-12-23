@@ -1,6 +1,6 @@
 export class Likes{
   constructor(public id:number,
-              public userid:number,
+              public userID:number,
               public postid:number) {
   }
 }
