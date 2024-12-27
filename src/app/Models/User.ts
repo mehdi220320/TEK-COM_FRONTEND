@@ -1,14 +1,13 @@
 import {File2} from "./Post";
 
-export class User {
-  constructor(public id:number,
-              public nom:string,
-              public prenom: string,
-              public usernamez:string ,
-              public email:string,
-              public birthday:Date,
-              public role:string,
-              public status:string,
-              public image:File2
-              ) {}
+export interface User{
+   id:number,
+   nom:string,
+   prenom: string,
+   usernamez:string ,
+   email:string,
+   isactive:string,
+   role:string,
+   status:string,
+   image:File2
 }

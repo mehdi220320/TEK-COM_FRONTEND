@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {UserServiceService} from "../../Services/user-service.service";
 import {User} from "../../Models/User";
+import {File2} from "../../Models/Post";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-users-table-panel',
@@ -11,14 +13,15 @@ export class UsersTablePanelComponent implements OnInit {
     index=1;
     randomUsers:User[] = [];
   showNum: number = 10;
-
-  constructor(private userService:UserServiceService) { }
+  constructor(private userService:UserServiceService,private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
-    // this.userService.getAllUsers().subscribe((data) => {
-    //   this.alluser = data;
-    //   console.log(this.alluser);
-    // });
+    this.userService.getAll().subscribe((response)=>{
+      this.randomUsers=response;
+      console.log("aw users : "+response)
+    },(error)=>{
+      console.error("can t fetch all users")
+    })
   }
   numViews(event: Event): void {
     const target = event.target as HTMLSelectElement;
@@ -49,7 +52,7 @@ export class UsersTablePanelComponent implements OnInit {
   IndexChange(i:number):void{
     this.index=i;
   }
-  tableViews():any[]{
+  tableViews():User[]{
     if(this.index==1){
      return  this.randomUsers.slice(this.index-1,this.index*this.showNum)
     }
@@ -61,5 +64,17 @@ export class UsersTablePanelComponent implements OnInit {
       this.randomUsers.splice(index, 1);
     }
   }
+  getImageURL(image:any):any{
+    if(image===null)
+      if(this.index++%2==1)
+        return  'assets/images/background/img.png'
+      else
+        return 'assets/images/users/user-1.jpg'
+    else {
+      const file: File2 = image;
+      return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
+    }
+  }
+
 
 }

@@ -16,7 +16,7 @@ export class CommunityService {
     return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/communityByUserId/"+userId)
   }
 
-  createCommunity(community: any): Observable<any> { // Change <String> to <any>
+  createCommunity(community: any): Observable<any> {
     return this.httpClient.post<any>(this.PATH_OF_API + "/api/v1/com/addcom", community);
   }
 

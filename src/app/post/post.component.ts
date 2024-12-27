@@ -42,7 +42,7 @@ export class PostComponent implements OnInit {
 
   loadPosts(): void {
     if(this.currentRoute==="/home"){
-      this.postService.getPostById(localStorage.getItem('id')).subscribe(
+      this.postService.getPostByUserId(localStorage.getItem('id')).subscribe(
         (data: Post[]) => {
           this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
           console.log("Posts with fileList:", this.posts);
@@ -53,7 +53,9 @@ export class PostComponent implements OnInit {
       );
     }
     else {
-      this.postService.getPostByCommunityId("1").subscribe(
+      const parts = this.currentRoute.split('/');
+      const communityId = parts[2];
+      this.postService.getPostByCommunityId(communityId).subscribe(
         (data: Post[]) => {
           this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
           console.log("Posts with fileList:", this.posts);

@@ -8,24 +8,18 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./reportpost.component.css']
 })
 export class ReportpostComponent implements OnInit {
-  cause: string = ''; // Bind this to the selected radio button
-  postId: number = 0;  // Initialize as 0, it will be updated from the query parameter
-
-
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private route: ActivatedRoute  // Inject ActivatedRoute
-  ) {}
+  cause: string = '';
+  postId: number = 0;
+  description:string ='';
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    // Extract the postId from the query parameters
-    this.route.queryParamMap.subscribe(params => {
-      const postId = params.get('postId');  // Get postId from query parameters
-      console.log('Extracted postId:', postId);  // Log the extracted value
+    this.route.params.subscribe(params => {
+      const postId = params['postId'];
+      console.log('Extracted postId:', postId);
       if (postId) {
-        this.postId = +postId;  // Convert to number and assign to postId
-        console.log('Converted postId:', this.postId);  // Log the converted value
+        this.postId = +postId;
+        console.log('Converted postId:', this.postId);
       } else {
         console.error('No postId found in the query parameters');
       }
@@ -37,15 +31,13 @@ export class ReportpostComponent implements OnInit {
       alert('Please select a reason for reporting.');
       return;
     }
-
-
-    // Prepare the request payload with the correct field name "post"
     const reportData = {
       cause: this.cause,
-      post: this.postId // Ensure this matches the backend field name
+      post: this.postId,
+      whoreported: localStorage.getItem('id'),
+      description:this.description
     };
 
-    // Send POST request to create the report
     this.http.post('http://localhost:9090/api/v1/report/create', reportData).subscribe(
       (response) => {
         console.log('Report submitted:', response);

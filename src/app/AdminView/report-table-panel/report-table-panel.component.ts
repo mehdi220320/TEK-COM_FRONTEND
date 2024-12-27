@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from "../../Services/report.service";
 import { Report } from "../../Models/Report";
 import { CommonModule } from '@angular/common';
-import { FormsModule } from "@angular/forms";
-import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import {FormsModule, NgForm} from "@angular/forms";
+import {PostService} from "../../Services/post.service";
+import {File2, Post} from "../../Models/Post";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-report-table-panel',
@@ -16,132 +19,201 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class ReportTablePanelComponent implements OnInit {
 
   reports: Report[] = [];
-  index = 1; // Current page index
-  showNum: number = 10; // Number of reports to display per page
-  currentRoute: string = '';
-  successMessage: string = '';
-  errorMessage: string = '';
-
+  index = 1;
+  showNum: number = 10;
+  post: Post = {
+    id: 0,
+    date_ajout: new Date(),
+    whoposted: '',
+    community: '',
+    communityID:'',
+    content: '',
+    isVisible: true,
+    commentList: [],
+    likeList: [],
+    selectedImageIndex: 0,
+    showComments: false,
+    fileList: []
+  };
+  inputValue: string = '';
+  report : Report ={
+    id:-1,
+    post:-1,
+    cause:"",
+    date_ajout: new Date(),
+    whoposted:"",
+    etat:"",
+    description:"",
+    whoreported:""
+  };
   constructor(
-    private reportService: ReportService,
-    private sanitizer: DomSanitizer,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+    private reportService: ReportService,private postService:PostService,private sanitizer:DomSanitizer) {}
 
   ngOnInit(): void {
-    this.currentRoute = this.router.url;
-    this.loadReports();
+    this.reportService.getReports().subscribe((response)=>{
+      this.reports=response;
+    },(error)=>{
+      console.error("can t fetch reports ")
+    })
   }
-
-  // Load reports from the API
-  loadReports(): void {
-    this.reportService.getReports().subscribe(
-      (data: Report[]) => {
-        this.reports = data;
-        this.successMessage = 'Reports loaded successfully.';
-        this.errorMessage = ''; // Clear error message
-      },
-      (error) => {
-        this.errorMessage = 'Error fetching reports.';
-        console.error('Error fetching reports:', error);
-      }
-    );
-  }
-
-  /**
-   * Handle the change in the number of items to display per page.
-   */
   numViews(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.showNum = Number(target.value);
-    this.index = 1; // Reset to the first page
+    this.IndexChange(1);
   }
-
-  /**
-   * Get the total number of pages based on `showNum`.
-   */
-  getTotalPages(): number {
-    return Math.ceil(this.reports.length / this.showNum);
-  }
-
-  /**
-   * Generate an array of page indices for pagination.
-   */
   getTotIndex(): number[] {
-    return Array.from({length: this.getTotalPages()}, (_, i) => i + 1);
+    const totalPages = Math.ceil(this.reports.length / this.showNum);
+    return Array(totalPages).fill(0).map((_, i) => i + 1);
   }
 
-  /**
-   * Navigate to the next page.
-   */
-  nextIndex(): void {
-    this.index = this.index === this.getTotalPages() ? 1 : this.index + 1;
+  nextIndex(){
+    const totalPages = Math.ceil(this.reports.length / this.showNum);
+    if(totalPages==this.index){
+      this.index=1;
+    }else{
+      this.index++;
+    }
+  }
+  previousIndex(){
+    const totalPages = Math.ceil(this.reports.length / this.showNum);
+    if(this.index==1){
+      this.index=totalPages;
+    }else{
+      this.index--;
+    }
+  }
+  IndexChange(i:number):void{
+    this.index=i;
+  }
+  tableViews():Report[]{
+    if(this.index==1){
+      return  this.reports.slice(this.index-1,this.index*this.showNum)
+    }
+    return this.reports.slice((this.index-1)*this.showNum,this.index*this.showNum);
+  }
+  deleteReport(id: number): void {
+    let index = this.reports.findIndex(report => report.id === id);
+    if (index > -1) {
+      this.reportService.DeleteReport(id).subscribe(
+        () => {
+          console.log("aaaaaaaaaaaaaaaaaaaaaaaa")
+          this.reports.splice(index, 1);
+        },
+        (error) => {
+          console.error('Error deleting report:', error);
+        }
+      );
+    }
   }
 
-  /**
-   * Navigate to the previous page.
-   */
-  previousIndex(): void {
-    this.index = this.index === 1 ? this.getTotalPages() : this.index - 1;
-  }
-
-  /**
-   * Change to a specific page.
-   */
-  IndexChange(i: number): void {
-    this.index = i;
-  }
-
-  /**
-   * Get the subset of reports to display on the current page.
-   */
-  tableViews(): Report[] {
-    const start = (this.index - 1) * this.showNum;
-    return this.reports.slice(start, start + this.showNum);
-  }
-
-
-  validateReport(reportId: number): void {
-
-    this.reportService.validateReport(reportId).subscribe(
-      () => {
-        this.successMessage = `Report with ID ${reportId} validated successfully!`;
-        this.errorMessage = '';
-        this.loadReports();
-      },
-      (error) => {
-        console.error('Error validating report:', error);
-        this.errorMessage = `Failed to validate report with ID ${reportId}`;
-      }
-    );
-  }
-
-  rejectReport(reportId: number): void {
-    this.reportService.rejectReport(reportId).subscribe(
-      () => {
-        this.successMessage = 'Report rejected successfully!';
-        this.errorMessage = '';
-        this.loadReports();
-      },
-      (error) => {
-        this.errorMessage = 'Error rejecting report. Please try again later.';
-        console.error('Error rejecting report:', error);
-      }
-    );
-  }
-  // DeleteReport(reportId: number): void {
-  //   this.reportService.DeleteReport(reportId).subscribe(
+  // validateReport(reportId: number): void {
+  //
+  //   this.reportService.validateReport(reportId).subscribe(
   //     () => {
-  //       this.successMessage = 'Report deleted successfully!';
+  //       this.successMessage = `Report with ID ${reportId} validated successfully!`;
   //       this.errorMessage = '';
   //       this.loadReports();
   //     },
   //     (error) => {
-  //       this.errorMessage = 'Error deleting report. Please try again later.';
-  //       console.error('Error deleting report:', error);
+  //       console.error('Error validating report:', error);
+  //       this.errorMessage = `Failed to validate report with ID ${reportId}`;
   //     }
   //   );
   // }
+  //
+  // rejectReport(reportId: number): void {
+  //   this.reportService.rejectReport(reportId).subscribe(
+  //     () => {
+  //       this.successMessage = 'Report rejected successfully!';
+  //       this.errorMessage = '';
+  //       this.loadReports();
+  //     },
+  //     (error) => {
+  //       this.errorMessage = 'Error rejecting report. Please try again later.';
+  //       console.error('Error rejecting report:', error);
+  //     }
+  //   );
+  // }
+
+  getPostById(id: any,report:Report) {
+    this.postService.getPostById(id).subscribe((response)=>{
+      this.post=response;
+      console.log(response)
+    },(error)=>{
+      console.error(error)
+    })
+    this.report=report
+  }
+  ReinitializePost(){
+    this.post = {
+      id: 0,
+      date_ajout: new Date(),
+      whoposted: '',
+      community: '',
+      communityID:'',
+      content: '',
+      isVisible: true,
+      commentList: [],
+      likeList: [],
+      selectedImageIndex: 0,
+      showComments: false,
+      fileList: []
+    };
+    this.report ={
+      id:-1,
+      post:-1,
+      cause:"",
+      date_ajout: new Date(),
+      whoposted:"",
+      etat:"",
+      description:"",
+      whoreported:""
+    };
+
+  }
+
+  showImage(post: Post, index: number): void {
+    post.selectedImageIndex = index;
+  }
+  getImageUrl(post: Post, index: number): SafeUrl | null {
+    if (post.fileList && post.fileList[index]) {
+      const file: File2 = post.fileList[index];
+      return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
+    }
+    return null;
+  }
+  getTimeSincePost(dateAjout: Date): string {
+    const now = new Date();
+    const timeDifference = now.getTime() - new Date(dateAjout).getTime();
+
+    const minutes = Math.floor(timeDifference / (1000 * 60));
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''} ago`;
+    } else if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    }
+
+    return 'Just now';
+  }
+  createComment(ngform:NgForm,post:Post){};
+  getImageURL(image:any):any{
+    if(image===null)
+      if(this.index++%2==1)
+        return  'assets/images/background/img.png'
+      else
+        return 'assets/images/users/user-1.jpg'
+    else {
+      const file: File2 = image;
+      return this.sanitizer.bypassSecurityTrustUrl(`data:${file.fileType};base64,${file.data}`);
+    }
+  }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environement} from "../environement/environement";
 import {Observable} from "rxjs";
+import {User} from "../Models/User";
 interface LoginData {
   email: string;
   password: string;
@@ -22,5 +23,8 @@ export class UserServiceService {
   }
   public getUsernameById(id: any): Observable<string> {
     return this.httpclient.get<string>(`${this.PATH_OF_API}/api/v1/user/username/${id}`, { responseType: 'text' as 'json' });
+  }
+  public getAll():Observable<User[]>{
+    return  this.httpclient.get<User[]>(this.PATH_OF_API + "/api/v1/auth/users")
   }
 }

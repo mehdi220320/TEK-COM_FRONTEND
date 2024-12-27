@@ -12,40 +12,7 @@
                   <i class='bx bx-dots-horizontal-rounded'></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left post-dropdown-menu">
-                  <a href="#" class="dropdown-item" aria-describedby="savePost">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <i class='bx bx-bookmark-plus post-option-icon'></i>
-                      </div>
-                      <div class="col-md-10">
-                        <span class="fs-9">Save post</span>
-                        <small id="savePost" class="form-text text-muted">Add this to your saved items</small>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#" class="dropdown-item" aria-describedby="hidePost">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <i class='bx bx-hide post-option-icon'></i>
-                      </div>
-                      <div class="col-md-10">
-                        <span class="fs-9">Hide post</span>
-                        <small  class="form-text text-muted">See fewer posts like this</small>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#" class="dropdown-item" aria-describedby="snoozePost">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <i class='bx bx-time post-option-icon'></i>
-                      </div>
-                      <div class="col-md-10">
-                        <span class="fs-9">Snooze Lina for 30 days</span>
-                        <small  class="form-text text-muted">Temporarily stop seeing posts</small>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#" class="dropdown-item" aria-describedby="reportPost">
+                  <a  class="dropdown-item"  [href]="'/reportPost/'+post.id">
                     <div class="row">
                       <div class="col-md-2">
                         <i class='bx bx-block post-option-icon'></i>
@@ -185,6 +152,5 @@
           </div>
         </div>
       </div>
-
-    </div>
+ </div>
 

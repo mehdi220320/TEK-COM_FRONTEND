@@ -12,7 +12,7 @@ import {PostService} from "../../Services/post.service";
 })
 export class CommunityGalleryComponent implements OnInit {
   galery: File2[] = [];
-  posts:Post[]=[]
+  posts:Post[]=[];
   currentRoute: string = '';
   index=1;
   id!: string;

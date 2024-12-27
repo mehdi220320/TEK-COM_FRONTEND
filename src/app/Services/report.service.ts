@@ -13,7 +13,7 @@ export class ReportService  {
 
   constructor(private httpClient: HttpClient ) {}
 
-  getReports() {
+  getReports():Observable<Report[]> {
     return this.httpClient.get<Report[]>(this.PATH_OF_API+"/api/v1/report/reports");
   }
   submitReport(report:any){
@@ -33,11 +33,8 @@ export class ReportService  {
     return this.httpClient.put<number>(`${this.PATH_OF_API}/api/v1/report/ReportNonValider/${reportId}`, { headers: this.requestHeader });
   }
 
-  // DeleteReport(reportId: number): Observable<number> {
-  //   return this.httpClient.delete<number>(
-  //     `${this.PATH_OF_API}/api/v1/report/DeleteReport/${reportId}`,
-  //     { headers: this.requestHeader } // Add headers if necessary
-  //   );
-  // }
+  DeleteReport(reportId: number){
+    return this.httpClient.delete(this.PATH_OF_API+"/api/v1/report/DeleteReport/"+reportId );
+  }
 
 }

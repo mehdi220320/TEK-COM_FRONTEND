@@ -16,7 +16,7 @@ export class PostService {
   getPostByCommunityId(id: string | null) {
     return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/community/"+id);
   }
-  getPostById(id: string | null) {
+  getPostByUserId(id: string | null) {
     return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/user/"+id);
   }
   createPost(postData: any): Observable<any> {
@@ -54,5 +54,7 @@ export class PostService {
     };
     return this.httpClient.post(this.PATH_OF_API + "/api/v1/post/pressLike", payload);
   }
-
+  getPostById(id:any):Observable<Post>{
+    return this.httpClient.get<Post>(this.PATH_OF_API+"/api/v1/post/"+id+"/info");
+  }
 }

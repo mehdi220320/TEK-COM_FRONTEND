@@ -63,6 +63,20 @@
         />
         <label for="other" class="form-check-label">Other</label>
       </div>
+      <div >
+        <label for="description"  >Description: </label>
+        <textarea
+          type="text"
+          id="description"
+          name="description"
+          class="form-control bg-white  "
+          style="overflow: hidden"
+          [(ngModel)]="description"
+          placeholder="Please describe your reasons in detail here..."
+        >
+        </textarea>
+
+      </div>
     </div>
 
     <button type="submit" class="btn report-btn">Submit Report</button>

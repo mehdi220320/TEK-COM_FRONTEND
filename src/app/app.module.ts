@@ -35,9 +35,15 @@ const appRoutes:Routes=[
       { path: 'followers', component: CommunityFollowersComponent }
     ]
   },
-  {path:"adminIndex",component:ANavbarComponent},
-  {path:"dashboard",component:DasboardComponent},
-  {path:"tablepanel",component:UsersTablePanelComponent},
+  {path:"adminIndex",component:ANavbarComponent,
+    children:[
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {path:"dashboard",component:DasboardComponent},
+      {path:"tablepanel",component:UsersTablePanelComponent},
+      {path:"reportTable",component: ReportTablePanelComponent}
+    ]
+  },
+  {path:"reportPost/:postId",component:ReportpostComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
 @NgModule({

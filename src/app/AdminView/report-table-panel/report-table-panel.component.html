@@ -1,55 +1,30 @@
 <div class="container-fluid">
-  <h3 class="text-dark mb-4 mt-4">Reports</h3>
-
-  <!-- Success/Failure Messages -->
-  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-
+  <h3 class="text-dark mb-4 mt-4">Admin View "Reports panel"</h3>
   <div class="card shadow">
-    <!-- Card Header -->
     <div class="card-header py-3">
-      <p class="text-primary m-0 fw-bold">Report Details</p>
+      <p class="text-primary m-0 fw-bold">Reports Info's List</p>
     </div>
-
-    <!-- Card Body -->
     <div class="card-body">
-      <!-- Top Controls -->
-      <div class="row mb-3 align-items-center">
-        <!-- Items per Page Dropdown -->
+      <div class="row">
         <div class="col-md-6 text-nowrap">
-          <label class="form-label">
-            Show&nbsp;
-            <select
-              class="form-select form-select-sm d-inline-block"
-              [(ngModel)]="showNum"
-              (change)="numViews($event)"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </label>
+          <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable" (change)="numViews($event)">
+            <label class="form-label" >Show&nbsp;
+              <select class="d-inline-block form-select form-select-sm">
+                <option value="10" selected="">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>&nbsp;</label></div>
         </div>
-
-        <!-- Search Box -->
-        <div class="col-md-6 text-md-end">
-          <label class="form-label">
-            <input
-              type="search"
-              class="form-control form-control-sm"
-              placeholder="Search"
-            />
-          </label>
+        <div class="col-md-6">
+          <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
         </div>
       </div>
-
-      <!-- Report Table -->
-      <div class="table-responsive mt-2">
-        <table class="table table-hover table-striped align-middle">
+      <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+        <table class="table my-0">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>id</th>
             <th>Cause</th>
             <th>Date</th>
             <th>Post Creator</th>
@@ -60,58 +35,99 @@
           </thead>
           <tbody>
           <tr *ngFor="let report of tableViews()">
-            <td>{{ report.id }}</td>
+            <td>{{report.id}}</td>
             <td>{{ report.cause }}</td>
-            <td>{{ report.date_ajout | date: 'MM/dd/yyyy' }}</td>
+            <td>{{ report.date_ajout | date: 'MM/dd/yy' }}</td>
             <td>{{ report.whoposted }}</td>
-            <td>{{ report.post }}</td>
+            <td>{{ report.post  }}</td>
+            <td>{{report.etat}}</td>
             <td>
-                <span
-                  class="badge"
-                  [ngClass]="{
-                    'bg-success': report.etat === 'Traité',
-                    'bg-warning': report.etat === 'Non traité'
-                  }"
-                >
-                  {{ report.etat }}
-                </span>
-            </td>
-            <td>
-              <button
-                class="btn btn-success"
-                (click)="validateReport(report.id)"
-                [disabled]="report.etat === 'Traité'">
-                Validate
-              </button>
-              <button
-                class="btn btn-dark"
-                (click)="rejectReport(report.id)"
-                [disabled]="report.etat === 'Traité'">
-                Reject
-              </button>
-
-<!--              <button-->
-<!--                class="btn btn-danger"-->
-<!--                (click)="DeleteReport(report.id)">-->
-<!--                Delete-->
-<!--              </button>-->
-
+              <button class="btn btn-primary mr-1"  (click)="dialog.showModal();getPostById(report.post,report)" >Treate</button>
+              <button class="btn btn-danger" (click)="deleteReport(report.id)">Delete</button>
             </td>
           </tr>
           </tbody>
+          <tfoot>
+          <tr>
+            <td><strong>id</strong></td>
+            <td><strong>Cause</strong></td>
+            <td><strong>Date</strong></td>
+            <td><strong>Post Creator</strong></td>
+            <td><strong>Post ID</strong></td>
+            <td><strong>Status</strong></td>
+            <td><strong>Actions</strong></td>
+          </tr>
+          </tfoot>
         </table>
       </div>
-
-      <!-- Pagination Controls -->
-      <div class="d-flex justify-content-between">
-        <button class="btn btn-secondary" (click)="previousIndex()">Previous</button>
-        <button class="btn btn-secondary" (click)="nextIndex()">Next</button>
-        <ul class="pagination mb-0">
-          <li *ngFor="let index of getTotIndex()" class="page-item">
-            <a class="page-link" href="#" (click)="IndexChange(index)">{{ index }}</a>
-          </li>
-        </ul>
+      <div class="row">
+        <div class="col-md-6 align-self-center">
+          <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to {{this.showNum}} of {{reports.length}}</p>
+        </div>
+        <div class="col-md-6">
+          <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+            <ul class="pagination" >
+              <li class="page-item "><a class="page-link" aria-label="Previous" (click)="previousIndex()"><span aria-hidden="true">«</span></a></li>
+              <li  *ngFor="let i of getTotIndex()" class="page-item " [ngClass]="{ 'active': this.index === i }" ><a class="page-link" (click)="IndexChange(i)" >{{i}}</a></li>
+              <li class="page-item"><a class="page-link" aria-label="Next" (click)="nextIndex()"><span aria-hidden="true">»</span></a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<dialog #dialog id="dialog">
+  <button (click)="dialog.close();ReinitializePost()" aria-label="close" class="x">❌</button>
+  <div class="dialogcard">
+    <div class="col-lg-7 post-images-content ">
+      <div class="d-block ">
+        <ng-container *ngFor="let image of post.fileList; let i = index">
+          <img *ngIf="post.selectedImageIndex === i" [src]="getImageUrl(post, i)" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
+        </ng-container>
+      </div>
+      <div class="dots" *ngIf="post.fileList.length >= 2">
+        <label *ngFor="let image of post.fileList; let i = index"
+               (click)="showImage(post, i)"
+               [ngClass]="{'bg-light': post.selectedImageIndex === i}">
+        </label>
+      </div>
+    </div>
+
+    <div class="paper">
+      <div class="lines">
+        <div contenteditable>
+          <strong>Report Info's List</strong>
+          <ul>
+            <li><strong>Report informations : id"{{report.id}}"</strong>
+              <ul>
+                <li><strong>The reporter :</strong> {{report.whoreported}}</li>
+                <li><strong>Reported In :</strong> {{report.date_ajout | date: 'MM/dd/yy' }}</li>
+                <li><strong>Reason :</strong> {{report.cause}} </li>
+                <li><strong>Status :</strong> {{report.etat}}</li>
+                <li><strong>Description:</strong> {{ report.description}}</li>
+              </ul>
+            </li>
+            <li><strong>Post informations : id"{{report.post}}"</strong>
+              <ul>
+                <li><strong>The poster :</strong> {{report.whoposted}}</li>
+                <li><strong>Reported In :</strong> {{post.date_ajout | date: 'MM/dd/yy' }}</li>
+                <li><strong>Community ID :</strong> {{post.communityID}} </li>
+                <li><strong>Community :</strong> {{post.community}}</li>
+                <li><strong>Number of likes :</strong> {{ post.likeList.length }}</li>
+                <li><strong>Number of comments :</strong> {{ post.commentList.length }}</li>
+                <li><strong>Number of pictures : </strong>{{post.fileList.length}}</li>
+                <li><strong>Content : </strong>{{post.content}}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="holes">
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+      </div>
+    </div>
+  </div>
+</dialog>

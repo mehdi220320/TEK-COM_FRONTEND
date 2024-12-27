@@ -32,7 +32,7 @@
           <input type="file" id="coverimg" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
         </div>
       </div>
-      <div >
+      <div *ngIf="creationStatus===false;else submitElse">
         <div class="form-row submit-btn">
           <div class="input-data">
             <div class="inner"></div>

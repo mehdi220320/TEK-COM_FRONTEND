@@ -34,11 +34,12 @@ export class CreateCommunityComponent implements OnInit {
   changeStatus(status:boolean){
     this.creationStatus=status;
   }
+
   createCommunity(comForm: NgForm) {
     const formData = new FormData();
     formData.append('title', comForm.value.title);
     formData.append('description', comForm.value.description);
-    formData.append('usercreate', '1');
+    formData.append('usercreate', localStorage.getItem('id') || '-1');
 
     this.communityService.createCommunity(formData).subscribe(
       (response) => {
