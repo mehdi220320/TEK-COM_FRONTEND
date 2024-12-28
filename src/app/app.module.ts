@@ -20,6 +20,7 @@ import { CommunityGalleryComponent } from './community/community-gallery/communi
 import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
 import {ReportpostComponent} from "./post/reportpost/reportpost.component";
 import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
+import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
@@ -62,7 +63,8 @@ const appRoutes:Routes=[
     CommunityFollowersComponent,
     CommunityGalleryComponent,
     DasboardComponent,
-    ReportpostComponent
+    ReportpostComponent,
+    LeftSideNavComponent
   ],
   imports: [
     BrowserModule,

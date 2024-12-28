@@ -50,8 +50,19 @@ export class ReportTablePanelComponent implements OnInit {
     private reportService: ReportService,private postService:PostService,private sanitizer:DomSanitizer) {}
 
   ngOnInit(): void {
+  this.loadReports();
+  }
+  loadReports(){
     this.reportService.getReports().subscribe((response)=>{
       this.reports=response;
+      this.reports.sort((a, b) => {
+        if (a.etat === "Stand-by" && b.etat !== "Stand-by") {
+          return -1;
+        } else if (a.etat !== "Stand-by" && b.etat === "Stand-by") {
+          return 1;
+        }
+        return 0;
+      });
     },(error)=>{
       console.error("can t fetch reports ")
     })
@@ -106,38 +117,53 @@ export class ReportTablePanelComponent implements OnInit {
     }
   }
 
-  // validateReport(reportId: number): void {
-  //
-  //   this.reportService.validateReport(reportId).subscribe(
-  //     () => {
-  //       this.successMessage = `Report with ID ${reportId} validated successfully!`;
-  //       this.errorMessage = '';
-  //       this.loadReports();
-  //     },
-  //     (error) => {
-  //       console.error('Error validating report:', error);
-  //       this.errorMessage = `Failed to validate report with ID ${reportId}`;
-  //     }
-  //   );
-  // }
-  //
-  // rejectReport(reportId: number): void {
-  //   this.reportService.rejectReport(reportId).subscribe(
-  //     () => {
-  //       this.successMessage = 'Report rejected successfully!';
-  //       this.errorMessage = '';
-  //       this.loadReports();
-  //     },
-  //     (error) => {
-  //       this.errorMessage = 'Error rejecting report. Please try again later.';
-  //       console.error('Error rejecting report:', error);
-  //     }
-  //   );
-  // }
+  validateReport(reportId: number): void {
+    this.reportService.validateReport(reportId).subscribe(
+      () => {
+        const rep = this.reports.find(r => r.id === reportId);
+        if(rep){
+          this.reports.forEach(r => {
+            if (r.post === rep.post) {
+              r.etat = "Banned";
+            }
+          });
+        }
+        // this.successMessage = `Report with ID ${reportId} validated successfully!`;
+        // this.errorMessage = '';
+      },
+      (error) => {
+        console.error('Error validating report:', error);
+        // this.errorMessage = `Failed to validate report with ID ${reportId}`;
+      }
+    );
+  }
+
+  rejectReport(reportId: number): void {
+    this.reportService.rejectReport(reportId).subscribe(
+      () => {
+        const rep = this.reports.find(r => r.id === reportId);
+        if(rep){
+          this.reports.forEach(r => {
+            if (r.post === rep.post) {
+              r.etat = "Fake";
+            }
+          });
+        }
+        // this.successMessage = 'Report rejected successfully!';
+        // this.errorMessage = '';
+
+      },
+      (error) => {
+        // this.errorMessage = 'Error rejecting report. Please try again later.';
+        console.error('Error rejecting report:', error);
+      }
+    );
+  }
 
   getPostById(id: any,report:Report) {
     this.postService.getPostById(id).subscribe((response)=>{
       this.post=response;
+      this.post.selectedImageIndex=0
       console.log(response)
     },(error)=>{
       console.error(error)
