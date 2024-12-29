@@ -4,6 +4,7 @@ import {File2, Post} from "../../Models/Post";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {NgForm} from "@angular/forms";
 import {PostService} from "../../Services/post.service";
+import {Comments} from "../../Models/Comments";
 
 @Component({
   selector: 'app-community-gallery',
@@ -16,6 +17,7 @@ export class CommunityGalleryComponent implements OnInit {
   currentRoute: string = '';
   index=1;
   id!: string;
+  UserLOGINiD= localStorage.getItem('id');
 
   post: Post = {
     id: 0,
@@ -132,5 +134,52 @@ export class CommunityGalleryComponent implements OnInit {
         console.log("error fetching post");
       })
   }
-  createComment(ngform:NgForm,post:Post){};
+  createComment(commentForm: NgForm, post: Post): void {
+    this.postService.addComment(commentForm.value.description, localStorage.getItem('id'), post.id).subscribe(
+      (response) => {
+        console.log('Comment created successfully:', response);
+        const newComment: Comments = {
+          id: response.id,
+          description: response.description,
+          date: new Date(response.date),
+          username: response.username,
+          postid: response.postid
+        };
+        this.post.commentList.push(newComment);
+        commentForm.reset();
+      },
+      (error) => {
+        console.error('Error creating comment:', error);
+      }
+    );
+  }
+  pressLike(postId: number): void {
+    this.postService.pressLike(this.UserLOGINiD, postId).subscribe(
+      (response) => {
+        console.log("Successfully liked the post");
+        const parsedId = this.UserLOGINiD ? parseInt(this.UserLOGINiD, 10) :-1;
+        const post = this.posts.find(p => p.id === postId);
+        if (post) {
+          const existingLikeIndex = post.likeList.findIndex(like => like.userID === parsedId);
+
+          if (existingLikeIndex === -1) {
+            post.likeList.push({ id: response.id, userID: parsedId, postid: postId });
+          } else {
+            post.likeList.splice(existingLikeIndex, 1);
+          }
+        }
+      },
+      (error) => {
+        console.error("Error liking the post", error);
+      }
+    );
+  }
+  checkLike(userID: any, post: Post): boolean {
+    const parsedId = this.UserLOGINiD ? parseInt(this.UserLOGINiD, 10) : null;
+
+    if (parsedId === null) {
+      return false;
+    }
+    return post.likeList.some(item => item.userID === parsedId);
+  }
 }

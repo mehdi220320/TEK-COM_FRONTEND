@@ -9,5 +9,6 @@ export interface User{
    isactive:string,
    role:string,
    status:string,
+   bio:string,
    image:File2
 }

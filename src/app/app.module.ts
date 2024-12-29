@@ -21,10 +21,15 @@ import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
 import {ReportpostComponent} from "./post/reportpost/reportpost.component";
 import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
 import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SearchComponent } from './navbar/search/search.component';
 const appRoutes:Routes=[
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"home",component:NavbarComponent},
+  {path:"home",component:NavbarComponent,children:[
+      {path:"search/:search",component:SearchComponent},
+      { path: '', redirectTo: '', pathMatch: 'full' },
+    ]},
   { path: 'reportpost', component: ReportpostComponent },
   {
     path: 'community/:id',
@@ -44,9 +49,11 @@ const appRoutes:Routes=[
       {path:"reportTable",component: ReportTablePanelComponent}
     ]
   },
+  {path:'profile/:id',component:ProfileComponent},
   {path:"reportPost/:postId",component:ReportpostComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' },]
+  { path: '**', redirectTo: '/home' },
+]
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +71,9 @@ const appRoutes:Routes=[
     CommunityGalleryComponent,
     DasboardComponent,
     ReportpostComponent,
-    LeftSideNavComponent
+    LeftSideNavComponent,
+    ProfileComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

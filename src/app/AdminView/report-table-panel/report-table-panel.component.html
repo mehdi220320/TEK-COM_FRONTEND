@@ -82,7 +82,7 @@
 <dialog #dialog id="dialog">
   <button (click)="dialog.close();ReinitializePost()" aria-label="close" class="x">❌</button>
   <div class="dialogcard">
-    <div class="col-lg-7 post-images-content ">
+    <div class="col-lg-6 post-images-content ">
       <div class="d-block ">
         <ng-container *ngFor="let image of post.fileList; let i = index">
           <img style="max-height: 550px" *ngIf="post.selectedImageIndex === i" [src]="getImageUrl(post, i)" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
@@ -95,7 +95,7 @@
         </label>
       </div>
     </div>
-      <div class="ml-1 col-lg-5">
+      <div class="ml-1 col-lg-6 ">
         <div contenteditable style="overflow-y: scroll;
                                     scrollbar-width: thin;
                                     height: 600px;
@@ -127,7 +127,7 @@
           </ul>
         </div>
         <div style=" display: flex;
-                          margin-left: 262px;
+                          margin-left: 390px;
                           font-size: 1.5em;">
           <button (click)="dialog.close();ReinitializePost()"  class="btn btn-dark mr-1"><strong > Cancel </strong></button>
           <button (click)="rejectReport(report.id);dialog.close()" class="btn btn-primary mr-1"><strong  > Reject </strong></button>

@@ -1,0 +1,19 @@
+<div class="bg-white py-3 px-4 shadow-sm">
+  <div class="card-head d-flex justify-content-between">
+    <h5 class="mb-4"><strong>Communities:</strong> {{searchQuery}}</h5>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-6 mb-2 h-50 " *ngFor="let community of communities" >
+      <div class="card group-card shadow-sm">
+        <img style="height: 224px" class="gallery_card" [src]="getImageURL(community.image)" alt="Group image">
+        <div class="card-body">
+          <div class="btn-group w-100" role="group">
+            <a [href]="'community/'+community.id" style="display: contents;">
+              <button class="btn btn-quick-link join-group-btn border w-100" > {{community.title}}</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

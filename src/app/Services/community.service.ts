@@ -12,10 +12,15 @@ export class CommunityService {
   PATH_OF_API = environement.apiBaseUrl;
   requestHeader = new HttpHeaders({"No-Auth": "True"})
   constructor(private httpClient:HttpClient ) {}
+  getAllCommunities():Observable<Community[]>{
+    return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/communities")
+  }
   getCommunitybyUserID(userId:any):Observable<Community[]>{
     return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/communityByUserId/"+userId)
   }
-
+  getCommunityBySearch(search:any){
+    return this.httpClient.get<Community[]>(this.PATH_OF_API+"/api/v1/com/search/"+search)
+  }
   createCommunity(community: any): Observable<any> {
     return this.httpClient.post<any>(this.PATH_OF_API + "/api/v1/com/addcom", community);
   }

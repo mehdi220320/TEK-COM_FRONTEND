@@ -27,4 +27,7 @@ export class UserServiceService {
   public getAll():Observable<User[]>{
     return  this.httpclient.get<User[]>(this.PATH_OF_API + "/api/v1/auth/users")
   }
+  public getUserById(id:any):Observable<User>{
+    return  this.httpclient.get<User>(this.PATH_OF_API + "/api/v1/auth/user/"+id)
+  }
 }
