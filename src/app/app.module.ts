@@ -24,6 +24,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.component';
 import { SendforgettpassComponent } from './forgetpassword/sendforgettpass/sendforgettpass.component';
 import { HomeComponent } from './home/home.component';
+import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
 
 const appRoutes:Routes=[
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
@@ -75,7 +76,9 @@ const appRoutes:Routes=[
     ReportpostComponent,
     ForgetpassComponent,
     SendforgettpassComponent,
-    HomeComponent
+    HomeComponent,
+    LeftSideNavComponent
+
   ],
   imports: [
     BrowserModule,
