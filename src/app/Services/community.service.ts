@@ -44,6 +44,7 @@ export class CommunityService {
     const formData=new FormData();
     formData.append('userId',userId);
     formData.append('communityId',communityId);
+    console.log("here is the data"+formData) ;
     return this.httpClient.post(this.PATH_OF_API+"/api/v1/com/addMember",formData);
   }
   deleteMember(communityId: any, userId: any): Observable<any> {
