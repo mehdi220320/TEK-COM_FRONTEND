@@ -38,9 +38,8 @@ export class CreatePostComponent implements OnInit {
     }
 
     this.currenturl=this.router.url
-    if(this.currenturl!='/home'){
+    if(this.currenturl.startsWith('/community')){
       const parts = this.currenturl.split('/');
-
       this.communityId = parts[2];
 
       this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
@@ -49,6 +48,12 @@ export class CreatePostComponent implements OnInit {
         console.error("isMember fonction doesn t work properly")
       })
 
+    }else if (this.currenturl.startsWith("/profile")){
+      const parts = this.currenturl.split('/');
+      const userpageid = parts[2];
+      if(userpageid===localStorage.getItem('id')){
+        this.isMember=true;
+      }
     }else{
       this.isMember=true;
     }
@@ -65,8 +70,6 @@ export class CreatePostComponent implements OnInit {
       images: this.imageFiles.map(fileHandle => fileHandle.file)
     };
 
-
-    // Use the service to create the post
     this.postService.createPost(postData).subscribe(
       (response) => {
         console.log('Post created successfully:', response);

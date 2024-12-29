@@ -7,6 +7,15 @@ interface LoginData {
   email: string;
   password: string;
 }
+interface forgetpassData{
+  newpassword : string;
+
+}
+interface forgetData{
+  email : string;
+
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +37,18 @@ export class UserServiceService {
     return  this.httpclient.get<User[]>(this.PATH_OF_API + "/api/v1/auth/users")
   }
   public getUserById(id:any):Observable<User>{
-    return  this.httpclient.get<User>(this.PATH_OF_API + "/api/v1/auth/user/"+id)
+    return  this.httpclient.get<User>(this.PATH_OF_API + "/api/v1/auth/find2/"+id)
+  }
+  public forgetpass2(Forgetpassdata: forgetpassData) {
+    const email = localStorage.getItem('email');
+
+    const body = { email , ...Forgetpassdata };
+    return this.httpclient.post(this.PATH_OF_API + "/api/v1/auth/forgetpass2", body)
+  }
+  public forgetpass(ForgetData: forgetData) {
+    return this.httpclient.post(this.PATH_OF_API + "/api/v1/auth/forgetpass", ForgetData)
+  }
+  public getuser2bymail2(email:string): any {
+    return this.httpclient.get<any>(`${this.PATH_OF_API}/api/v1/auth/findbymail2/`+email);
   }
 }

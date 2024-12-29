@@ -69,4 +69,7 @@ export class PostService {
   getPostCountsByYearAndMonth(): Observable<Map<string, number>> {
     return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/post/post-counts-by-year-and-month");
   }
+  getuserPosts(userid: any):Observable<Post[]> {
+    return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/userposts/"+userid);
+  }
 }

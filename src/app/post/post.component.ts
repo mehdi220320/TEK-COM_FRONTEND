@@ -52,6 +52,19 @@ export class PostComponent implements OnInit {
         }
       );
     }
+    else if (this.currentRoute.startsWith("/profile")){
+      const parts = this.currentRoute.split('/');
+      const userID = parts[2];
+      this.postService.getuserPosts(userID).subscribe(
+        (data: Post[]) => {
+          this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
+          console.log("Posts with fileList:", this.posts);
+        },
+        (error) => {
+          console.error("Error fetching posts:", error);
+        }
+      );
+    }
     else {
       const parts = this.currentRoute.split('/');
       const communityId = parts[2];
