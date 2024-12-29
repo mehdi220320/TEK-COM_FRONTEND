@@ -20,10 +20,20 @@ import { CommunityGalleryComponent } from './community/community-gallery/communi
 import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
 import {ReportpostComponent} from "./post/reportpost/reportpost.component";
 import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
+import { NgChartsModule } from 'ng2-charts';
+import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.component';
+import { SendforgettpassComponent } from './forgetpassword/sendforgettpass/sendforgettpass.component';
+import { HomeComponent } from './home/home.component';
+
 const appRoutes:Routes=[
+  {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent},
+  {path:"sendforget",component:SendforgettpassComponent},
+  {path:"forgetpass",component:ForgetpassComponent},
+  {path:"home2",component:HomeComponent},
+
   { path: 'reportpost', component: ReportpostComponent },
   {
     path: 'community/:id',
@@ -62,7 +72,10 @@ const appRoutes:Routes=[
     CommunityFollowersComponent,
     CommunityGalleryComponent,
     DasboardComponent,
-    ReportpostComponent
+    ReportpostComponent,
+    ForgetpassComponent,
+    SendforgettpassComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +83,8 @@ const appRoutes:Routes=[
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    ReportTablePanelComponent
+    ReportTablePanelComponent,
+    NgChartsModule
   ],
   exports:[RouterModule],
   providers: [UserServiceService],

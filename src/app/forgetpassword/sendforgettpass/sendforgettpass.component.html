@@ -12,31 +12,24 @@
           </div>
         </div>
       </div>
-      <form #loginForm="ngForm"(ngSubmit)="login(loginForm)">
+      <form #forgetpassForm="ngForm"(ngSubmit)="forgetpass(forgetpassForm)">
         <div class="row ">
           <div class="col-md-12">
             <div class="form-group">
+
+              <h5> Entrez votre e-mail pour recevoir <br>un e-mail de réinitialisation</h5>
+              <h6 *ngIf="showalert" style="color: red ;"><p style="margin-right: 50px;"> Vérifiez votre e-mail  </p> <p>Si vous rencontrez un problème, contactez l'administrateur de sécurité </p></h6>
               <input type="text" class="form-control" ngModel name="email" placeholder="Email Address">
             </div>
           </div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <input type="password" class="form-control" ngModel  name="password" placeholder="Password">
-            </div>
-          </div>
+
           <div class="col-md-12 mb-3">
             <a routerLink="/sendforget">Forgot password?</a>
           </div>
           <div class="col-md-6">
-            <label class="custom-control material-checkbox">
-              <input type="checkbox" class="material-control-input">
-              <span class="material-control-indicator"></span>
-              <span class="material-control-description">Remember Me</span>
-            </label>
+
           </div>
-          <div *ngIf="isLoading">
-            Connexion...
-          </div>
+
           <div class="col-md-6 text-right">
             <div class="form-group">
               <button type="submit" class="btn btn-primary sign-up">Sign In</button>
@@ -51,10 +44,10 @@
     </div>
   </div>
   <div class="col-md-6 d-flex justify-content-center align-items-center"
-       >
+  >
     <div class="auth-left-content mt-5 mb-5 text-center">
 
-      <img src="./assets/images/ICP-LP-Heros_Proserv-B_1.webp" style="width: 110%;margin-left: -10%" alt="Logo">
+      <img src="./assets/images/_2EC7CADA-EF84-4EBA-982E-B985C33F9E10_-removebg-preview.png" style="width: 110%;margin-left: -10%" alt="Logo">
 
     </div>
   </div>
@@ -72,3 +65,44 @@
   </div>
 </div>
 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<section>
+  <div class="form-box">
+    <div class="form-value">
+      <form #forgetpassForm="ngForm"(ngSubmit)="forgetpass(forgetpassForm)">
+        <div class="img"><img src="assets/LOGO-ATTIJARI-NEW.gif" width="150px"> </div>
+        <h2>RECETTE-APP</h2>
+
+        <h5> Entrez votre e-mail pour recevoir <br>un e-mail de réinitialisation</h5>
+        <h6 *ngIf="showalert" style="color: red ;"><p style="margin-right: 50px;"> Vérifiez votre e-mail  </p> <p>Si vous rencontrez un problème, contactez l'administrateur de sécurité </p></h6>
+
+        <div class="inputbox">
+
+
+          <input type="email"
+                 ngModel
+                 name="email"
+                 id="email" required>
+          <label  place>E-mail</label>
+          <div class="icon"> <img src="assets/mail.png" width="70px" alt="Input Icon"> </div>
+        </div>
+
+
+
+
+
+        <button type="submit">Confirmer</button>
+        <div class="forget">
+          <a routerLink="/login">Retour à la page de connexion</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

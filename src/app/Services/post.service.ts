@@ -57,4 +57,16 @@ export class PostService {
   getPostById(id:any):Observable<Post>{
     return this.httpClient.get<Post>(this.PATH_OF_API+"/api/v1/post/"+id+"/info");
   }
+  getPostCountsByCommunity(): Observable<Map<string, number>> {
+    return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/post/counts");
+  }
+  getTopUsersByPostCounts(): Observable<Map<string, number>> {
+    return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/post/top-users");
+  }
+  getPostCountsByYear(): Observable<Map<number, number>> {
+    return this.httpClient.get<Map<number, number>>(this.PATH_OF_API + "/api/v1/post/post-counts-by-year");
+  }
+  getPostCountsByYearAndMonth(): Observable<Map<string, number>> {
+    return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/post/post-counts-by-year-and-month");
+  }
 }

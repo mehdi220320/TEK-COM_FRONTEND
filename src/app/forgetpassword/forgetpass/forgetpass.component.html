@@ -12,34 +12,38 @@
           </div>
         </div>
       </div>
-      <form #loginForm="ngForm"(ngSubmit)="login(loginForm)">
+      <form  #forgetpass2Form="ngForm"(ngSubmit)="forgetpass2(forgetpass2Form)">
         <div class="row ">
           <div class="col-md-12">
             <div class="form-group">
-              <input type="text" class="form-control" ngModel name="email" placeholder="Email Address">
+              <input type="password"
+                     ngModel
+                     name="newpassword"
+                     placeholder="New password"
+                     id="password2" required
+                     class="form-control">
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <input type="password" class="form-control" ngModel  name="password" placeholder="Password">
+              <input type="password"
+                     ngModel
+                     name="confirmpassword"
+                     placeholder="Confirm password"
+
+                     id="password1" required
+                     class="form-control">
             </div>
           </div>
-          <div class="col-md-12 mb-3">
-            <a routerLink="/sendforget">Forgot password?</a>
-          </div>
           <div class="col-md-6">
-            <label class="custom-control material-checkbox">
-              <input type="checkbox" class="material-control-input">
-              <span class="material-control-indicator"></span>
-              <span class="material-control-description">Remember Me</span>
-            </label>
+
           </div>
           <div *ngIf="isLoading">
             Connexion...
           </div>
           <div class="col-md-6 text-right">
             <div class="form-group">
-              <button type="submit" class="btn btn-primary sign-up">Sign In</button>
+              <button type="submit" class="btn btn-primary sign-up">Save</button>
             </div>
           </div>
           <div class="col-md-12 text-monospace text-center  ">
@@ -51,10 +55,10 @@
     </div>
   </div>
   <div class="col-md-6 d-flex justify-content-center align-items-center"
-       >
+  >
     <div class="auth-left-content mt-5 mb-5 text-center">
 
-      <img src="./assets/images/ICP-LP-Heros_Proserv-B_1.webp" style="width: 110%;margin-left: -10%" alt="Logo">
+      <img src="./assets/images/_6D1A69BC-B3F2-42E1-A671-083A7FD39E2C_-removebg-preview.png" style="width: 110%;margin-left: -10%" alt="Logo">
 
     </div>
   </div>
