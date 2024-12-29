@@ -1,0 +1,14 @@
+<div class="card newsfeed-user-card h-100">
+  <ul class="list-group list-group-flush contacts  list-group "  >
+    <li class="list-group-item">
+      <h6>List of your communities</h6>
+    </li>
+    <li class="list-group-item d-flex justify-content-between media align-items-center sd-active" *ngFor="let community of communities">
+      <a [href]="'/community/'+community.id" class="sidebar-item">
+        <img  [src]="getImageURL(community.image)" width="40" height="40" class="rounded-circle" >
+        {{community.title}}
+      </a>
+    </li>
+
+  </ul>
+</div>

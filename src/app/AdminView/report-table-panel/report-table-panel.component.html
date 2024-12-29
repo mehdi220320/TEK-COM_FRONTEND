@@ -40,9 +40,11 @@
             <td>{{ report.date_ajout | date: 'MM/dd/yy' }}</td>
             <td>{{ report.whoposted }}</td>
             <td>{{ report.post  }}</td>
-            <td>{{report.etat}}</td>
+            <td *ngIf="report.etat==='Stand-by'" style="color:yellow"><strong>{{report.etat}}</strong></td>
+            <td *ngIf="report.etat==='Banned'" style="color:red" ><strong>{{report.etat}}</strong></td>
+            <td *ngIf="report.etat==='Fake'" style="color:green" ><strong>{{report.etat}}</strong></td>
             <td>
-              <button class="btn btn-primary mr-1"  (click)="dialog.showModal();getPostById(report.post,report)" >Treate</button>
+              <button *ngIf="report.etat==='Stand-by'" class="btn btn-primary mr-1"  (click)="dialog.showModal();getPostById(report.post,report)" >Treate</button>
               <button class="btn btn-danger" (click)="deleteReport(report.id)">Delete</button>
             </td>
           </tr>
@@ -83,7 +85,7 @@
     <div class="col-lg-7 post-images-content ">
       <div class="d-block ">
         <ng-container *ngFor="let image of post.fileList; let i = index">
-          <img *ngIf="post.selectedImageIndex === i" [src]="getImageUrl(post, i)" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
+          <img style="max-height: 550px" *ngIf="post.selectedImageIndex === i" [src]="getImageUrl(post, i)" class="post-content rounded " [alt]="'Post image ' + (i + 1)">
         </ng-container>
       </div>
       <div class="dots" *ngIf="post.fileList.length >= 2">
@@ -93,11 +95,12 @@
         </label>
       </div>
     </div>
-
-    <div class="paper">
-      <div class="lines">
-        <div contenteditable>
-          <strong>Report Info's List</strong>
+      <div class="ml-1 col-lg-5">
+        <div contenteditable style="overflow-y: scroll;
+                                    scrollbar-width: thin;
+                                    height: 600px;
+                                    ">
+          <strong style="font-size: 2em">Report Info's List</strong>
           <ul>
             <li><strong>Report informations : id"{{report.id}}"</strong>
               <ul>
@@ -120,14 +123,16 @@
                 <li><strong>Content : </strong>{{post.content}}</li>
               </ul>
             </li>
+            <br>
           </ul>
         </div>
-      </div>
-      <div class="holes">
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
+        <div style=" display: flex;
+                          margin-left: 262px;
+                          font-size: 1.5em;">
+          <button (click)="dialog.close();ReinitializePost()"  class="btn btn-dark mr-1"><strong > Cancel </strong></button>
+          <button (click)="rejectReport(report.id);dialog.close()" class="btn btn-primary mr-1"><strong  > Reject </strong></button>
+          <button (click)="validateReport(report.id);dialog.close()" class="btn btn-danger mr-1"><strong > Ban </strong></button>
+        </div>
       </div>
     </div>
-  </div>
 </dialog>
