@@ -41,14 +41,14 @@ export class LoginComponent implements OnInit {
         }
         const role1 = response.role;
         if (role1 === 'STUD') {
-          this.router.navigate(['/navbar']);
+          this.router.navigate(['/home']);
           this.isLoading = false;
         } else if (role1==='PROF')
-        { this.router.navigate(['/seancebyproject']);
+        { this.router.navigate(['/home']);
           this.isLoading = false;}else if (role1==='orga')
         { this.router.navigate(['/list']);
           this.isLoading = false;}
-        else if(role1 === 'ADMIN'){this.router.navigate(['/seancebyproject']);this.isLoading = false;}
+        else if(role1 === 'ADMIN'){this.router.navigate(['/adminIndex']);this.isLoading = false;}
 
 
       },

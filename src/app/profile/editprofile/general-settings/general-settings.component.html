@@ -1,0 +1,50 @@
+<div class="settings-form p-4">
+  <h2>Your Account</h2>
+  <form #updateForm="ngForm"(ngSubmit)="update(updateForm)" class="mt-4 settings-form">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="settingsFirstName">First Name</label>
+        <input ngModel type="text" class="form-control" id="settingsFirstName" name="settingsFirstName" [placeholder]="user.prenom">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="settingsLastName">Last Name</label>
+        <input ngModel type="text" class="form-control" id="settingsLastName" name="settingsLastName" [placeholder]="user.nom">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="settingsemail">Email</label>
+        <input  ngModel type="text" class="form-control" id="settingsemail" name="settingsemail" [placeholder]="user.email">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group" *ngIf="user.role==='STUD'">
+        <label for="settingsclass">Class</label>
+        <input ngModel type="text" class="form-control" id="settingsclass" name="settingsclass" [placeholder]="job">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="settingsbio">Your Bio</label>
+        <input ngModel type="text" class="form-control" id="settingsbio" name="settingsbio" [placeholder]="user.bio">
+      </div>
+    </div>
+<!--    <div class="col-md-12">-->
+<!--      <div class="form-row mb-3 align-items-center">-->
+<!--        <div class="col">-->
+<!--          <label for="settingsUsername">Username</label>-->
+<!--          <input type="email" class="form-control" id="settingsUsername" aria-describedby="usernameHelp" value="arthur_minasyan_96" placeholder="Username">-->
+<!--          <small id="usernameHelp" class="form-text text-muted">Your public username is the same as your timeline address.</small>-->
+<!--        </div>-->
+<!--        <div class="col check-username">-->
+<!--          <span><i class="bx bx-check success"></i> Username is available</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="col-md-6 text-right">
+      <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+    </div>
+  </form>
+</div>

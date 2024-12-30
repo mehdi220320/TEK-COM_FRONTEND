@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   communitiesWithMembers: any[] = [];
   filteredCommunities: any[] = []; // Array for filtered results
   searchQuery: string = ''; // Property to bind to input
-
+  UserId=localStorage.getItem('id')
   constructor(private router: Router, private communityService: CommunityService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {

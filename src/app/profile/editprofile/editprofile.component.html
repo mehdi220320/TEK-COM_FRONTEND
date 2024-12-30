@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+<div class="row message-right-side-content">
+  <div class="col-md-12">
+    <div id="message-frame">
+      <div class="message-sidepanel">
+        <div class="message-contacts settings-sidebar">
+          <ul class="conversations">
+            <h6 class="p-3">General Settings</h6>
+            <li class="contact " routerLinkActive="setting-active">
+              <a routerLink="generalsettings" class="wrap d-flex align-items-center">
+                <img src="assets/images/icons/settings/account.png" class="settings-icon" alt="Settings left sidebar">
+                <div class="meta">
+                  <p>Your Account details</p>
+                </div>
+              </a>
+            </li>
+            <h6 class="p-3">Security &amp; Login</h6>
+            <li class="contact" routerLinkActive="setting-active">
+              <a routerLink="changepassword" class="wrap d-flex align-items-center">
+                <img src="assets/images/icons/settings/account.png" class="settings-icon" alt="Settings left sidebar">
+                <div class="meta">
+                  <p>Change Password</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

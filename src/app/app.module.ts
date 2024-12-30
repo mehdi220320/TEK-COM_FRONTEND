@@ -27,12 +27,15 @@ import {SendforgettpassComponent} from "./forgetpassword/sendforgettpass/sendfor
 import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.component';
 import {HomeComponent} from "./home/home.component";
 import { NgChartsModule } from 'ng2-charts';
+import { EditprofileComponent } from './profile/editprofile/editprofile.component';
+import { GeneralSettingsComponent } from './profile/editprofile/general-settings/general-settings.component';
+import { ChangepasswordComponent } from './profile/editprofile/changepassword/changepassword.component';
 
 
 const appRoutes:Routes=[
   {path:"sendforget",component:SendforgettpassComponent},
   {path:"forgetpass",component:ForgetpassComponent},
-  {path:"home2",component:HomeComponent},
+  {path:"index",component:HomeComponent},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent,children:[
@@ -59,6 +62,12 @@ const appRoutes:Routes=[
     ]
   },
   {path:'profile/:id',component:ProfileComponent},
+  {path:'editprofile/:id',component:EditprofileComponent,children:[
+      { path: '', redirectTo: 'generalsettings', pathMatch: 'full' },
+      { path: 'generalsettings', component: GeneralSettingsComponent },
+      { path: 'changepassword', component: ChangepasswordComponent}
+    ]
+  },
   {path:"reportPost/:postId",component:ReportpostComponent},
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
   { path: '**', redirectTo: '/home' },
@@ -86,6 +95,9 @@ const appRoutes:Routes=[
     ForgetpassComponent,
     SendforgettpassComponent,
     HomeComponent,
+    EditprofileComponent,
+    GeneralSettingsComponent,
+    ChangepasswordComponent,
   ],
   imports: [
     BrowserModule,
