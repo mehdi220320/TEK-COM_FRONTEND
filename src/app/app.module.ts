@@ -27,8 +27,9 @@ import { HomeComponent } from './home/home.component';
 import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
 import {SearchComponent} from "./navbar/search/search.component";
 import {ProfileComponent} from "./profile/profile.component";
-import {AuthGuard} from "./authguard/auth.guard";
-
+import { EditprofileComponent } from './profile/editprofile/editprofile.component';
+import { GeneralSettingsComponent } from './profile/editprofile/general-settings/general-settings.component';
+import { ChangepasswordComponent } from './profile/editprofile/changepassword/changepassword.component';
 const appRoutes:Routes=[
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
@@ -61,6 +62,12 @@ const appRoutes:Routes=[
     ]
   },
   {path:'profile/:id',component:ProfileComponent},
+  {path:'editprofile/:id',component:EditprofileComponent,children:[
+      { path: '', redirectTo: 'generalsettings', pathMatch: 'full' },
+      { path: 'generalsettings', component: GeneralSettingsComponent },
+      { path: 'changepassword', component: ChangepasswordComponent}
+    ]
+  },
   {path:"reportPost/:postId",component:ReportpostComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
@@ -86,7 +93,10 @@ const appRoutes:Routes=[
     HomeComponent,
     LeftSideNavComponent,
     SearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditprofileComponent,
+    GeneralSettingsComponent,
+    ChangepasswordComponent,
   ],
   imports: [
     BrowserModule,
