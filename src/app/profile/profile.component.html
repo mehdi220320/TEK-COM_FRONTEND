@@ -6,72 +6,55 @@
   <div class="w-full  px-4 mx-auto">
     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
       <div class="px-6">
-        <div class="flex flex-wrap justify-center">
-          <div class="w-full px-4 flex justify-center">
-            <div class="relative">
-              <img  [src]="getImageURL(user.image)" class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
-            </div>
-          </div>
-          <div class="w-full px-4 text-center mt-20">
-            <div class="flex justify-center py-4 lg:pt-4 pt-8">
-              <div class="mr-4 p-3 text-center">
-              <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                {{posts.length}}
-              </span>
-                <span class="text-sm text-blueGray-400">Posts</span>
-              </div>
-              <div class="mr-4 p-3 text-center">
-              <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                {{getNumberOffiles()}}
-              </span>
-                <span class="text-sm text-blueGray-400">Photos</span>
-              </div>
-              <div class="mr-4 p-3 text-center">
-              <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                {{getNumberOffiles()}}
-              </span>
-                <span class="text-sm text-blueGray-400">Photos</span>
-              </div>
-
-              <div class="lg:mr-4 p-3 text-center" *ngIf="UserId===id">
-                <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                  <a class="dropdown-item" [href]="'/editprofile/'+UserId">
-                    <img src="assets/images/icons/navbar/gear-1.png" alt="Navbar icon">
-                  </a>
-                </span>
-                <span class="text-sm text-blueGray-400">Edit Your Profile</span>
-              </div>
-            </div>
-          </div>
+        <!-- Profile Picture (No Overlap) -->
+        <div class="flex justify-center -mt-20">
+          <img src="assets/images/users/_32CE68E4-4BC3-40E9-9B69-C6D6F565DBED_-removebg-preview.png"
+               class="shadow-xl rounded-full h-auto align-middle border-none max-w-150-px">
         </div>
-        <div class="text-center mt-12">
-          <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+
+        <!-- User Info -->
+        <div class="text-center mt-16">
+          <h3 class="text-xl font-semibold text-blueGray-700">
             {{user.nom}} {{user.prenom}}
           </h3>
-          <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-            <i class="fas fa-user mr-2 text-lg text-blueGray-400"></i>
-            {{user.usernamez}}
+          <div class="text-sm text-blueGray-400">
+            <i class="fas fa-user mr-1"></i> {{user.usernamez}}
           </div>
-          <div class="mb-2 text-blueGray-600 mt-10" *ngIf="user.role==='STUD'">
-            <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-            Student - {{this.job}}
+          <div class="text-sm text-blueGray-600 mt-2" *ngIf="user.role==='STUD'">
+            <i class="fas fa-briefcase mr-1"></i> Student - {{this.job}}
           </div>
-          <div class="mb-2 text-blueGray-600">
-            <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-            Tek-Up University
+          <div class="text-sm text-blueGray-600">
+            <i class="fas fa-university mr-1"></i> Tek-Up University
           </div>
         </div>
-        <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
-          <div class="flex flex-wrap justify-center">
-            <div class="w-full lg:w-9/12 px-4">
-              <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
-                {{this.user.bio}}
-              </p>
-            </div>
+
+        <!-- Stats Section (Narrowed) -->
+        <div class="flex justify-center items-center mt-6 max-w-xl mx-auto" style="gap: 40px;">
+          <div class="text-center">
+            <span class="text-lg font-bold text-blueGray-700">{{posts.length}}</span>
+            <div class="text-sm text-blueGray-400">Posts</div>
           </div>
+          <div class="text-center">
+            <span class="text-lg font-bold text-blueGray-700">{{getNumberOffiles()}}</span>
+            <div class="text-sm text-blueGray-400">Photos</div>
+          </div>
+          <div class="text-center" *ngIf="user.id.toString() === id">
+            <a [href]="'/editprofile/' + user.id">
+              <img src="assets/images/icons/navbar/gear-1.png" alt="Edit" class="h-6 w-6 mx-auto">
+            </a>
+            <div class="text-sm text-blueGray-400">Edit</div>
+          </div>
+        </div>
+
+        <!-- Bio Section -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-blueGray-700">
+            {{this.user.bio}}
+          </p>
         </div>
       </div>
     </div>
+
     <div class="row newsfeed-right-side-content mt-3 bg-blueGray-50 " >
       <div class="col-md-3  newsfeed-left-side shadow-sm" id="sidebar-wrapper" >
         <app-left-side-nav></app-left-side-nav>

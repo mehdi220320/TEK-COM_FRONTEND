@@ -44,7 +44,7 @@
             <td *ngIf="report.etat==='Banned'" style="color:red" ><strong>{{report.etat}}</strong></td>
             <td *ngIf="report.etat==='Fake'" style="color:green" ><strong>{{report.etat}}</strong></td>
             <td>
-              <button *ngIf="report.etat==='Stand-by'" class="btn btn-primary mr-1"  (click)="dialog.showModal();getPostById(report.post,report)" >Treate</button>
+              <button *ngIf="report.etat==='Stand-by'" class="btn btn-primary mr-1"  (click)="dialog.showModal();getPostById(report.post,report)" >Treat</button>
               <button class="btn btn-danger" (click)="deleteReport(report.id)">Delete</button>
             </td>
           </tr>
@@ -114,7 +114,7 @@
             <li><strong>Post informations : id"{{report.post}}"</strong>
               <ul>
                 <li><strong>The poster :</strong> {{report.whoposted}}</li>
-                <li><strong>Reported In :</strong> {{post.date_ajout | date: 'MM/dd/yy' }}</li>
+                <li><strong>Posted In :</strong> {{post.date_ajout | date: 'MM/dd/yy' }}</li>
                 <li><strong>Community ID :</strong> {{post.communityID}} </li>
                 <li><strong>Community :</strong> {{post.community}}</li>
                 <li><strong>Number of likes :</strong> {{ post.likeList.length }}</li>

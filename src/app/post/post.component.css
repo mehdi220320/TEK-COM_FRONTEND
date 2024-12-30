@@ -5,6 +5,11 @@
   margin-top: -65px;
 
 }
+.post {
+  width: 90%;
+  margin-left: 6%;
+
+}
 .dots label {
   height: 20px;
   width: 20px;
