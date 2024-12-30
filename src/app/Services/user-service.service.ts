@@ -60,6 +60,7 @@ export class UserServiceService {
     formData.append('nom', user.nom );
     formData.append('prenom', user.prenom );
     formData.append('email', user.email);
+    formData.append('usernamez', user.usernamez);
     formData.append('classse',job );
     formData.append('bio', user.bio);
     return this.httpclient.put<User>(this.PATH_OF_API + "/api/v1/auth/update/"+user.id, formData)

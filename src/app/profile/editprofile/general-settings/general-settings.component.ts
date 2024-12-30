@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../../Models/User";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserServiceService} from "../../../Services/user-service.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {StudentService} from "../../../Services/student.service";
@@ -32,7 +32,7 @@ export class GeneralSettingsComponent implements OnInit {
   id=localStorage.getItem('id')
   job: string = ""
 
-  constructor( private route: ActivatedRoute, private userService: UserServiceService, private sanitizer: DomSanitizer, private studentService: StudentService) {
+  constructor( private route: ActivatedRoute,private router:Router, private userService: UserServiceService, private sanitizer: DomSanitizer, private studentService: StudentService) {
   }
   ngOnInit(): void {
     this.userService.getUserById(this.id).subscribe((response) => {
@@ -53,14 +53,24 @@ export class GeneralSettingsComponent implements OnInit {
   }
 
   update(updateForm: NgForm) {
-    this.user.nom=updateForm.value['settingsFirstName']
-    this.user.prenom=updateForm.value['settingsLastName']
-    this.user.email=updateForm.value['settingsemail']
-    this.user.bio=updateForm.value['settingsbio']
+    if(updateForm.value['settingsFirstName']!=""){
+      this.user.nom=updateForm.value['settingsFirstName']
+    }
+    if(updateForm.value['settingsLastName']!="") {
+      this.user.prenom=updateForm.value['settingsLastName']
+    }
+    if(updateForm.value['settingsemail']!=null)
+      this.user.email=updateForm.value['settingsemail']
+    if(updateForm.value['settingsbio']!="")
+      this.user.bio=updateForm.value['settingsbio']
+    if(updateForm.value['Username']!="")
+    this.user.usernamez=updateForm.value['Username']
     if (this.user.role==="STUD")
-      this.job=updateForm.value['settingsclass']
+      if (updateForm.value['settingsclass']!=="")
+        this.job=updateForm.value['settingsclass']
     this.userService.updateUser(this.user,this.job).subscribe((response)=>{
       console.log(" user updated ")
+      this.router.navigate(['/profile/'+this.user.id])
     })
   }
 }
