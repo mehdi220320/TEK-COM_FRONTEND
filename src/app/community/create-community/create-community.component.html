@@ -20,17 +20,17 @@
           <label>Write Your Description</label>
         </div>
       </div>
-      <div *ngFor="let file of fileHandle" class="d-inline-flex ml-3 align-items-end justify-content-center">
-        <i class="bx bx-window-close close-icon" (click)="removeFileSelected(file)"></i>
-        <img *ngIf="file && file.url" [src]="file.url" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
-      </div>
       <div class="form-row">
         <div class="col-md-9 cov-img">
-          <label for="coverimg" class="btn btn-link post-form-btn btn-sm">
+          <label for="image" class="btn btn-link post-form-btn btn-sm">
             <i class="bx bx-images"></i> <span>Choose your Community's Front Cover Photo</span>
           </label>
-          <input type="file" id="coverimg" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+          <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
         </div>
+      </div>
+      <div *ngIf="fileHandle" class="d-inline-flex ml-3 align-items-end justify-content-center">
+        <i class="bx bx-window-close close-icon" (click)="removeFileSelected(fileHandle)"></i>
+        <img *ngIf="fileHandle.url" [src]="fileHandle.url" class="img-thumbnail img-fluid img-body" alt="Image Preview" />
       </div>
       <div *ngIf="creationStatus===false;else submitElse">
         <div class="form-row submit-btn">

@@ -69,4 +69,18 @@ export class PostService {
   getPostCountsByYearAndMonth(): Observable<Map<string, number>> {
     return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/post/post-counts-by-year-and-month");
   }
+  getactifuserstoken(): Observable<Map<string, number>> {
+    return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/auth/user-login-count");
+  }
+  getUserCount(): Observable<number> {
+    return this.httpClient.get<number>(
+      this.PATH_OF_API + '/api/v1/auth/user-count'
+    );
+  }
+  getCommunityCount(): Observable<number> {
+    return this.httpClient.get<number>(this.PATH_OF_API + "/api/v1/com/community-count");
+  }
+  getcommunitiesmembers(): Observable<Map<string, number>> {
+    return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/com/community-member-counts");
+  }
 }

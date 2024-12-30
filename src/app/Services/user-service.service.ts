@@ -47,4 +47,8 @@ export class UserServiceService {
   public getuser2bymail2(email:string): any {
     return this.httpclient.get<any>(`${this.PATH_OF_API}/api/v1/auth/findbymail2/`+email);
   }
+  public logout(token : string) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.httpclient.post(this.PATH_OF_API + "/api/v1/auth/logout", null,{headers})
+  }
 }

@@ -25,17 +25,18 @@ import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.comp
 import { SendforgettpassComponent } from './forgetpassword/sendforgettpass/sendforgettpass.component';
 import { HomeComponent } from './home/home.component';
 import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
+import {AuthGuard} from "./authguard/auth.guard";
 
 const appRoutes:Routes=[
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"home",component:NavbarComponent},
+  {path:"home",component:NavbarComponent ,canActivate:[AuthGuard]},
   {path:"sendforget",component:SendforgettpassComponent},
   {path:"forgetpass",component:ForgetpassComponent},
   {path:"home2",component:HomeComponent},
 
-  { path: 'reportpost', component: ReportpostComponent },
+  { path: 'reportpost', component: ReportpostComponent ,canActivate:[AuthGuard]},
   {
     path: 'community/:id',
     component: CommunityProfileComponent,
@@ -44,7 +45,7 @@ const appRoutes:Routes=[
       { path: 'timeline', component: PostComponent },
       { path: 'gallery', component: CommunityGalleryComponent,data: { galery: [] } },
       { path: 'followers', component: CommunityFollowersComponent }
-    ]
+    ],canActivate:[AuthGuard]
   },
   {path:"adminIndex",component:ANavbarComponent,
     children:[
@@ -52,9 +53,9 @@ const appRoutes:Routes=[
       {path:"dashboard",component:DasboardComponent},
       {path:"tablepanel",component:UsersTablePanelComponent},
       {path:"reportTable",component: ReportTablePanelComponent}
-    ]
+    ],canActivate:[AuthGuard]
   },
-  {path:"reportPost/:postId",component:ReportpostComponent},
+  {path:"reportPost/:postId",component:ReportpostComponent,canActivate:[AuthGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
 @NgModule({
