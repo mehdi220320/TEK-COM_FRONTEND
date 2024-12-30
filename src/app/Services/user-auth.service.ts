@@ -102,7 +102,7 @@ public isLoggedIn2(){
     }
   }
   public onlogout() {
-    /*const token = localStorage.getItem('jwtToken');
+    const token = localStorage.getItem('jwtToken');
 
     if (token) {
       this.userService.logout(token).subscribe(
@@ -113,6 +113,6 @@ public isLoggedIn2(){
         },
         error => console.error(error)
       );
-    }*/
+    }
   }
 }

@@ -51,13 +51,8 @@ export class UserServiceService {
   public getuser2bymail2(email:string): any {
     return this.httpclient.get<any>(`${this.PATH_OF_API}/api/v1/auth/findbymail2/`+email);
   }
-  public updateUser(user:User,job:any):Observable<User>{
-    const formData = new FormData();
-    formData.append('nom', user.nom );
-    formData.append('prenom', user.prenom );
-    formData.append('email', user.email);
-    formData.append('classse',job );
-    formData.append('bio', user.bio);
-    return this.httpclient.put<User>(this.PATH_OF_API + "/api/v1/auth/update/"+user.id, formData)
+  public logout(token : string) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.httpclient.post(this.PATH_OF_API + "/api/v1/auth/logout", null,{headers})
   }
 }

@@ -20,28 +20,27 @@ import { CommunityGalleryComponent } from './community/community-gallery/communi
 import { DasboardComponent } from './AdminView/dasboard/dasboard.component';
 import {ReportpostComponent} from "./post/reportpost/reportpost.component";
 import {ReportTablePanelComponent} from "./AdminView/report-table-panel/report-table-panel.component";
-import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
-import { ProfileComponent } from './profile/profile.component';
-import { SearchComponent } from './navbar/search/search.component';
-import {SendforgettpassComponent} from "./forgetpassword/sendforgettpass/sendforgettpass.component";
-import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.component';
-import {HomeComponent} from "./home/home.component";
 import { NgChartsModule } from 'ng2-charts';
-import { EditprofileComponent } from './profile/editprofile/editprofile.component';
-import { GeneralSettingsComponent } from './profile/editprofile/general-settings/general-settings.component';
-import { ChangepasswordComponent } from './profile/editprofile/changepassword/changepassword.component';
-
+import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.component';
+import { SendforgettpassComponent } from './forgetpassword/sendforgettpass/sendforgettpass.component';
+import { HomeComponent } from './home/home.component';
+import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
+import {SearchComponent} from "./navbar/search/search.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {AuthGuard} from "./authguard/auth.guard";
 
 const appRoutes:Routes=[
-  {path:"sendforget",component:SendforgettpassComponent},
-  {path:"forgetpass",component:ForgetpassComponent},
-  {path:"index",component:HomeComponent},
+  {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   {path:"home",component:NavbarComponent,children:[
       {path:"search/:search",component:SearchComponent},
       { path: '', redirectTo: '', pathMatch: 'full' },
     ]},
+  {path:"sendforget",component:SendforgettpassComponent},
+  {path:"forgetpass",component:ForgetpassComponent},
+  {path:"home2",component:HomeComponent},
+
   { path: 'reportpost', component: ReportpostComponent },
   {
     path: 'community/:id',
@@ -62,16 +61,9 @@ const appRoutes:Routes=[
     ]
   },
   {path:'profile/:id',component:ProfileComponent},
-  {path:'editprofile/:id',component:EditprofileComponent,children:[
-      { path: '', redirectTo: 'generalsettings', pathMatch: 'full' },
-      { path: 'generalsettings', component: GeneralSettingsComponent },
-      { path: 'changepassword', component: ChangepasswordComponent}
-    ]
-  },
   {path:"reportPost/:postId",component:ReportpostComponent},
-  {path:'' ,redirectTo:'home2',pathMatch:'full'},
-  { path: '**', redirectTo: '/home' },
-]
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' },]
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,15 +81,12 @@ const appRoutes:Routes=[
     CommunityGalleryComponent,
     DasboardComponent,
     ReportpostComponent,
-    LeftSideNavComponent,
-    ProfileComponent,
-    SearchComponent,
     ForgetpassComponent,
     SendforgettpassComponent,
     HomeComponent,
-    EditprofileComponent,
-    GeneralSettingsComponent,
-    ChangepasswordComponent,
+    LeftSideNavComponent,
+    SearchComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +97,7 @@ const appRoutes:Routes=[
     ReportTablePanelComponent,
     NgChartsModule
   ],
-  exports:[RouterModule],
+  exports: [RouterModule, NavbarComponent],
   providers: [UserServiceService],
   bootstrap: [AppComponent]
 })

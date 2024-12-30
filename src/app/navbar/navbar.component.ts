@@ -6,6 +6,8 @@ import { File2 } from "../Models/Post";
 import { DomSanitizer } from "@angular/platform-browser";
 import { User } from "../Models/User";
 import { forkJoin, map } from "rxjs";
+import {UserServiceService} from "../Services/user-service.service";
+import {UserAuthService} from "../Services/user-auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +20,10 @@ export class NavbarComponent implements OnInit {
   filteredCommunities: any[] = []; // Array for filtered results
   searchQuery: string = ''; // Property to bind to input
   UserId=localStorage.getItem('id')
-  constructor(private router: Router, private communityService: CommunityService, private sanitizer: DomSanitizer) {}
+  constructor(private router: Router, private communityService: CommunityService, private sanitizer: DomSanitizer
+    , private userService: UserServiceService , private userauthservice: UserAuthService
+
+  ) {}
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
@@ -62,7 +67,6 @@ export class NavbarComponent implements OnInit {
 
   onSearch() {
     if (this.searchQuery.trim()) {
-      // this.router.navigate(['home/search/', this.searchQuery]);
       window.location.href = 'http://localhost:4200/home/search/'+this.searchQuery
     }
   }
@@ -98,4 +102,22 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
+  public onlogout() {
+
+
+
+    const token = localStorage.getItem('jwtToken');
+    this.userauthservice.clear();
+    if (token) {
+      this.userService.logout(token).subscribe(
+        () => {
+          localStorage.removeItem('jwtToken');
+
+
+        },
+        error => console.error(error)
+      );
+    }
+  }
+
 }

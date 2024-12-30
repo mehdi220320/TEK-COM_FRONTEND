@@ -11,8 +11,8 @@ import {Community} from "../../Models/Community";
   styleUrls: ['./create-community.component.css']
 })
 export class CreateCommunityComponent implements OnInit {
-  fileHandle: FileHandle[] =[];
-  msg:String|undefined;
+  fileHandle: FileHandle | null = null; // Change to allow only one file  msg:String|undefined;
+  msg: string | undefined;
   creationStatus: boolean | undefined;
   constructor(private sanitizer: DomSanitizer,private communityService:CommunityService) { }
   ngOnInit(): void {
@@ -22,14 +22,11 @@ export class CreateCommunityComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-      this.fileHandle.push({ file, url });
+      this.fileHandle = { file, url };
     }
   }
   removeFileSelected(file:FileHandle){
-    let index = this.fileHandle.indexOf(file);
-    if (index !== -1) {
-      this.fileHandle.splice(index, 1);
-    }
+    this.fileHandle = null;
   }
   changeStatus(status:boolean){
     this.creationStatus=status;
@@ -40,11 +37,12 @@ export class CreateCommunityComponent implements OnInit {
     formData.append('title', comForm.value.title);
     formData.append('description', comForm.value.description);
     formData.append('usercreate', localStorage.getItem('id') || '-1');
-
-    this.communityService.createCommunity(formData).subscribe(
+    if (this.fileHandle) {
+      formData.append('image', this.fileHandle.file, this.fileHandle.file.name); // 'photo' should match the backend field name
+    }    this.communityService.createCommunity(formData).subscribe(
       (response) => {
         console.log('Community created successfully:', response.message);
-        this.msg=comForm.value.title
+        this.msg = comForm.value.title;
         comForm.reset();
         this.changeStatus(true);
       },

@@ -1,0 +1,39 @@
+.card-equal-height {
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body p {
+  margin-bottom: 0;
+}
+
+.card-body .fw-bold {
+  font-size: 1rem; /* Set a smaller font size for consistent look */
+}
+
+/* Smaller font size for the third card */
+.card-equal-height:nth-child(3) .card-body .fw-bold {
+  font-size: 0.875rem; /* Adjust font size for the third card */
+}
+
+/* To ensure cards have equal height and fit in the row */
+.card-equal-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Ensuring the cards are of similar height */
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.sizetext{
+
+  font-size: 40px ;
+}

@@ -45,8 +45,6 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
         } else if (role1==='PROF')
         { this.router.navigate(['/home']);
-          this.isLoading = false;}else if (role1==='orga')
-        { this.router.navigate(['/list']);
           this.isLoading = false;}
         else if(role1 === 'ADMIN'){this.router.navigate(['/adminIndex']);this.isLoading = false;}
 
