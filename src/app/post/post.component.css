@@ -28,3 +28,9 @@
   margin-right: 5px;
   object-fit: cover;
 }
+
+.comment-scrollbar{
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  height: 330px;
+}

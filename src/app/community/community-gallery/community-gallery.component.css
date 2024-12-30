@@ -135,7 +135,7 @@ dialog::backdrop {
 .comment-scrollbar{
   overflow-y: scroll;
   scrollbar-width: thin;
-  height: 330px;
+  height: 400px;
 }
 
 

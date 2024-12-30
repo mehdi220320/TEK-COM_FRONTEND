@@ -83,4 +83,7 @@ export class PostService {
   getcommunitiesmembers(): Observable<Map<string, number>> {
     return this.httpClient.get<Map<string, number>>(this.PATH_OF_API + "/api/v1/com/community-member-counts");
   }
+  getuserPosts(userid: any):Observable<Post[]> {
+    return this.httpClient.get<Post[]>(this.PATH_OF_API+"/api/v1/post/userposts/"+userid);
+  }
 }

@@ -229,7 +229,6 @@ export class ReportTablePanelComponent implements OnInit {
 
     return 'Just now';
   }
-  createComment(ngform:NgForm,post:Post){};
   getImageURL(image:any):any{
     if(image===null)
       if(this.index++%2==1)

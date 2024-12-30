@@ -5,7 +5,7 @@
         <textarea
           class="form-control bg-white " id="postForm" ngModel name="content" rows="2" placeholder="What's on your mind?"></textarea>
       </div>
-      <div *ngIf="currenturl=='/home'">
+      <div *ngIf="!currenturl.startsWith('/cummunity')">
         <label for="community-select" class="ml-3">Choose a Community:</label>
         <select class="selectpicker  border-0 px-2 py-2 rounded shadow" id="community-select"
                 [(ngModel)]="selectedCommunity" name="community" >

@@ -41,8 +41,21 @@ export class PostComponent implements OnInit {
   }
 
   loadPosts(): void {
-    if(this.currentRoute==="/home"){
+    if(this.currentRoute==="/home" || this.currentRoute==="/profile" ){
       this.postService.getPostByUserId(localStorage.getItem('id')).subscribe(
+        (data: Post[]) => {
+          this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
+          console.log("Posts with fileList:", this.posts);
+        },
+        (error) => {
+          console.error("Error fetching posts:", error);
+        }
+      );
+    }
+    else if (this.currentRoute.startsWith("/profile")){
+      const parts = this.currentRoute.split('/');
+      const userID = parts[2];
+      this.postService.getuserPosts(userID).subscribe(
         (data: Post[]) => {
           this.posts = data.map(post => ({ ...post, selectedImageIndex: 0 }));
           console.log("Posts with fileList:", this.posts);
@@ -153,7 +166,8 @@ export class PostComponent implements OnInit {
         console.error("Error liking the post", error);
       }
     );
-  }  checkLike(userID: any, post: Post): boolean {
+  }
+  checkLike(userID: any, post: Post): boolean {
     const parsedId = this.UserLOGINiD ? parseInt(this.UserLOGINiD, 10) : null;
 
     if (parsedId === null) {

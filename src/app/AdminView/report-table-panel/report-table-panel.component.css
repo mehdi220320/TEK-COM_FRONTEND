@@ -161,8 +161,9 @@ dialog .x:hover {
 
 
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
+
+
 
 h1 {
   text-align: center;
@@ -262,9 +263,7 @@ h1 {
   }
 }
 @media only screen and (max-height: 600px) {
-  body {
-    overflow: hidden;
-  }
+
   .paper {
     margin-top: -110px;
     -webkit-transform: scale(0.6);
@@ -296,9 +295,7 @@ h1 {
     margin-left: 12px;
   }
   .paper {
-    margin: 0;
-    margin-left: 12px;
-    margin-top: -110px;
+
     -webkit-transform: scale(0.6);
     -webkit-transform-origin: 0% 50%;
     -webkit-transition: 0.3s;
@@ -317,9 +314,7 @@ h1 {
     margin-left: 12px;
   }
   .paper {
-    margin: 0;
-    margin-left: 12px;
-    margin-top: -165px;
+
     -webkit-transform: scale(0.4);
     -webkit-transform-origin: 0% 50%;
     -webkit-transition: 0.3s;
@@ -329,9 +324,7 @@ h1 {
   }
 }
 @media only screen and (max-height: 300px) {
-  body {
-    overflow: hidden;
-  }
+
   h1 {
     text-align: left;
     font-size: 1.3em;
