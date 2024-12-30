@@ -4,7 +4,7 @@
   background: #fff;
   width: 800px;
   padding: 25px 40px 10px 40px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0,0);
   margin-bottom: 17px;
 }
 .container .text{
@@ -12,7 +12,7 @@
   font-size: 41px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  background: -webkit-linear-gradient(right, #0e44ea, #000000, #0e44ea, #000000);
+  background: black;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -95,7 +95,6 @@ form .form-row .textarea{
   width: 300%;
   position: absolute;
   left: -100%;
-  background: -webkit-linear-gradient(right, #0e44ea, #000000, #0e44ea, #000000);
   transition: all 0.4s;
 }
 .submit-btn .input-data:hover .inner{
@@ -168,9 +167,8 @@ dialog {
 }
 dialog::backdrop {
   animation: fadeIn 1s ease both;
-  background: #000;
   z-index: 2;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(1px);
 }
 dialog .x {
   filter: grayscale(1);
@@ -211,22 +209,31 @@ body {
   background-size: cover;
 }
 button.primary {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #fff !important;
-  background: #000;
-  padding: 13px 25px;
-  border-radius: 17px;
-  transition: background-color 0.1s ease;
-  box-sizing: border-box;
-  transition: all 0.25s ease;
-  border: 0;
+  font-size: 1rem;
+  color: #fff;
+  background: #007bff;
+  padding: 12px 28px;
+  border-radius: 5px ;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: none;
   cursor: pointer;
-  box-shadow: 0 10px 20px -10px #000;
+  margin-left: 50%;
 }
+
 button.primary:hover {
-  box-shadow: 0 20px 20px -10px #000;
-  transform: translateY(-5px);
+  background: #1a1a1a;
+  transform: translateY(-2px);
+}
+
+button.primary:active {
+  background: #333;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button.primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
 }
 @keyframes fadeIn {
   from {
@@ -236,19 +243,18 @@ button.primary:hover {
     opacity: 1;
   }
 }
-.container {
-  max-width: 800px;
-  background: #fff;
-  width: 800px;
-  padding: 25px 40px 10px 40px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+.containerd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -15%;
+  margin-bottom: 5%;
 }
 .container .text {
   text-align: center;
   font-size: 41px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -326,7 +332,7 @@ form .form-row .textarea {
   width: 300%;
   position: absolute;
   left: -100%;
-  background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+  background: -webkit-linear-gradient(right, #838383, #100f0f, #838383, #100f0f);
   transition: all 0.4s;
 }
 .submit-btn .input-data:hover .inner {
