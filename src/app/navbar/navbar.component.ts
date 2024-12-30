@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   communitiesWithMembers: any[] = [];
   filteredCommunities: any[] = []; // Array for filtered results
   searchQuery: string = ''; // Property to bind to input
-
+  UserId=localStorage.getItem('id')
   constructor(private router: Router, private communityService: CommunityService, private sanitizer: DomSanitizer
     , private userService: UserServiceService , private userauthservice: UserAuthService
 
@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit {
 
   onSearch() {
     if (this.searchQuery.trim()) {
-      // this.router.navigate(['home/search/', this.searchQuery]);
       window.location.href = 'http://localhost:4200/home/search/'+this.searchQuery
     }
   }
@@ -120,4 +119,5 @@ export class NavbarComponent implements OnInit {
       );
     }
   }
+
 }

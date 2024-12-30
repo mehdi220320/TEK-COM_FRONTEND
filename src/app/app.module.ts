@@ -25,12 +25,18 @@ import { ForgetpassComponent } from './forgetpassword/forgetpass/forgetpass.comp
 import { SendforgettpassComponent } from './forgetpassword/sendforgettpass/sendforgettpass.component';
 import { HomeComponent } from './home/home.component';
 import { LeftSideNavComponent } from './post/left-side-nav/left-side-nav.component';
+import {SearchComponent} from "./navbar/search/search.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {AuthGuard} from "./authguard/auth.guard";
 
 const appRoutes:Routes=[
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"home",component:NavbarComponent},
+  {path:"home",component:NavbarComponent,children:[
+      {path:"search/:search",component:SearchComponent},
+      { path: '', redirectTo: '', pathMatch: 'full' },
+    ]},
   {path:"sendforget",component:SendforgettpassComponent},
   {path:"forgetpass",component:ForgetpassComponent},
   {path:"home2",component:HomeComponent},
@@ -54,6 +60,7 @@ const appRoutes:Routes=[
       {path:"reportTable",component: ReportTablePanelComponent}
     ]
   },
+  {path:'profile/:id',component:ProfileComponent},
   {path:"reportPost/:postId",component:ReportpostComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },]
@@ -77,8 +84,9 @@ const appRoutes:Routes=[
     ForgetpassComponent,
     SendforgettpassComponent,
     HomeComponent,
-    LeftSideNavComponent
-
+    LeftSideNavComponent,
+    SearchComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +97,7 @@ const appRoutes:Routes=[
     ReportTablePanelComponent,
     NgChartsModule
   ],
-  exports:[RouterModule],
+  exports: [RouterModule, NavbarComponent],
   providers: [UserServiceService],
   bootstrap: [AppComponent]
 })
