@@ -57,10 +57,9 @@ export class GeneralSettingsComponent implements OnInit {
     this.user.prenom=updateForm.value['settingsLastName']
     this.user.email=updateForm.value['settingsemail']
     this.user.bio=updateForm.value['settingsbio']
-    if (this.user.role==="STUD")
-      this.job=updateForm.value['settingsclass']
+
     this.userService.updateUser(this.user,this.job).subscribe((response)=>{
-      console.log(" user updated ")
+      console.log(" user updated "+ response)
     })
   }
 }

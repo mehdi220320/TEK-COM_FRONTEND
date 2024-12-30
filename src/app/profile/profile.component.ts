@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   posts: Post[] = []
   id: string = "";
   job: string = ""
-  UserId=localStorage.getItem('id')
+
   constructor(private postService: PostService, private route: ActivatedRoute, private userService: UserServiceService, private sanitizer: DomSanitizer, private studentService: StudentService) {
   }
 
