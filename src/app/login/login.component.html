@@ -34,17 +34,16 @@
               <span class="material-control-description">Remember Me</span>
             </label>
           </div>
-          <div *ngIf="isLoading">
-            Connexion...
-          </div>
+
           <div class="col-md-6 text-right">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary sign-up">Sign In</button>
+            <div class="form-actions">
+              <button type="submit" [disabled]="isLoading">Sign in</button>
+              <div *ngIf="isLoading" class="spinner"></div>
             </div>
           </div>
-          <div class="col-md-12 text-monospace text-center  ">
+          <div class="col-md-12 text-monospace   ">
             <span class="go-login">Not yet a member?   </span>
-            <button type="button" class="btn btn-primary bg-white text-dark sign-up" routerLink="signup"> Sign Up</button>
+            <button type="button" class="btn btn-primary bg-white text-dark sign-up" routerLink="/signup"> Sign Up</button>
           </div>
         </div>
       </form>

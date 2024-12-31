@@ -38,7 +38,8 @@ export class CreateCommunityComponent implements OnInit {
     formData.append('description', comForm.value.description);
     formData.append('usercreate', localStorage.getItem('id') || '-1');
     if (this.fileHandle) {
-      formData.append('image', this.fileHandle.file, this.fileHandle.file.name); // 'photo' should match the backend field name
+      formData.append('image', this.fileHandle.file, this.fileHandle.file.name);
+
     }    this.communityService.createCommunity(formData).subscribe(
       (response) => {
         console.log('Community created successfully:', response.message);

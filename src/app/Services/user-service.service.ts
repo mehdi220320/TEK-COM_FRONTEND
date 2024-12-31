@@ -15,6 +15,16 @@ interface forgetData{
   email : string;
 
 }
+interface registerData{
+  id: string;
+  nom : string;
+  prenom: string;
+  email: string;
+  password: string;
+  role : string ;
+  classse: string;
+  bio: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +45,18 @@ export class UserServiceService {
   }
   public getAll():Observable<User[]>{
     return  this.httpclient.get<User[]>(this.PATH_OF_API + "/api/v1/auth/users")
+  }
+  public register(RegisterData: registerData) {
+    const formData = new FormData();
+    formData.append('nom', RegisterData.nom );
+    formData.append('prenom',  RegisterData.prenom );
+    formData.append('email',  RegisterData.email);
+    formData.append('role',  RegisterData.role);
+
+    formData.append('classse', RegisterData.classse );
+    formData.append('bio',  RegisterData.bio);
+    console.log(RegisterData)
+    return this.httpclient.post(this.PATH_OF_API + "/api/v1/auth/register", RegisterData)
   }
   public getUserById(id:any):Observable<User>{
     return  this.httpclient.get<User>(this.PATH_OF_API + "/api/v1/auth/find2/"+id)
