@@ -8,6 +8,7 @@ import{PostService} from '../Services/post.service'
 import {NgForm} from "@angular/forms";
 import { User } from '../Models/User';
 import { Router } from '@angular/router';
+import {NotificationService} from "../Services/notification.service";
 
 @Component({
   selector: 'app-post',
@@ -32,7 +33,7 @@ export class PostComponent implements OnInit {
 
   ];
 
-  constructor(private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
+  constructor(private notificationService:NotificationService,private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
 
 
   ngOnInit(): void {
@@ -137,8 +138,13 @@ export class PostComponent implements OnInit {
 
         const postToUpdate = this.posts.find(p => p.id === post.id);
         if (postToUpdate) {
-          postToUpdate.commentList.push(newComment);
+          postToUpdate.commentList.unshift(newComment);
         }
+        this.notificationService.addNotification(localStorage.getItem('id'),post.id,"COMMENT").subscribe(
+          (response)=>{
+            console.log(response)
+          },error => console.log("notification ma mchatech"+error)
+        );
         commentForm.reset();
       },
       (error) => {
@@ -157,6 +163,11 @@ export class PostComponent implements OnInit {
 
           if (existingLikeIndex === -1) {
             post.likeList.push({ id: response.id, userID: parsedId, postid: postId });
+            this.notificationService.addNotification(localStorage.getItem('id'),postId,"LIKE").subscribe(
+              (response)=>{
+                console.log(response)
+              },error => console.log("notification ma mchatech"+error)
+            );
           } else {
             post.likeList.splice(existingLikeIndex, 1);
           }

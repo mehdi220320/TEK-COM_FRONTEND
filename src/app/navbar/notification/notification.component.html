@@ -1,23 +1,46 @@
-<div class="bg-white py-3 px-4 shadow-sm">
-  <div class="card-head d-flex justify-content-between">
-    <h5 class="mb-4">Gallery</h5>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-sm-6 mb-2 h-50 " *ngFor="let file of galery" >
-      <div class="card group-card shadow-sm">
-        <img [src]="getImageURL(file)" class="gallery_card" alt="Group image">
-        <div class="card-body">
-          <div class="btn-group w-100" role="group">
-            <button (click)="dialog.showModal();getPostByFile(file)" class="btn btn-quick-link join-group-btn border w-100">See post</button>
-          </div>
-        </div>
+<a href="#" class="nav-link nav-links rm-drop-mobile drop-w-tooltip" data-toggle="dropdown" data-placement="bottom" data-title="Notifications" role="button" aria-haspopup="true" aria-expanded="false">
+  <img src="assets/images/icons/navbar/notification.png" class="notification-bell" alt="navbar icon"> <span class="badge badge-pill badge-primary">{{this.NotSeen}}</span>
+</a>
+<ul class="dropdown-menu notify-drop dropdown-menu-right nav-drop shadow-sm" >
+  <div class="notify-drop-title">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-6 fs-8">Notifications <span class="badge badge-pill badge-primary ml-2">{{this.NotSeen}}</span></div>
+      <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+        <a href="#" class="notify-right-icon">
+          Mark All as Read
+        </a>
       </div>
     </div>
   </div>
-</div>
+  <!-- end notify title -->
+  <!-- notify content -->
+  <div class="drop-content" style="    max-height: 316px;" >
+    <li *ngFor="let notification of notifications" [ngStyle]="{'background-color': notification.seen === false ? '#F2F4F5' : 'transparent'}" (click)="dialog.showModal();getPost(notification.post,notification.id)" style="cursor: pointer">
+      <div class="col-md-2 col-sm-2 col-xs-2">
+        <div class="notify-img">
+          <img [src]="getImageURL(notification.whoreact.image)" height="40" width="40" alt="notification user image">
+        </div>
+      </div>
+      <div class="col-md-10 col-sm-10 col-xs-10">
+        <a href="#" class="notification-user"> {{notification.whoreact.usernamez}} </a>
+        <span class="notification-type" [innerHTML]="getNotificationType(notification)"></span>
+        <a  class="notify-right-icon" >
+          <svg *ngIf="notification.seen===true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16" style="fill: rgba(0, 0, 0, 1)"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
+          <svg  *ngIf="notification.seen===false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"  style="fill: rgba(0, 0, 0, 1)"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>
+        </a>
 
+        <p class="time">
+          <span class="badge badge-pill badge-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-clock-fill " style="color: white" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+            </svg>
+          </span> {{getTimeSincePost(notification.date)}}
+        </p>
+      </div>
+    </li>
 
-
+  </div>
+</ul>
 
 <dialog #dialog id="dialog">
   <button (click)="dialog.close();ReinitializePost()" aria-label="close" class="x">❌</button>
@@ -72,7 +95,7 @@
         <div [ngClass]="{'mt-4':post.fileList.length >= 2}" class="mb-2">
           <!-- Reactions -->
           <div class="argon-reaction">
-                                        <span class="like-btn">
+                                       <span class="like-btn">
                                             <a (click)="pressLike(post.id)" class="post-card-buttons" style="cursor: pointer">
                                               <i class='bx bxs-like mr-2 ' [ngStyle]="{'color': checkLike(UserLOGINiD, post) ? 'blue' : ''}"></i> {{ (post.likeList ? post.likeList.length : 0) }} Likes
                                             </a>
@@ -90,25 +113,25 @@
                   <div class="panel-body comment-scrollbar">
                     <ul class="media-list comments-list" >
                       <li class="media comment-form">
-                      <a href="#" class="pull-left">
-                        <img src="assets/images/users/user-4.jpg" alt="" class="img-circle">
-                      </a>
-                      <div class="media-body">
-                        <form #commentForm="ngForm"(ngSubmit)="createComment(commentForm,post)"  role="form">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                <input type="text" class="form-control comment-input" [(ngModel)]="inputValue" name="description" placeholder="Write a comment...">
+                        <a href="#" class="pull-left">
+                          <img src="assets/images/users/user-4.jpg" alt="" class="img-circle">
+                        </a>
+                        <div class="media-body">
+                          <form #commentForm="ngForm"(ngSubmit)="createComment(commentForm,post)"  role="form">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="input-group">
+                                  <input type="text" class="form-control comment-input" [(ngModel)]="inputValue" name="description" placeholder="Write a comment...">
 
-                                <div class="input-group-btn">
-                                  <button type="submit" class="btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bxs-send'></i></button>
+                                  <div class="input-group-btn">
+                                    <button type="submit" class="btn comment-form-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class='bx bxs-send'></i></button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </form>
-                      </div>
-                    </li>
+                          </form>
+                        </div>
+                      </li>
                     </ul>
                     <ul class="media-list comments-list" *ngFor="let comment of post.commentList" >
                       <li class="media">

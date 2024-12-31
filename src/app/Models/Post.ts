@@ -26,16 +26,16 @@ export interface Post {
 
 }
 const initialPost: Post = {
-  id: 0, // Assuming '0' is a placeholder for an uninitialized post
-  date_ajout: new Date(), // Use the current date or set to a specific date
-  whoposted: '', // Empty string for who posted
-  community: '', // Empty string for community
+  id: 0,
+  date_ajout: new Date(),
+  whoposted: '',
+  community: '',
   communityID:'',
-  content: '', // Empty string for content
-  isVisible: true, // Default visibility; adjust as needed
-  commentList: [], // Initialize as an empty array
-  likeList: [], // Initialize as an empty array
-  selectedImageIndex: undefined, // Optional property can be undefined
-  showComments: false, // Default to not showing comments
-  fileList: [] // Initialize as an empty array
+  content: '',
+  isVisible: true,
+  commentList: [],
+  likeList: [],
+  selectedImageIndex: undefined,
+  showComments: false,
+  fileList: []
 };

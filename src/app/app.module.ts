@@ -30,6 +30,7 @@ import {ProfileComponent} from "./profile/profile.component";
 import { EditprofileComponent } from './profile/editprofile/editprofile.component';
 import { GeneralSettingsComponent } from './profile/editprofile/general-settings/general-settings.component';
 import { ChangepasswordComponent } from './profile/editprofile/changepassword/changepassword.component';
+import { NotificationComponent } from './navbar/notification/notification.component';
 const appRoutes:Routes=[
   {path:'' ,redirectTo:'home2',pathMatch:'full'},
   {path:"login",component:LoginComponent},
@@ -97,6 +98,7 @@ const appRoutes:Routes=[
     EditprofileComponent,
     GeneralSettingsComponent,
     ChangepasswordComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
