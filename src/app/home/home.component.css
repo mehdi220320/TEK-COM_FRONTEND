@@ -38,12 +38,36 @@
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+@keyframes fadeInFeature {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
+.feature-box {
+  animation: fadeInFeature 1.5s ease-in-out;
+}
 .light-background {
   --background-color: #f3f9ff;
   --surface-color: #ffffff;
 }
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
+.hero-content {
+  animation: slideIn 1s ease-out;
+}
 .dark-background {
   --background-color: #0d83fd;
   --default-color: #ffffff;

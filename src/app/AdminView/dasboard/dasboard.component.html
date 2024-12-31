@@ -110,7 +110,7 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Top Community with posts</h6>
+                <h6 class="text-primary fw-bold m-0">Most Active Communities by Posts</h6>
               </div>
               <div class="card-body">
                 <div class="chart-container">
@@ -122,7 +122,7 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Top Users with posts</h6>
+                <h6 class="text-primary fw-bold m-0">Users with the Most Posts</h6>
               </div>
               <div class="card-body">
                 <div class="chart-container">
@@ -138,10 +138,10 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Post Counts by Year</h6>
+                <h6 class="text-primary fw-bold m-0">Yearly Post Breakdown</h6>
               </div>
               <div class="card-body">
-                <div class="chart-container">
+                <div class="chart-container"  style="width: 50% ;margin-left: 25%">
                   <canvas baseChart [datasets]="chartDataYear.datasets" [labels]="chartDataYear.labels" [options]="chartOptions" [type]="chartTypeYear"></canvas>
                 </div>
               </div>
@@ -150,7 +150,7 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Post Counts by Year and Month</h6>
+                <h6 class="text-primary fw-bold m-0">Post Breakdown by Year and Month</h6>
               </div>
               <div class="card-body">
                 <div class="chart-container" style="width: 50% ;margin-left: 25%">
@@ -165,7 +165,7 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Post Counts by Year</h6>
+                <h6 class="text-primary fw-bold m-0">Most Active Users on TEK-COM</h6>
               </div>
               <div class="card-body">
                 <div class="chart-container">
@@ -181,10 +181,10 @@
           <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="text-primary fw-bold m-0">Members by Community</h6>
+                <h6 class="text-primary fw-bold m-0">Community Membership Overview</h6>
               </div>
               <div class="card-body">
-                <div class="chart-container" style="width: 50% ;margin-left: 25%">
+                <div class="chart-container" >
                   <div class="chart-container">
                     <canvas baseChart
                             [datasets]="chartDatamembersCommunity.datasets"

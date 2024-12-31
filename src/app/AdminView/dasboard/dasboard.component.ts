@@ -13,10 +13,10 @@ export class DasboardComponent implements OnInit {
   // Chart Types for each chart
   chartTypeCommunity: ChartType = 'bar';
   chartTypeUsers: ChartType = 'line';
-  chartTypeYear: ChartType = 'bar';
+  chartTypeYear: ChartType = 'radar';
   chartTypeYearMonth: ChartType = 'doughnut';
   chartTypeLogins: ChartType = 'line';
-  chartTypemembersCommunity: ChartType = 'polarArea';
+  chartTypemembersCommunity: ChartType = 'bar';
   chartDatamembersCommunity: ChartData = {
     labels: [],
     datasets: [
