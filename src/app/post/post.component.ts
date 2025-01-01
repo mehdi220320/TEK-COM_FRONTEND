@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
 import { User } from '../Models/User';
 import { Router } from '@angular/router';
 import {NotificationService} from "../Services/notification.service";
+import {CommunityService} from "../Services/community.service";
 
 @Component({
   selector: 'app-post',
@@ -20,25 +21,15 @@ export class PostComponent implements OnInit {
   UserLOGINiD= localStorage.getItem('id');
   selectedImageIndex: number = 0;
   currentRoute: string = '';
-  userImages: string[] = [
-    'assets/images/users/post/155865-OV9V41-346-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346f-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346g-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346l-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346x-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346xx-removebg-preview.png',
-    'assets/images/users/post/menn-removebg-preview.png',
-    'assets/images/users/post/155865-OV9V41-346ss-removebg-preview.png',
-    'assets/images/users/post/womm-removebg-preview.png',
-
-  ];
-
-  constructor(private notificationService:NotificationService,private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
+  isMemberOfCommunity: boolean = false;
+  communities: any[] = [];
+  constructor(private communityService: CommunityService ,private notificationService:NotificationService,private postService: PostService, private sanitizer: DomSanitizer,private router:Router) {}
 
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
     this.loadPosts();
+    this.checkUserMembership();
   }
 
   loadPosts(): void {
@@ -80,10 +71,20 @@ export class PostComponent implements OnInit {
       );
     }
   }
-  getRandomUserImage(): string {
-    const randomIndex = Math.floor(Math.random() * this.userImages.length);
-    return this.userImages[randomIndex];
+  checkUserMembership(): void {
+    this.communityService.getCommunitybyUserID(localStorage.getItem('id')).subscribe(
+      (response) => {
+        this.communities = response;
+        if (this.communities.length > 0) {
+          this.isMemberOfCommunity = true; // User is a member of a community
+        }
+      },
+      (error) => {
+        console.log("Can't fetch getCommunitybyUserID", error);
+      }
+    );
   }
+
   showImage(post: Post, index: number): void {
     post.selectedImageIndex = index;
   }
