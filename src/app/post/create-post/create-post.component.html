@@ -24,8 +24,14 @@
           </label>
           <input type="file" id="imageFileInput" (change)="onImageFileSelected($event)" accept="image/*" multiple style="display: none;"/>
         </div>
+
         <div class="col-md-12 text-right">
-          <button type="submit" class="btn btn-primary btn-sm">Publish</button>
+          <div class="col-md-6 text-right">
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm" [disabled]="isLoading" >Publish</button>
+              <div *ngIf="isLoading" class="spinner"></div>
+            </div>
+          </div>
         </div>
       </div>
     </form>

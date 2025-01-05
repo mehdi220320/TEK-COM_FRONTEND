@@ -20,6 +20,8 @@ export class CreatePostComponent implements OnInit {
   whoposted!: number  ;
   currenturl:string='';
   communityId:string='';
+  isLoading = false;
+
   isMember!:boolean;
   communities:Community[]=[];
   userID=localStorage.getItem('id');
@@ -41,7 +43,7 @@ export class CreatePostComponent implements OnInit {
     if(this.currenturl.startsWith('/community')){
       const parts = this.currenturl.split('/');
       this.communityId = parts[2];
-
+      this.selectedCommunity = this.communityId;
       this.communityService.isMember(this.userID,this.communityId).subscribe((response)=>{
         this.isMember=response
       },(error)=>{
@@ -62,6 +64,8 @@ export class CreatePostComponent implements OnInit {
   selectedCommunity: string = '';
 
   addPost(postForm: NgForm) {
+    this.isLoading = true;
+
     const postData = {
       content: postForm.value['content'],
       whoposted: this.whoposted.toString(),
@@ -73,6 +77,8 @@ export class CreatePostComponent implements OnInit {
     this.postService.createPost(postData).subscribe(
       (response) => {
         console.log('Post created successfully:', response);
+        this.isLoading = false;
+
         window.location.reload();
       },
       (error) => {
